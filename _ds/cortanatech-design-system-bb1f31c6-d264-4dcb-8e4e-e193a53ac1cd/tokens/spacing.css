@@ -1,0 +1,56 @@
+/* ============================================================
+   CortanaTech Solutions — Spacing & Layout Tokens
+   Base unit: 4px
+   ============================================================ */
+
+:root {
+  /* ── Base Spacing Scale ── */
+  --space-0:  0;
+  --space-px: 1px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  28px;
+  --space-8:  32px;
+  --space-9:  36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-28: 112px;
+  --space-32: 128px;
+
+  /* ── Border Radius ── */
+  --radius-none: 0;
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-3xl:  32px;
+  --radius-full: 9999px;
+
+  /* ── Container Widths ── */
+  --container-narrow: 720px;
+  --container-default: 1200px;
+  --container-wide:    1400px;
+  --container-full:    100%;
+
+  /* ── Component Dimensions ── */
+  --header-height:    72px;
+  --sidebar-width:    260px;
+  --icon-sm:          16px;
+  --icon-md:          24px;
+  --icon-lg:          32px;
+  --icon-xl:          48px;
+
+  /* ── Section Padding ── */
+  --section-padding-y:    var(--space-20);
+  --section-padding-x:    var(--space-8);
+}

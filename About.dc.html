@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>About — CortanaTech Solutions</title>
+  <meta name="description" content="Meet the team behind CortanaTech Solutions and learn how we partner with churches, schools, and startups to deliver practical, mission-driven digital solutions.">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/shadows.css">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/styles.css">
+  <script src="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/_ds_bundle.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { font-family: var(--font-body); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 56px; }
+    .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .mobile-menu-btn { display: none; background: transparent; border: none; cursor: pointer; padding: 8px; }
+    .mobile-nav { display: none; position: absolute; top: 80px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #E8E6E6; padding: 16px 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); z-index: 99; }
+    .mobile-nav.open { display: flex; flex-direction: column; gap: 12px; }
+    .mobile-nav a { font-family: var(--font-body); font-size: 15px; font-weight: 500; color: #454C59; padding: 10px 0; border-bottom: 1px solid #F1EDED; }
+    .mobile-nav a:last-child { border-bottom: none; }
+    @media (max-width: 900px) {
+      .desktop-nav { display: none !important; }
+      .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+      .mobile-nav { display: none; }
+      .mobile-nav.open { display: flex; }
+      .container { padding-left: 24px !important; padding-right: 24px !important; }
+      .split-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .team-grid { grid-template-columns: 1fr !important; }
+      .cta-inner { flex-direction: column; align-items: flex-start !important; }
+      .footer-inner { flex-direction: column; align-items: flex-start !important; }
+    }
+  </style>
+</helmet>
+
+<div style="font-family: var(--font-body);">
+
+  <!-- NAV -->
+  <nav style="position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #E8E6E6; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; height: 80px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
+    <a href="Home.dc.html" style="flex-shrink: 0;"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
+    <div class="desktop-nav" style="display: flex; align-items: center; gap: 36px;">
+      <a href="Services.dc.html" style="font-family: var(--font-body); font-size: 14px; font-weight: 500; color: #454C59;" style-hover="color: #1C75BC;">Services</a>
+      <a href="Work.dc.html" style="font-family: var(--font-body); font-size: 14px; font-weight: 500; color: #454C59;" style-hover="color: #1C75BC;">Our Work</a>
+      <a href="Blog.dc.html" style="font-family: var(--font-body); font-size: 14px; font-weight: 500; color: #454C59;" style-hover="color: #1C75BC;">Blog</a>
+      <a href="About.dc.html" style="font-family: var(--font-body); font-size: 14px; font-weight: 700; color: #1C75BC;">About</a>
+      <a href="Contact.dc.html" style="background: #2B3990; color: #fff; padding: 11px 22px; border-radius: 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600;" style-hover="background: #1C75BC;">Get Started</a>
+    </div>
+    <button class="mobile-menu-btn" onClick="{{ toggleMenu }}" aria-label="Toggle navigation menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </nav>
+  <div class="mobile-nav {{ menuOpen ? 'open' : '' }}">
+    <a href="Services.dc.html" onClick="{{ closeMenu }}">Services</a>
+    <a href="Work.dc.html" onClick="{{ closeMenu }}">Our Work</a>
+    <a href="Blog.dc.html" onClick="{{ closeMenu }}">Blog</a>
+    <a href="About.dc.html" onClick="{{ closeMenu }}">About</a>
+    <a href="Contact.dc.html" onClick="{{ closeMenu }}">Get Started</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section style="position: relative; padding: 80px 0 88px; overflow: hidden; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 42%, #19235a 100%);">
+    <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs><pattern id="about-dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.5" fill="rgba(255,255,255,0.07)"></circle></pattern></defs>
+      <rect width="100%" height="100%" fill="url(#about-dots)"></rect>
+    </svg>
+    <svg style="position: absolute; right: -60px; top: -80px; width: 380px; height: 380px; pointer-events: none;" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="190" cy="190" r="170" stroke="rgba(255,255,255,0.055)" stroke-width="1.5"></circle>
+      <circle cx="190" cy="190" r="115" stroke="rgba(255,255,255,0.04)" stroke-width="1"></circle>
+    </svg>
+    <div class="container" style="position: relative; z-index: 2; text-align: center;">
+      <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.14em; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 16px;">Who We Are</div>
+      <h1 style="font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; line-height: 1.05; letter-spacing: -0.03em; text-wrap: balance; margin-bottom: 18px;">We're Your Digital Partner, Not Your Vendor</h1>
+      <p style="font-family: var(--font-body); font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.68; max-width: 540px; margin: 0 auto;">Cortanatech Solutions exists to bridge the gap between mission and technology — for organizations that are changing the world but don't have a tech team to back them up.</p>
+    </div>
+  </section>
+
+  <!-- OUR MISSION -->
+  <section style="background: #fff; padding: 96px 0;">
+    <div class="container">
+      <div class="split-grid">
+        <div style="border-radius: 24px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 20px 52px rgba(0,0,0,0.1);">
+          <img src="assets/photos/team-smiling.jpg" alt="The Cortanatech team" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;">
+        </div>
+        <div>
+          <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 16px;">Our Mission</div>
+          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 42px); font-weight: 900; color: #2B3990; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 24px; text-wrap: balance;">Helping Organizations Focus on What Matters Most</h2>
+          <p style="font-family: var(--font-body); font-size: 16px; color: #454C59; line-height: 1.78; margin-bottom: 20px;">Too many churches, schools, and nonprofits are held back by technology — not empowered by it. They spend time managing broken websites, wrestling with email setups, or waiting on overpriced agencies. We exist to change that.</p>
+          <p style="font-family: var(--font-body); font-size: 16px; color: #454C59; line-height: 1.78;">Cortanatech Solutions was built to give mission-driven organizations access to practical, professional digital infrastructure — affordably, and with a partner who actually understands their world.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE WORK -->
+  <section style="background: #F1EDED; padding: 96px 0;">
+    <div class="container">
+      <div class="split-grid">
+        <div>
+          <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 16px;">Our Approach</div>
+          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 42px); font-weight: 900; color: #2B3990; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 24px; text-wrap: balance;">We Come Alongside You — Not At You</h2>
+          <p style="font-family: var(--font-body); font-size: 16px; color: #454C59; line-height: 1.78; margin-bottom: 20px;">We don't hand down technical jargon or disappear after delivery. We walk with you through the process, explain what we're building and why, and make sure your team feels confident using whatever we create.</p>
+          <p style="font-family: var(--font-body); font-size: 16px; color: #454C59; line-height: 1.78;">Whether you're a pastor, a school administrator, or a first-time founder — you don't need to speak tech to work with us. We translate both ways.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="background: #fff; border-radius: 16px; padding: 28px; display: flex; gap: 20px; align-items: flex-start; box-shadow: 0 2px 12px rgba(0,0,0,0.05);">
+            <div style="width: 44px; height: 44px; background: #EBF4FB; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #1C75BC; flex-shrink: 0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: #1E1F1E; margin-bottom: 6px;">Partnership over vendor-ship</div>
+              <div style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.6;">We're in it with you, not just for you. Your success is our success.</div>
+            </div>
+          </div>
+          <div style="background: #fff; border-radius: 16px; padding: 28px; display: flex; gap: 20px; align-items: flex-start; box-shadow: 0 2px 12px rgba(0,0,0,0.05);">
+            <div style="width: 44px; height: 44px; background: #EBF4FB; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #1C75BC; flex-shrink: 0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: #1E1F1E; margin-bottom: 6px;">Transparency at every step</div>
+              <div style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.6;">No surprises in scope, timeline, or pricing. We communicate plainly and consistently.</div>
+            </div>
+          </div>
+          <div style="background: #fff; border-radius: 16px; padding: 28px; display: flex; gap: 20px; align-items: flex-start; box-shadow: 0 2px 12px rgba(0,0,0,0.05);">
+            <div style="width: 44px; height: 44px; background: #EBF4FB; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #1C75BC; flex-shrink: 0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            </div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: #1E1F1E; margin-bottom: 6px;">Practical over flashy</div>
+              <div style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.6;">We build what you need, not what looks impressive in a portfolio. Functional is the goal.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section style="background: #fff; padding: 96px 0;">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 56px;">
+        <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 12px;">The People Behind the Work</div>
+        <h2 style="font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: #2B3990; letter-spacing: -0.025em; line-height: 1.15; text-wrap: balance;">Meet the Team</h2>
+      </div>
+
+      <!-- Row 1: 3 cards -->
+      <div class="team-grid" style="margin-bottom: 24px;">
+
+        <!-- Faithful Eli Coronel -->
+        <div style="background: #fff; border: 1.5px solid #E8E6E6; border-radius: 20px; padding: 36px 28px; display: flex; flex-direction: column; align-items: flex-start; transition: all 0.2s;" style-hover="transform: translateY(-3px); box-shadow: 0 12px 32px rgba(28,117,188,0.1); border-color: #C5DFF2;">
+          <img src="assets/photos/team/faithful-eli-coronel.png" alt="Faithful Eli Coronel" style="width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin-bottom: 24px; flex-shrink: 0; box-shadow: 0 8px 24px rgba(28,117,188,0.25);">
+          <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Faithful Eli Coronel</div>
+          <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; letter-spacing: 0.04em; margin-bottom: 14px;">Director of Operations / Founder</div>
+          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">Faithful brings over a decade of expertise in Software Engineering, leading our team with visionary insight and technical prowess.</p>
+        </div>
+
+        <!-- Titus Jr Laxa -->
+        <div style="background: #fff; border: 1.5px solid #E8E6E6; border-radius: 20px; padding: 36px 28px; display: flex; flex-direction: column; align-items: flex-start; transition: all 0.2s;" style-hover="transform: translateY(-3px); box-shadow: 0 12px 32px rgba(28,117,188,0.1); border-color: #C5DFF2;">
+          <img src="assets/photos/team/titus-jr-laxa.png" alt="Titus Jr Laxa" style="width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin-bottom: 24px; flex-shrink: 0; box-shadow: 0 8px 24px rgba(41,171,226,0.25);">
+          <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Titus Jr Laxa</div>
+          <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; letter-spacing: 0.04em; margin-bottom: 14px;">Director of Branding / Co-Founder</div>
+          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">Titus Jr is a seasoned design expert with extensive experience in crafting innovative and user-centric designs.</p>
+        </div>
+
+        <!-- Aiza Nosa -->
+        <div style="background: #fff; border: 1.5px solid #E8E6E6; border-radius: 20px; padding: 36px 28px; display: flex; flex-direction: column; align-items: flex-start; transition: all 0.2s;" style-hover="transform: translateY(-3px); box-shadow: 0 12px 32px rgba(28,117,188,0.1); border-color: #C5DFF2;">
+          <img src="assets/photos/team/aiza-nosa.png" alt="Aiza Nosa" style="width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin-bottom: 24px; flex-shrink: 0; box-shadow: 0 8px 24px rgba(43,57,144,0.25);">
+          <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Aiza Nosa</div>
+          <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; letter-spacing: 0.04em; margin-bottom: 14px;">Director of Administration / Co-Founder</div>
+          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">Aiza excels in administration, ensuring seamless operations and strategic growth with a strong focus on organizational excellence.</p>
+        </div>
+      </div>
+
+      <!-- Row 2: 2 cards centered -->
+      <div class="team-grid">
+        <div style="grid-column: 1 / 2; background: #fff; border: 1.5px solid #E8E6E6; border-radius: 20px; padding: 36px 28px; display: flex; flex-direction: column; align-items: flex-start; transition: all 0.2s;" style-hover="transform: translateY(-3px); box-shadow: 0 12px 32px rgba(28,117,188,0.1); border-color: #C5DFF2;">
+          <img src="assets/photos/team/jennifer-dimino.png" alt="Jennifer Dimino" style="width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin-bottom: 24px; flex-shrink: 0; box-shadow: 0 8px 24px rgba(28,117,188,0.25);">
+          <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Jennifer Dimino</div>
+          <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; letter-spacing: 0.04em; margin-bottom: 14px;">Director of Finance</div>
+          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">Jennifer specializes in data analytics and cost-to-serve strategies, helping clients increase brand awareness, generate leads, and acquire new customers.</p>
+        </div>
+        <div style="grid-column: 2 / 3; background: #fff; border: 1.5px solid #E8E6E6; border-radius: 20px; padding: 36px 28px; display: flex; flex-direction: column; align-items: flex-start; transition: all 0.2s;" style-hover="transform: translateY(-3px); box-shadow: 0 12px 32px rgba(28,117,188,0.1); border-color: #C5DFF2;">
+          <img src="assets/photos/team/mervin-hernandez.png" alt="Mervin Hernandez" style="width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin-bottom: 24px; flex-shrink: 0; box-shadow: 0 8px 24px rgba(43,57,144,0.25);">
+          <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Mervin Hernandez</div>
+          <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; letter-spacing: 0.04em; margin-bottom: 14px;">Director of Technology</div>
+          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">Mervin is a veteran in the IT industry with over 30 years of experience in developing, managing, and implementing advanced technology solutions.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TEAM PHOTO -->
+  <section style="background: #fff; padding: 96px 0;">
+    <div class="container">
+      <div style="border-radius: 24px; overflow: hidden; position: relative; aspect-ratio: 21/7; box-shadow: 0 20px 52px rgba(0,0,0,0.1);">
+        <img src="assets/photos/team-hero-1.jpg" alt="The Cortanatech team at work" style="width: 100%; height: 100%; object-fit: cover; object-position: center 30%;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to right, rgba(27,55,130,0.88) 0%, transparent 55%);"></div>
+        <div style="position: absolute; top: 0; left: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; padding: 60px 64px; max-width: 520px;">
+          <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 16px;">Cortanatech Solutions, Inc.</div>
+          <div style="font-family: var(--font-display); font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: #fff; line-height: 1.25; letter-spacing: -0.02em; text-wrap: balance;">We are your trusted business aid for Digital Innovation.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section style="background: #2B3990; padding: 80px 0;">
+    <div class="container cta-inner" style="display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap;">
+      <div>
+        <h2 style="font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 40px); font-weight: 900; color: #fff; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 10px; text-wrap: balance;">Let's build something together.</h2>
+        <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.6;">Ready to start a project? We'd love to hear about your organization.</p>
+      </div>
+      <a href="Contact.dc.html" style="display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #2B3990; padding: 15px 32px; border-radius: 8px; font-family: var(--font-body); font-size: 15px; font-weight: 700; white-space: nowrap; flex-shrink: 0;" style-hover="background: #EBF4FB;">Get In Touch →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background: #fff; border-top: 1px solid #E8E6E6; padding: 40px 0 28px;">
+    <div class="container footer-inner" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+      <a href="Home.dc.html"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
+      <div style="display: flex; gap: 28px; flex-wrap: wrap;">
+        <a href="Services.dc.html" style="font-family: var(--font-body); font-size: 14px; color: #454C59; font-weight: 500;" style-hover="color: #1C75BC;">Services</a>
+        <a href="Work.dc.html" style="font-family: var(--font-body); font-size: 14px; color: #454C59; font-weight: 500;" style-hover="color: #1C75BC;">Our Work</a>
+        <a href="Blog.dc.html" style="font-family: var(--font-body); font-size: 14px; color: #454C59; font-weight: 500;" style-hover="color: #1C75BC;">Blog</a>
+        <a href="About.dc.html" style="font-family: var(--font-body); font-size: 14px; color: #1C75BC; font-weight: 700;" style-hover="color: #1C75BC;">About</a>
+        <a href="Contact.dc.html" style="font-family: var(--font-body); font-size: 14px; color: #454C59; font-weight: 500;" style-hover="color: #1C75BC;">Contact</a>
+      </div>
+      <span style="font-family: var(--font-body); font-size: 13px; color: #8C909A;">© 2026 Cortanatech Solutions, Inc.</span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { menuOpen: false };
+  toggleMenu = () => this.setState({ menuOpen: !this.state.menuOpen });
+  closeMenu = () => this.setState({ menuOpen: false });
+  renderVals() {
+    return {
+      menuOpen: this.state.menuOpen,
+      toggleMenu: this.toggleMenu,
+      closeMenu: this.closeMenu
+    };
+  }
+}
+</script>
+</body>
+</html>

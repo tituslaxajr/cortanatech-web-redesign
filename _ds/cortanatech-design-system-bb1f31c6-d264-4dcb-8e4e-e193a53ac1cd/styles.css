@@ -1,0 +1,10 @@
+/* ============================================================
+   CortanaTech Design System — Global Stylesheet Entry Point
+   Import this single file to consume the full token set.
+   ============================================================ */
+
+@import './tokens/fonts.css';
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/shadows.css';

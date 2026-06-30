@@ -1,0 +1,66 @@
+/* ============================================================
+   CortanaTech Solutions — Color Tokens
+   Source: Branding Guide 2024 + logo sampling
+   ============================================================ */
+
+:root {
+  /* ── Brand Blue Scale ── */
+  --color-blue-50:  #EBF4FB;
+  --color-blue-100: #C5DFF2;
+  --color-blue-200: #9ECBEA;
+  --color-blue-300: #5FA8D8;
+  --color-blue-400: #2E85C2;
+  --color-blue-500: #1C75BC;   /* Primary blue — TECH wordmark on light bg */
+  --color-blue-600: #1863A3;
+  --color-blue-700: #14518A;
+  --color-blue-800: #2B3990;   /* Navy / primary dark */
+  --color-blue-900: #1E2A70;
+
+  /* ── Neutral Scale ── */
+  --color-neutral-0:   #FFFFFF;
+  --color-neutral-50:  #F1EDED;   /* Warm off-white — page bg */
+  --color-neutral-100: #E8E6E6;
+  --color-neutral-200: #D1D0CE;   /* Borders */
+  --color-neutral-300: #B5B3B0;
+  --color-neutral-400: #8C909A;   /* Muted text */
+  --color-neutral-500: #6B6F7A;
+  --color-neutral-600: #454C59;   /* Secondary text */
+  --color-neutral-700: #2D3142;
+  --color-neutral-800: #1E1F1E;   /* Near-black body text */
+  --color-neutral-900: #0F1011;
+
+  /* ── Semantic / Alias Tokens ── */
+  --color-primary:         var(--color-blue-500);
+  --color-primary-dark:    var(--color-blue-800);
+  --color-primary-light:   var(--color-blue-400);
+  --color-primary-subtle:  var(--color-blue-50);
+
+  --color-text-primary:    var(--color-neutral-800);
+  --color-text-secondary:  var(--color-neutral-600);
+  --color-text-muted:      var(--color-neutral-400);
+  --color-text-inverse:    var(--color-neutral-0);
+  --color-text-accent:     var(--color-blue-500);
+
+  --color-surface-default: var(--color-neutral-0);
+  --color-surface-subtle:  var(--color-neutral-50);
+  --color-surface-navy:    var(--color-blue-800);
+  --color-surface-blue:    var(--color-blue-500);
+
+  --color-border-default:  var(--color-neutral-200);
+  --color-border-subtle:   var(--color-neutral-100);
+  --color-border-focus:    var(--color-blue-500);
+
+  /* ── Sky Blue (TECH wordmark on dark backgrounds) ── */
+  --color-blue-sky:   #29ABE2;   /* Light gradient stop — TECH on dark/gradient bg */
+
+  /* ── Brand Gradients ── */
+  --gradient-brand:         linear-gradient(135deg, #29ABE2 0%, #2E3192 100%); /* @kind color */
+  --gradient-brand-overlay: linear-gradient(135deg, rgba(41,171,226,0.82) 0%, rgba(46,49,146,0.82) 100%); /* @kind color */
+  --gradient-brand-overlay-dark: linear-gradient(135deg, rgba(41,171,226,0.92) 0%, rgba(46,49,146,0.92) 100%); /* @kind color */
+
+  /* ── Status ── */
+  --color-success:  #1A7F4B;
+  --color-warning:  #C8821A;
+  --color-error:    #C0392B;
+  --color-info:     var(--color-blue-500);
+}

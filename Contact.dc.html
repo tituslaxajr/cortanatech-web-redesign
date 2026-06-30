@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Contact — CortanaTech Solutions</title>
+  <meta name="description" content="Get in touch with CortanaTech Solutions. Tell us about your church, school, nonprofit, or startup project and we'll respond within one business day.">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/shadows.css">
+  <link rel="stylesheet" href="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/styles.css">
+  <script src="_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/_ds_bundle.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { font-family: var(--font-body); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    input, textarea, select { font-family: var(--font-body); }
+    input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 56px; }
+    .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .mobile-menu-btn { display: none; background: transparent; border: none; cursor: pointer; padding: 8px; }
+    .mobile-nav { display: none; position: absolute; top: 80px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #E8E6E6; padding: 16px 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); z-index: 99; }
+    .mobile-nav.open { display: flex; flex-direction: column; gap: 12px; }
+    .mobile-nav a { font-family: var(--font-body); font-size: 15px; font-weight: 500; color: #454C59; padding: 10px 0; border-bottom: 1px solid #F1EDED; }
+    .mobile-nav a:last-child { border-bottom: none; }
+    @media (max-width: 900px) {
+      .desktop-nav { display: none !important; }
+      .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+      .mobile-nav { display: none; }
+      .mobile-nav.open { display: flex; }
+      .container { padding-left: 24px !important; padding-right: 24px !important; }
+      .split-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .footer-inner { flex-direction: column; align-items: flex-start !important; }
+    }
+  </style>
+</helmet>
+
+<div style="font-family: var(--font-body);">
+
+  <!-- NAV -->
+  <nav style="position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #E8E6E6; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; height: 80px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
+    <a href="Home.dc.html" style="flex-shrink: 0;"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
+    <div class="desktop-nav" style="display: flex; align-items: center; gap: 36px;">
+      <a href="Services.dc.html" style="font-family: var(--font-body); font-size: 14px; font-weight: 500; color: #454C59;" style-hover="color: #1C75BC;">Services</a>
+      <a href="Work.dc.html" style="font-family: var(--font-body); font-size: 14px; font-weight: 500; color: #454C59;" style-hover="color: #1C75BC;">Our Work</a>
+      <a href="Blog.dc.html" style="font-family: var(--font-body); font-size: 14px; font-weight: 500; color: #454C59;" style-hover="color: #1C75BC;">Blog</a>
+      <a href="About.dc.html" style="font-family: var(--font-body); font-size: 14px; font-weight: 500; color: #454C59;" style-hover="color: #1C75BC;">About</a>
+      <a href="Contact.dc.html" style="background: #1C75BC; color: #fff; padding: 11px 22px; border-radius: 8px; font-family: var(--font-body); font-size: 14px; font-weight: 700;">Get Started</a>
+    </div>
+    <button class="mobile-menu-btn" onClick="{{ toggleMenu }}" aria-label="Toggle navigation menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </nav>
+  <div class="mobile-nav {{ menuOpen ? 'open' : '' }}">
+    <a href="Services.dc.html" onClick="{{ closeMenu }}">Services</a>
+    <a href="Work.dc.html" onClick="{{ closeMenu }}">Our Work</a>
+    <a href="Blog.dc.html" onClick="{{ closeMenu }}">Blog</a>
+    <a href="About.dc.html" onClick="{{ closeMenu }}">About</a>
+    <a href="Contact.dc.html" onClick="{{ closeMenu }}">Get Started</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section style="position: relative; padding: 80px 0 88px; overflow: hidden; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 42%, #19235a 100%);">
+    <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs><pattern id="contact-dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.5" fill="rgba(255,255,255,0.07)"></circle></pattern></defs>
+      <rect width="100%" height="100%" fill="url(#contact-dots)"></rect>
+    </svg>
+    <svg style="position: absolute; right: -60px; top: -80px; width: 380px; height: 380px; pointer-events: none;" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="190" cy="190" r="170" stroke="rgba(255,255,255,0.055)" stroke-width="1.5"></circle>
+      <circle cx="190" cy="190" r="115" stroke="rgba(255,255,255,0.04)" stroke-width="1"></circle>
+    </svg>
+    <div class="container" style="position: relative; z-index: 2; text-align: center;">
+      <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.14em; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 16px;">Let's Talk</div>
+      <h1 style="font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; line-height: 1.05; letter-spacing: -0.03em; text-wrap: balance; margin-bottom: 18px;">Start a Conversation</h1>
+      <p style="font-family: var(--font-body); font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.68; max-width: 500px; margin: 0 auto;">Tell us about your organization and what you need. We'll follow up within one business day.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM + INFO -->
+  <section style="background: #fff; padding: 96px 0;">
+    <div class="container">
+      <div class="split-grid" style="grid-template-columns: 1fr 1.4fr; align-items: start;">
+
+        <!-- Left: info -->
+        <div>
+          <h2 style="font-family: var(--font-display); font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: #2B3990; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 20px; text-wrap: balance;">We'd love to hear from you</h2>
+          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 48px;">Whether you're just exploring, have a specific project in mind, or need help figuring out where to start — send us a message and we'll get back to you promptly.</p>
+
+          <div style="display: flex; flex-direction: column; gap: 28px;">
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 48px; height: 48px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #1C75BC; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              </div>
+              <div>
+                <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #8C909A; text-transform: uppercase; margin-bottom: 4px;">Email</div>
+                <div style="font-family: var(--font-body); font-size: 15px; color: #1E1F1E; font-weight: 500;">info@cortanatechsolutions.com</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 48px; height: 48px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #1C75BC; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div>
+                <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #8C909A; text-transform: uppercase; margin-bottom: 4px;">Response Time</div>
+                <div style="font-family: var(--font-body); font-size: 15px; color: #1E1F1E; font-weight: 500;">Within one business day</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 48px; height: 48px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #1C75BC; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div>
+                <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #8C909A; text-transform: uppercase; margin-bottom: 4px;">We Serve</div>
+                <div style="font-family: var(--font-body); font-size: 15px; color: #1E1F1E; font-weight: 500;">Churches, Schools, Nonprofits &amp; Startups</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial mini -->
+          <div style="margin-top: 52px; background: #F1EDED; border-radius: 16px; padding: 28px;">
+            <div style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: #2B3990; line-height: 1.5; margin-bottom: 16px;">"The professionalism of their services is commendable."</div>
+            <div style="font-family: var(--font-body); font-size: 13px; color: #454C59;">— Evangel Balmes, Baptist Bible Seminary &amp; Institute, Inc.</div>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <div style="background: #fff; border: 1.5px solid #E8E6E6; border-radius: 24px; padding: 44px; box-shadow: 0 8px 32px rgba(0,0,0,0.06);">
+          <form onSubmit="{{ submitContact }}" style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div>
+                <label style="font-family: var(--font-body); font-size: 11px; font-weight: 600; color: #8C909A; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px;">First Name</label>
+                <input type="text" value="{{ contactName }}" onInput="{{ setContactName }}" placeholder="Your name" required style="width: 100%; padding: 13px 16px; border: 1.5px solid #D1D0CE; border-radius: 8px; background: #fff; color: #1E1F1E; font-size: 15px; outline: none; transition: border-color 0.2s;" style-focus="border-color: #1C75BC; box-shadow: 0 0 0 3px rgba(28,117,188,0.1);">
+              </div>
+              <div>
+                <label style="font-family: var(--font-body); font-size: 11px; font-weight: 600; color: #8C909A; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px;">Email</label>
+                <input type="email" value="{{ contactEmail }}" onInput="{{ setContactEmail }}" placeholder="your@email.com" required style="width: 100%; padding: 13px 16px; border: 1.5px solid #D1D0CE; border-radius: 8px; background: #fff; color: #1E1F1E; font-size: 15px; outline: none; transition: border-color 0.2s;" style-focus="border-color: #1C75BC; box-shadow: 0 0 0 3px rgba(28,117,188,0.1);">
+              </div>
+            </div>
+            <div>
+              <label style="font-family: var(--font-body); font-size: 11px; font-weight: 600; color: #8C909A; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px;">Organization</label>
+              <input type="text" value="{{ contactOrg }}" onInput="{{ setContactOrg }}" placeholder="Your church, school, or startup" required style="width: 100%; padding: 13px 16px; border: 1.5px solid #D1D0CE; border-radius: 8px; background: #fff; color: #1E1F1E; font-size: 15px; outline: none;" style-focus="border-color: #1C75BC;">
+            </div>
+            <div>
+              <label style="font-family: var(--font-body); font-size: 11px; font-weight: 600; color: #8C909A; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px;">What Are You Looking For?</label>
+              <select value="{{ contactService }}" onChange="{{ setContactService }}" required style="width: 100%; padding: 13px 16px; border: 1.5px solid #D1D0CE; border-radius: 8px; background: #fff; color: #1E1F1E; font-size: 15px; outline: none; appearance: none; background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"8\" viewBox=\"0 0 12 8\"><path d=\"M1 1l5 5 5-5\" stroke=\"%23454C59\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\"/></svg>'); background-repeat: no-repeat; background-position: right 16px center;">
+                <option value="">Select a service...</option>
+                <option>Website Design &amp; Development</option>
+                <option>Professional Email Setup</option>
+                <option>Chatbot Development</option>
+                <option>Custom Web Application</option>
+                <option>Not sure yet — let's talk</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-family: var(--font-body); font-size: 11px; font-weight: 600; color: #8C909A; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px;">Tell Us About Your Project</label>
+              <textarea value="{{ contactMessage }}" onInput="{{ setContactMessage }}" placeholder="Describe what you need, what you're trying to accomplish, and any deadlines..." rows="5" required style="width: 100%; padding: 13px 16px; border: 1.5px solid #D1D0CE; border-radius: 8px; background: #fff; color: #1E1F1E; font-size: 15px; outline: none; resize: vertical; line-height: 1.6;" style-focus="border-color: #1C75BC;"></textarea>
+            </div>
+            <button type="submit" style="width: 100%; padding: 15px 24px; background: #2B3990; color: #fff; border: none; border-radius: 8px; font-family: var(--font-body); font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s;" style-hover="background: #1C75BC;">Send Message →</button>
+            <p style="font-family: var(--font-body); font-size: 13px; color: #2B3990; text-align: center; line-height: 1.5;">{{ contactMessageText }}</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background: #fff; border-top: 1px solid #E8E6E6; padding: 40px 0 28px;">
+    <div class="container footer-inner" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+      <a href="Home.dc.html"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
+      <div style="display: flex; gap: 28px; flex-wrap: wrap;">
+        <a href="Services.dc.html" style="font-family: var(--font-body); font-size: 14px; color: #454C59; font-weight: 500;" style-hover="color: #1C75BC;">Services</a>
+        <a href="Work.dc.html" style="font-family: var(--font-body); font-size: 14px; color: #454C59; font-weight: 500;" style-hover="color: #1C75BC;">Our Work</a>
+        <a href="Blog.dc.html" style="font-family: var(--font-body); font-size: 14px; color: #454C59; font-weight: 500;" style-hover="color: #1C75BC;">Blog</a>
+        <a href="About.dc.html" style="font-family: var(--font-body); font-size: 14px; color: #454C59; font-weight: 500;" style-hover="color: #1C75BC;">About</a>
+        <a href="Contact.dc.html" style="font-family: var(--font-body); font-size: 14px; color: #1C75BC; font-weight: 700;" style-hover="color: #1C75BC;">Contact</a>
+      </div>
+      <span style="font-family: var(--font-body); font-size: 13px; color: #8C909A;">© 2026 Cortanatech Solutions, Inc.</span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = {
+    menuOpen: false,
+    contactName: '',
+    contactEmail: '',
+    contactOrg: '',
+    contactService: '',
+    contactMessage: '',
+    contactMessageText: ''
+  };
+
+  toggleMenu = () => this.setState({ menuOpen: !this.state.menuOpen });
+  closeMenu = () => this.setState({ menuOpen: false });
+
+  setContactName = (e) => this.setState({ contactName: e.target.value });
+  setContactEmail = (e) => this.setState({ contactEmail: e.target.value });
+  setContactOrg = (e) => this.setState({ contactOrg: e.target.value });
+  setContactService = (e) => this.setState({ contactService: e.target.value });
+  setContactMessage = (e) => this.setState({ contactMessage: e.target.value });
+
+  submitContact = (e) => {
+    e.preventDefault();
+    const { contactName, contactEmail, contactOrg, contactService, contactMessage } = this.state;
+    if (!contactName.trim() || !contactEmail.trim() || !contactOrg.trim() || !contactMessage.trim()) {
+      this.setState({ contactMessageText: 'Please fill in all fields.' });
+      return;
+    }
+    this.setState({
+      contactName: '',
+      contactEmail: '',
+      contactOrg: '',
+      contactService: '',
+      contactMessage: '',
+      contactMessageText: 'Message sent! We\'ll follow up within one business day.'
+    });
+  };
+
+  renderVals() {
+    return {
+      menuOpen: this.state.menuOpen,
+      contactName: this.state.contactName,
+      contactEmail: this.state.contactEmail,
+      contactOrg: this.state.contactOrg,
+      contactService: this.state.contactService,
+      contactMessage: this.state.contactMessage,
+      contactMessageText: this.state.contactMessageText,
+      toggleMenu: this.toggleMenu,
+      closeMenu: this.closeMenu,
+      setContactName: this.setContactName,
+      setContactEmail: this.setContactEmail,
+      setContactOrg: this.setContactOrg,
+      setContactService: this.setContactService,
+      setContactMessage: this.setContactMessage,
+      submitContact: this.submitContact
+    };
+  }
+}
+</script>
+</body>
+</html>

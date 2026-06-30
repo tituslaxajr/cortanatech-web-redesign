@@ -46,8 +46,6 @@
       '  vec3 c1 = vec3(0.122,0.220,0.510);' + // #1f3882
       '  vec3 c2 = vec3(0.098,0.137,0.353);' + // #19235a
       '  vec3 col = t < 0.42 ? mix(c0,c1,t/0.42) : mix(c1,c2,(t-0.42)/0.58);' +
-      '  float f1 = smoothstep(0.75, 0.0, distance(uv, vec2(-0.05,0.10)));' +
-      '  col += vec3(0.161,0.671,0.886) * 0.38 * f1;' +
       '  float f2 = smoothstep(0.65, 0.0, distance(uv, vec2(1.05,0.95)));' +
       '  col += vec3(0.169,0.224,0.565) * 0.50 * f2;' +
       '  return col;' +

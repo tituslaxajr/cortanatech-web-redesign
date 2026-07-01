@@ -4,9 +4,6 @@
 :root {
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  /* Warm accent — used sparingly for emphasis (eyebrows, key numbers, primary CTA). */
-  --color-accent: #FF6B4A;
-  --color-accent-strong: #E8543A;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,8 +57,6 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 .btn-primary-lg:hover { background: #1C75BC; }
 .btn-white { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #2B3990; padding: 15px 32px; border-radius: 8px; font-family: var(--font-body); font-size: 15px; font-weight: 700; transition: background 0.2s; white-space: nowrap; flex-shrink: 0; }
 .btn-white:hover { background: #EBF4FB; }
-.btn-accent { display: inline-flex; align-items: center; gap: 8px; background: var(--color-accent); color: #fff; padding: 15px 28px; border: none; border-radius: 8px; font-family: var(--font-body); font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.2s; }
-.btn-accent:hover { background: var(--color-accent-strong); }
 .btn-outline-white { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #2B3990; padding: 13px 26px; border-radius: 8px; font-family: var(--font-body); font-size: 14px; font-weight: 700; transition: background 0.2s; }
 .btn-outline-white:hover { background: #EBF4FB; }
 
@@ -74,8 +69,8 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 .form-input { width: 100%; padding: 13px 16px; border: 1.5px solid #D1D0CE; border-radius: 8px; background: #fff; color: #1E1F1E; font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-family: var(--font-body); }
 .form-input:focus { border-color: #1C75BC; box-shadow: 0 0 0 3px rgba(28,117,188,0.1); }
 .form-input-dark { width: 100%; padding: 12px 15px; border: 1.5px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #fff; font-size: 14px; outline: none; font-family: var(--font-body); }
-.form-label { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: #8C909A; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px; }
-.form-label-dark { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.48); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px; }
+.form-label { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: #6B7280; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px; }
+.form-label-dark { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.68); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 8px; }
 
 /* Animation */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
@@ -96,10 +91,10 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 
 /* Blog read more */
 .read-more { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: #1C75BC; transition: color 0.2s; }
-.read-more:hover { color: var(--color-accent); }
+.read-more:hover { color: #2B3990; }
 
 /* Blog view-all link */
-.view-all { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.75); border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 2px; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+.view-all { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 2px; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
 .view-all:hover { color: #fff; border-color: rgba(255,255,255,0.7); }
 
 /* Page hero (inner pages) */
@@ -113,10 +108,10 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 
 /* Portfolio image link */
 .port-link { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: #1C75BC; padding: 13px 12px; transition: color 0.2s; }
-.port-link:hover { color: var(--color-accent); }
+.port-link:hover { color: #2B3990; }
 
 /* Testimonial blog read-more underline */
-.blog-read-more { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 1px; transition: color 0.2s; }
+.blog-read-more { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.94); border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 1px; transition: color 0.2s; }
 .blog-read-more:hover { color: #fff; border-bottom-color: rgba(255,255,255,0.7); }
 
 /* Responsive */

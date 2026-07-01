@@ -100,12 +100,6 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 /* Page hero (inner pages) */
 .page-hero { position: relative; padding: 80px 0 88px; overflow: hidden; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 42%, #19235a 100%); }
 
-/* Wave section dividers — soften color-band transitions (ties into the water theme) */
-.wave-divider { position: absolute; left: 0; width: 100%; line-height: 0; pointer-events: none; z-index: 3; }
-.wave-divider svg { display: block; width: 100%; height: clamp(38px, 5.5vw, 68px); }
-.wave-divider.bottom { bottom: 0; }
-.wave-divider.top { top: 0; }
-
 /* Portfolio image link */
 .port-link { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: #1C75BC; padding: 13px 12px; transition: color 0.2s; }
 .port-link:hover { color: #2B3990; }

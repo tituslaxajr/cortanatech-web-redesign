@@ -23,6 +23,33 @@
     body { font-family: var(--font-body); }
     .details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
     .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+
+    /* Case study cards */
+    .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    .case-card { display: block; width: 100%; text-align: left; background: #fff; border: 1.5px solid #E8E6E6; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer; border-radius: 20px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.05); transition: box-shadow 0.2s, transform 0.2s; }
+    .case-card:hover { box-shadow: 0 10px 30px rgba(28,117,188,0.14); transform: translateY(-3px); }
+    .case-card:focus-visible { outline: 3px solid #1C75BC; outline-offset: 2px; }
+    .case-badge { position: absolute; top: 14px; left: 14px; font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: #fff; text-transform: uppercase; background: rgba(20,24,40,0.55); backdrop-filter: blur(6px); padding: 5px 12px; border-radius: 100px; }
+    .case-card-label { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #1C75BC; text-transform: uppercase; margin-bottom: 10px; }
+    .case-card-title { font-family: var(--font-display); font-size: 21px; font-weight: 800; color: #2B3990; letter-spacing: -0.015em; line-height: 1.25; margin-bottom: 10px; }
+    .case-card-excerpt { font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 18px; }
+    .case-tag { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 5px 12px; border-radius: 100px; }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(17,21,38,0.62); z-index: 300; align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.open { display: flex; }
+    .modal-panel { background: #fff; border-radius: 24px; max-width: 920px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 48px; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.28); }
+    .modal-close { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; border-radius: 50%; border: none; background: #F1EDED; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; z-index: 2; }
+    .modal-close:hover { background: #E8E6E6; }
+    body.modal-open { overflow: hidden; }
+
+    @media (max-width: 900px) {
+      .case-grid { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 640px) {
+      .modal-panel { padding: 32px 22px; border-radius: 16px; max-height: 92vh; }
+      .modal-close { top: 14px; right: 14px; }
+    }
   </style>
 </head>
 <body>
@@ -66,33 +93,115 @@
     </div>
   </section>
 
-  <!-- FEATURED: BBSI CASE STUDY -->
+  <!-- CASE STUDIES GRID -->
   <section style="background: #fff; padding: 96px 0;">
     <div class="container">
-      <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 48px;">Featured Case Study</div>
-      <div class="split-grid" style="gap: 72px; margin-bottom: 72px;">
-        <div style="border-radius: 24px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.12); aspect-ratio: 4/3; position: relative;">
+      <div style="text-align: center; margin-bottom: 56px;">
+        <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 12px;">Case Studies</div>
+        <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 40px); font-weight: 900; color: #2B3990; letter-spacing: -0.025em; line-height: 1.15;">Real Projects, Real Partnerships</h2>
+        <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.7; max-width: 480px; margin: 16px auto 0;">Tap any project below to see the full story — the challenge, what we built, and the outcome.</p>
+      </div>
+      <div class="case-grid reveal-stagger">
+        <button type="button" class="case-card reveal" onclick="openCaseModal('bbsi')" aria-haspopup="dialog">
+          <div style="aspect-ratio: 16/11; overflow: hidden; position: relative;">
+            <img src="assets/photos/bbsi-homepage.jpg" alt="Screenshot of the Baptist Bible Seminary and Institute homepage" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
+            <span class="case-badge">Live</span>
+          </div>
+          <div style="padding: 28px 30px 30px;">
+            <div class="case-card-label">Featured Case Study</div>
+            <h3 class="case-card-title">Baptist Bible Seminary &amp; Institute, Inc.</h3>
+            <p class="case-card-excerpt">A fully responsive website and branded professional email for a Philippine theological institution.</p>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;">
+              <span class="case-tag">Website Design</span>
+              <span class="case-tag">Professional Email</span>
+            </div>
+            <span class="read-more">View Case Study →</span>
+          </div>
+        </button>
+
+        <button type="button" class="case-card reveal" onclick="openCaseModal('kalinga')" aria-haspopup="dialog">
+          <div style="aspect-ratio: 16/11; overflow: hidden; position: relative;">
+            <img src="assets/photos/kalinga-homepage.jpg" alt="Kalinga admin login screen for Kapatid Ministry's child sponsorship platform" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
+            <span class="case-badge">Internal Tool</span>
+          </div>
+          <div style="padding: 28px 30px 30px;">
+            <div class="case-card-label">Case Study</div>
+            <h3 class="case-card-title">Kalinga — Kapatid Ministry</h3>
+            <p class="case-card-excerpt">A custom child sponsorship management platform built for Kapatid Ministry's team.</p>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;">
+              <span class="case-tag">Custom Web App</span>
+              <span class="case-tag">Nonprofit Software</span>
+            </div>
+            <span class="read-more">View Case Study →</span>
+          </div>
+        </button>
+
+        <button type="button" class="case-card reveal" onclick="openCaseModal('megopic')" aria-haspopup="dialog">
+          <div style="aspect-ratio: 16/11; overflow: hidden; position: relative;">
+            <img src="assets/photos/megopic-homepage.jpg" alt="Screenshot of the Megopic medical conference website homepage" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
+            <span class="case-badge">Live</span>
+          </div>
+          <div style="padding: 28px 30px 30px;">
+            <div class="case-card-label">Case Study</div>
+            <h3 class="case-card-title">Megopic — Taylor University</h3>
+            <p class="case-card-excerpt">A complete event website for Taylor University's medical conference — registration to CME credits.</p>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;">
+              <span class="case-tag">Event Website</span>
+              <span class="case-tag">Registration &amp; Ticketing</span>
+            </div>
+            <span class="read-more">View Case Study →</span>
+          </div>
+        </button>
+
+        <button type="button" class="case-card reveal" onclick="openCaseModal('stewardtrack')" aria-haspopup="dialog">
+          <div style="aspect-ratio: 16/11; overflow: hidden; position: relative;">
+            <img src="assets/photos/stewardtrack-homepage.jpg" alt="Screenshot of the StewardTrack marketing homepage" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
+            <span class="case-badge">Our Product</span>
+          </div>
+          <div style="padding: 28px 30px 30px;">
+            <div class="case-card-label">Built In-House</div>
+            <h3 class="case-card-title">StewardTrack</h3>
+            <p class="case-card-excerpt">Our own SaaS platform helping Philippine churches manage membership, giving, and finances.</p>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;">
+              <span class="case-tag">SaaS Platform</span>
+              <span class="case-tag">Church Management</span>
+            </div>
+            <span class="read-more">View Case Study →</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL: BBSI -->
+  <div class="modal-overlay" id="modal-bbsi" onclick="if (event.target === this) closeCaseModal('bbsi')">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-bbsi-title">
+      <button type="button" class="modal-close" onclick="closeCaseModal('bbsi')" aria-label="Close case study">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 32px;">Featured Case Study</div>
+      <div class="split-grid" style="gap: 56px; margin-bottom: 56px;">
+        <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.12); aspect-ratio: 4/3; position: relative;">
           <img src="assets/photos/bbsi-homepage.jpg" alt="Screenshot of the Baptist Bible Seminary and Institute homepage" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
           <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(43,57,144,0.92) 0%, transparent 55%);"></div>
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 28px;">
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 24px;">
             <div style="font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.85); text-transform: uppercase; margin-bottom: 6px;">Live</div>
-            <div style="font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff;">bbsi.edu.ph</div>
+            <div style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff;">bbsi.edu.ph</div>
           </div>
         </div>
         <div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: #2B3990; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 16px;">Baptist Bible Seminary &amp; Institute, Inc.</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 28px;">A theological institution in the Philippines committed to training the next generation of ministry leaders through sound biblical scholarship. When they came to us, they needed a professional digital presence that matched the caliber of their academic program.</p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;">
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Website Design</span>
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Website Development</span>
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Professional Email</span>
+          <h2 id="modal-bbsi-title" style="font-family: var(--font-display); font-size: clamp(24px, 3vw, 34px); font-weight: 900; color: #2B3990; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px;">Baptist Bible Seminary &amp; Institute, Inc.</h2>
+          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 24px;">A theological institution in the Philippines committed to training the next generation of ministry leaders through sound biblical scholarship. When they came to us, they needed a professional digital presence that matched the caliber of their academic program.</p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;">
+            <span class="case-tag">Website Design</span>
+            <span class="case-tag">Website Development</span>
+            <span class="case-tag">Professional Email</span>
           </div>
           <a href="https://bbsi.edu.ph" target="_blank" rel="noopener noreferrer" class="btn-primary">Visit Live Site →</a>
         </div>
       </div>
 
-      <!-- Case study details -->
-      <div class="details-grid reveal" style="border-top: 1px solid #E8E6E6; padding-top: 72px;">
+      <div class="details-grid" style="border-top: 1px solid #E8E6E6; padding-top: 48px;">
         <div>
           <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: #1C75BC; text-transform: uppercase; margin-bottom: 16px;">The Challenge</div>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">BBSI needed a website that could represent their seminary online, communicate their programs clearly, and help prospective students connect with them — all without a large IT budget or in-house tech team.</p>
@@ -107,73 +216,72 @@
         </div>
       </div>
 
-      <!-- Our approach -->
-      <div style="border-top: 1px solid #E8E6E6; padding-top: 72px; margin-top: 72px;">
+      <div style="border-top: 1px solid #E8E6E6; padding-top: 48px; margin-top: 48px;">
         <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: #1C75BC; text-transform: uppercase; margin-bottom: 24px;">Our Approach</div>
-        <div class="process-grid reveal">
-          <div style="background: #F1EDED; border-radius: 20px; padding: 36px 30px;">
-            <div style="font-family: var(--font-display); font-size: 48px; font-weight: 900; color: #D1D0CE; line-height: 1; margin-bottom: 18px;">01</div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #2B3990; margin-bottom: 12px;">Discovery</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.72;">We sat down with BBSI's team to understand their academic programs, admissions process, and exactly what prospective students needed to see.</p>
+        <div class="process-grid">
+          <div style="background: #F1EDED; border-radius: 20px; padding: 32px 26px;">
+            <div style="font-family: var(--font-display); font-size: 40px; font-weight: 900; color: #D1D0CE; line-height: 1; margin-bottom: 16px;">01</div>
+            <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #2B3990; margin-bottom: 10px;">Discovery</h3>
+            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">We sat down with BBSI's team to understand their academic programs, admissions process, and exactly what prospective students needed to see.</p>
           </div>
-          <div style="background: #F1EDED; border-radius: 20px; padding: 36px 30px;">
-            <div style="font-family: var(--font-display); font-size: 48px; font-weight: 900; color: #D1D0CE; line-height: 1; margin-bottom: 18px;">02</div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #2B3990; margin-bottom: 12px;">Design &amp; Build</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.72;">We designed and built a fully responsive site that reflects BBSI's academic credibility, and configured branded email for every faculty and staff member.</p>
+          <div style="background: #F1EDED; border-radius: 20px; padding: 32px 26px;">
+            <div style="font-family: var(--font-display); font-size: 40px; font-weight: 900; color: #D1D0CE; line-height: 1; margin-bottom: 16px;">02</div>
+            <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #2B3990; margin-bottom: 10px;">Design &amp; Build</h3>
+            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">We designed and built a fully responsive site that reflects BBSI's academic credibility, and configured branded email for every faculty and staff member.</p>
           </div>
-          <div style="background: #F1EDED; border-radius: 20px; padding: 36px 30px;">
-            <div style="font-family: var(--font-display); font-size: 48px; font-weight: 900; color: #D1D0CE; line-height: 1; margin-bottom: 18px;">03</div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #2B3990; margin-bottom: 12px;">Launch &amp; Handoff</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.72;">We launched together, walked BBSI's IT administrator through managing the site day-to-day, and stayed on call for support after go-live.</p>
+          <div style="background: #F1EDED; border-radius: 20px; padding: 32px 26px;">
+            <div style="font-family: var(--font-display); font-size: 40px; font-weight: 900; color: #D1D0CE; line-height: 1; margin-bottom: 16px;">03</div>
+            <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #2B3990; margin-bottom: 10px;">Launch &amp; Handoff</h3>
+            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">We launched together, walked BBSI's IT administrator through managing the site day-to-day, and stayed on call for support after go-live.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #F1EDED; border-radius: 20px; padding: 40px 36px; margin-top: 48px; text-align: center;">
+        <div style="font-family: var(--font-display); font-size: 48px; font-weight: 900; color: #D1D0CE; line-height: 0.4; margin-bottom: 16px;">"</div>
+        <blockquote style="font-family: var(--font-display); font-size: clamp(18px, 2vw, 22px); font-weight: 700; color: #2B3990; line-height: 1.5; letter-spacing: -0.01em; margin-bottom: 24px;">The professionalism of their services is commendable. We look forward to more partnership opportunities in the future.</blockquote>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: #D1D0CE;">
+            <img src="assets/photos/woman-laptop-smiling.jpg" alt="Evangel Balmes" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+          </div>
+          <div style="text-align: left;">
+            <div style="font-family: var(--font-body); font-size: 14px; font-weight: 700; color: #1E1F1E;">Evangel Balmes</div>
+            <div style="font-family: var(--font-body); font-size: 13px; color: #454C59;">IT Administrator, Baptist Bible Seminary &amp; Institute, Inc.</div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- TESTIMONIAL PULL QUOTE -->
-  <section style="background: #F1EDED; padding: 80px 0;">
-    <div style="max-width: 900px; margin: 0 auto; padding: 0 56px; text-align: center;">
-      <div style="font-family: var(--font-display); font-size: 72px; font-weight: 900; color: #D1D0CE; line-height: 0.6; margin-bottom: 20px;">"</div>
-      <blockquote style="font-family: var(--font-display); font-size: clamp(20px, 2.5vw, 28px); font-weight: 700; color: #2B3990; line-height: 1.5; letter-spacing: -0.01em; margin-bottom: 32px;">The professionalism of their services is commendable. We look forward to more partnership opportunities in the future.</blockquote>
-      <div style="display: flex; align-items: center; justify-content: center; gap: 14px;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: #D1D0CE;">
-          <img src="assets/photos/woman-laptop-smiling.jpg" alt="Evangel Balmes" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
-        </div>
-        <div style="text-align: left;">
-          <div style="font-family: var(--font-body); font-size: 14px; font-weight: 700; color: #1E1F1E;">Evangel Balmes</div>
-          <div style="font-family: var(--font-body); font-size: 13px; color: #454C59;">IT Administrator, Baptist Bible Seminary &amp; Institute, Inc.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CASE STUDY: KALINGA -->
-  <section style="background: #fff; padding: 96px 0;">
-    <div class="container">
-      <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 48px;">Case Study</div>
-      <div class="split-grid" style="gap: 72px; margin-bottom: 72px;">
+  <!-- MODAL: KALINGA -->
+  <div class="modal-overlay" id="modal-kalinga" onclick="if (event.target === this) closeCaseModal('kalinga')">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-kalinga-title">
+      <button type="button" class="modal-close" onclick="closeCaseModal('kalinga')" aria-label="Close case study">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 32px;">Case Study</div>
+      <div class="split-grid" style="gap: 56px; margin-bottom: 56px;">
         <div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: #2B3990; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 16px;">Kalinga — Kapatid Ministry</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 28px;">Kapatid Ministry runs a child sponsorship program that connects generous sponsors with children in need across the Philippines. As the program grew, tracking children, sponsors, and the relationships between them on spreadsheets became harder to manage and easier to get wrong.</p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;">
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Custom Web App</span>
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Nonprofit Software</span>
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Database Design</span>
+          <h2 id="modal-kalinga-title" style="font-family: var(--font-display); font-size: clamp(24px, 3vw, 34px); font-weight: 900; color: #2B3990; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px;">Kalinga — Kapatid Ministry</h2>
+          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 24px;">Kapatid Ministry runs a child sponsorship program that connects generous sponsors with children in need across the Philippines. As the program grew, tracking children, sponsors, and the relationships between them on spreadsheets became harder to manage and easier to get wrong.</p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+            <span class="case-tag">Custom Web App</span>
+            <span class="case-tag">Nonprofit Software</span>
+            <span class="case-tag">Database Design</span>
           </div>
           <p style="font-family: var(--font-body); font-size: 13px; color: #6B7280; font-style: italic;">An internal tool built for Kapatid Ministry's team — not publicly accessible.</p>
         </div>
-        <div style="border-radius: 24px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.12); aspect-ratio: 4/3; position: relative;">
+        <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.12); aspect-ratio: 4/3; position: relative;">
           <img src="assets/photos/kalinga-homepage.jpg" alt="Kalinga admin login screen for Kapatid Ministry's child sponsorship platform" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
           <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(43,57,144,0.92) 0%, transparent 55%);"></div>
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 28px;">
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 24px;">
             <div style="font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.85); text-transform: uppercase; margin-bottom: 6px;">Internal Tool</div>
-            <div style="font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff;">Built for Kapatid Ministry</div>
+            <div style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff;">Built for Kapatid Ministry</div>
           </div>
         </div>
       </div>
 
-      <div class="details-grid reveal" style="border-top: 1px solid #E8E6E6; padding-top: 72px;">
+      <div class="details-grid" style="border-top: 1px solid #E8E6E6; padding-top: 48px;">
         <div>
           <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: #1C75BC; text-transform: uppercase; margin-bottom: 16px;">The Challenge</div>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">Kapatid Ministry needed a reliable way to manage a growing number of sponsored children and sponsors — keeping records accurate, sponsorships properly matched, and information easy for staff to find without digging through spreadsheets.</p>
@@ -188,34 +296,37 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- CASE STUDY: MEGOPIC -->
-  <section style="background: #F1EDED; padding: 96px 0;">
-    <div class="container">
-      <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 48px;">Case Study</div>
-      <div class="split-grid" style="gap: 72px; margin-bottom: 72px;">
-        <div style="border-radius: 24px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.12); aspect-ratio: 4/3; position: relative;">
+  <!-- MODAL: MEGOPIC -->
+  <div class="modal-overlay" id="modal-megopic" onclick="if (event.target === this) closeCaseModal('megopic')">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-megopic-title">
+      <button type="button" class="modal-close" onclick="closeCaseModal('megopic')" aria-label="Close case study">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 32px;">Case Study</div>
+      <div class="split-grid" style="gap: 56px; margin-bottom: 56px;">
+        <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.12); aspect-ratio: 4/3; position: relative;">
           <img src="assets/photos/megopic-homepage.jpg" alt="Screenshot of the Megopic medical conference website homepage" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
           <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(43,57,144,0.92) 0%, transparent 55%);"></div>
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 28px;">
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 24px;">
             <div style="font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.85); text-transform: uppercase; margin-bottom: 6px;">Live</div>
-            <div style="font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff;">Taylor University</div>
+            <div style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff;">Taylor University</div>
           </div>
         </div>
         <div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: #2B3990; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 16px;">Megopic — Taylor University</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 28px;">Megopic is Taylor University's medical conference, bringing together healthcare professionals for sessions, workshops, and continuing education. The event needed a website that could handle registration, showcase the full program, and support conference-specific needs — all ready before a fixed event date.</p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;">
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Event Website</span>
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Registration &amp; Ticketing</span>
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Web Development</span>
+          <h2 id="modal-megopic-title" style="font-family: var(--font-display); font-size: clamp(24px, 3vw, 34px); font-weight: 900; color: #2B3990; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px;">Megopic — Taylor University</h2>
+          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 24px;">Megopic is Taylor University's medical conference, bringing together healthcare professionals for sessions, workshops, and continuing education. The event needed a website that could handle registration, showcase the full program, and support conference-specific needs — all ready before a fixed event date.</p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;">
+            <span class="case-tag">Event Website</span>
+            <span class="case-tag">Registration &amp; Ticketing</span>
+            <span class="case-tag">Web Development</span>
           </div>
           <a href="https://taylors-conference.dhma-impactlab.com/" target="_blank" rel="noopener noreferrer" class="btn-primary">Visit Live Site →</a>
         </div>
       </div>
 
-      <div class="details-grid reveal" style="border-top: 1px solid #E8E6E6; padding-top: 72px;">
+      <div class="details-grid" style="border-top: 1px solid #E8E6E6; padding-top: 48px;">
         <div>
           <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: #1C75BC; text-transform: uppercase; margin-bottom: 16px;">The Challenge</div>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">Taylor University needed a professional website that could open registration and ticketing, present speakers and the agenda clearly, and support conference-specific requirements like abstract submissions and CME credit information — ready well ahead of the event.</p>
@@ -230,34 +341,37 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- CASE STUDY: STEWARDTRACK -->
-  <section style="background: #fff; padding: 96px 0;">
-    <div class="container">
-      <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 48px;">Built In-House</div>
-      <div class="split-grid" style="gap: 72px; margin-bottom: 72px;">
+  <!-- MODAL: STEWARDTRACK -->
+  <div class="modal-overlay" id="modal-stewardtrack" onclick="if (event.target === this) closeCaseModal('stewardtrack')">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-stewardtrack-title">
+      <button type="button" class="modal-close" onclick="closeCaseModal('stewardtrack')" aria-label="Close case study">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 32px;">Built In-House</div>
+      <div class="split-grid" style="gap: 56px; margin-bottom: 56px;">
         <div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: #2B3990; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 16px;">StewardTrack</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 28px;">Local churches across the Philippines often run on a patchwork of spreadsheets, paper records, and disconnected tools to manage membership, giving, and finances. Rather than build another one-off website, we built the platform we wished every church could have.</p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;">
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">SaaS Platform</span>
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Church Management</span>
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 14px; border-radius: 100px;">Full-Stack Development</span>
+          <h2 id="modal-stewardtrack-title" style="font-family: var(--font-display); font-size: clamp(24px, 3vw, 34px); font-weight: 900; color: #2B3990; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px;">StewardTrack</h2>
+          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 24px;">Local churches across the Philippines often run on a patchwork of spreadsheets, paper records, and disconnected tools to manage membership, giving, and finances. Rather than build another one-off website, we built the platform we wished every church could have.</p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;">
+            <span class="case-tag">SaaS Platform</span>
+            <span class="case-tag">Church Management</span>
+            <span class="case-tag">Full-Stack Development</span>
           </div>
           <a href="contact.html" class="btn-primary">Interested in StewardTrack? →</a>
         </div>
-        <div style="border-radius: 24px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.12); aspect-ratio: 4/3; position: relative;">
+        <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.12); aspect-ratio: 4/3; position: relative;">
           <img src="assets/photos/stewardtrack-homepage.jpg" alt="Screenshot of the StewardTrack marketing homepage" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
           <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(43,57,144,0.92) 0%, transparent 55%);"></div>
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 28px;">
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 24px;">
             <div style="font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.85); text-transform: uppercase; margin-bottom: 6px;">Our Product</div>
-            <div style="font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff;">Built by Cortanatech</div>
+            <div style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff;">Built by Cortanatech</div>
           </div>
         </div>
       </div>
 
-      <div class="details-grid reveal" style="border-top: 1px solid #E8E6E6; padding-top: 72px;">
+      <div class="details-grid" style="border-top: 1px solid #E8E6E6; padding-top: 48px;">
         <div>
           <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: #1C75BC; text-transform: uppercase; margin-bottom: 16px;">The Challenge</div>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">Churches need a way to manage member and family records, track giving and tithes, keep finances organized, and plan services and events — without stitching together spreadsheets and paper forms.</p>
@@ -272,7 +386,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- MORE WORK COMING -->
   <section style="background: #F1EDED; padding: 80px 0;">
@@ -303,6 +417,32 @@
   <script>
     function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
     function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
+
+    var lastFocusedEl = null;
+    function openCaseModal(id) {
+      var overlay = document.getElementById('modal-' + id);
+      if (!overlay) return;
+      lastFocusedEl = document.activeElement;
+      overlay.classList.add('open');
+      document.body.classList.add('modal-open');
+      document.addEventListener('keydown', handleModalKeydown);
+      var closeBtn = overlay.querySelector('.modal-close');
+      if (closeBtn) closeBtn.focus();
+    }
+    function closeCaseModal(id) {
+      var overlay = document.getElementById('modal-' + id);
+      if (!overlay) return;
+      overlay.classList.remove('open');
+      document.body.classList.remove('modal-open');
+      document.removeEventListener('keydown', handleModalKeydown);
+      if (lastFocusedEl) lastFocusedEl.focus();
+    }
+    function handleModalKeydown(e) {
+      if (e.key === 'Escape') {
+        var open = document.querySelector('.modal-overlay.open');
+        if (open) closeCaseModal(open.id.replace('modal-', ''));
+      }
+    }
   </script>
   <script src="water-ripple.js"></script>
   <script src="enhance.js"></script>

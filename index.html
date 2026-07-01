@@ -240,11 +240,12 @@
             <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.65); flex-shrink: 0;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
             </div>
-            <span style="font-family: var(--font-body); font-size: 14px; color: rgba(255,255,255,0.72);">info@cortanatechsolutions.com</span>
+            <span style="font-family: var(--font-body); font-size: 14px; color: rgba(255,255,255,0.72);">sales@cortanatechsolutions.com</span>
           </div>
         </div>
         <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11); border-radius: 20px; padding: 36px;">
-          <form id="contact-form" onsubmit="submitContact(event)" style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- TODO: replace YOUR_FORM_ID with the real Formspree form ID from formspree.io (recipient: sales@cortanatechsolutions.com) -->
+          <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="submitContact(event)" style="display: flex; flex-direction: column; gap: 16px;">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
               <div>
                 <label class="form-label-dark">Name</label>
@@ -300,8 +301,22 @@
     }
     function submitContact(e) {
       e.preventDefault();
-      document.getElementById('contact-msg').textContent = "Message sent! We'll follow up within one business day.";
-      e.target.reset();
+      var form = e.target;
+      var msg = document.getElementById('contact-msg');
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function (response) {
+        if (response.ok) {
+          msg.textContent = "Message sent! We'll follow up within one business day.";
+          form.reset();
+        } else {
+          msg.textContent = "Something went wrong. Please email us directly at sales@cortanatechsolutions.com.";
+        }
+      }).catch(function () {
+        msg.textContent = "Something went wrong. Please email us directly at sales@cortanatechsolutions.com.";
+      });
     }
   </script>
   <script src="water-ripple.js"></script>

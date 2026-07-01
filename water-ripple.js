@@ -35,6 +35,7 @@
       'uniform vec2 u_res;' +
       'uniform float u_time;' +
       'uniform float u_dpr;' +
+      'uniform float u_ambient;' +
       'uniform int u_count;' +
       'uniform vec2 u_centers[' + MAX + '];' +
       'uniform float u_starts[' + MAX + '];' +
@@ -75,7 +76,15 @@
       '    crest += max(0.0, w) * life;' +
       '  }' +
       '  float amp = 4.5 * u_dpr;' +
-      '  vec2 ruv = uv + (disp * amp) / u_res;' +
+      // Ambient drift: layered low-freq sines so the surface shimmers at rest.
+      '  vec2 ambient = vec2(0.0);' +
+      '  if (u_ambient > 0.5) {' +
+      '    float aa = 1.3 * u_dpr;' +
+      '    ambient.x = sin(uv.y * 6.0 + u_time * 0.55) * 0.6 + sin(uv.y * 11.0 - u_time * 0.32) * 0.35;' +
+      '    ambient.y = sin(uv.x * 7.0 - u_time * 0.48) * 0.6 + sin(uv.x * 13.0 + u_time * 0.4) * 0.35;' +
+      '    ambient *= aa;' +
+      '  }' +
+      '  vec2 ruv = uv + (disp * amp + ambient) / u_res;' +
       '  vec3 col = bg(ruv);' +
       '  col += vec3(0.70,0.85,1.0) * clamp(crest, 0.0, 1.0) * 0.07;' +
       '  gl_FragColor = vec4(col, 1.0);' +
@@ -113,6 +122,7 @@
     var uRes = gl.getUniformLocation(prog, 'u_res');
     var uTime = gl.getUniformLocation(prog, 'u_time');
     var uDpr = gl.getUniformLocation(prog, 'u_dpr');
+    var uAmbient = gl.getUniformLocation(prog, 'u_ambient');
     var uCount = gl.getUniformLocation(prog, 'u_count');
     var uCenters = gl.getUniformLocation(prog, 'u_centers');
     var uStarts = gl.getUniformLocation(prog, 'u_starts');
@@ -132,24 +142,38 @@
     for (var k = 0; k < MAX; k++) starts[k] = -999;
     var head = 0, count = 0, lastSpawn = 0, t0 = performance.now();
 
-    section.addEventListener('mousemove', function (e) {
+    function spawn(x, y) {
+      centers[head * 2] = x;
+      centers[head * 2 + 1] = y;
+      starts[head] = (performance.now() - t0) / 1000;
+      head = (head + 1) % MAX;
+      if (count < MAX) count++;
+    }
+
+    // pointermove covers mouse, pen and (while touching) touch input.
+    section.addEventListener('pointermove', function (e) {
       if (prefersReduced) return;
       var now = performance.now();
       if (now - lastSpawn < 60) return; // throttle spawn rate
       lastSpawn = now;
       var rect = section.getBoundingClientRect();
-      centers[head * 2] = (e.clientX - rect.left) * dpr;
-      centers[head * 2 + 1] = (e.clientY - rect.top) * dpr;
-      starts[head] = (now - t0) / 1000;
-      head = (head + 1) % MAX;
-      if (count < MAX) count++;
+      spawn((e.clientX - rect.left) * dpr, (e.clientY - rect.top) * dpr);
     });
+
+    // Idle / touch coverage: a slow auto-ripple so the surface always has life
+    // on mobile and when the cursor is still.
+    if (!prefersReduced) {
+      setInterval(function () {
+        spawn(Math.random() * canvas.width, Math.random() * canvas.height);
+      }, 2500);
+    }
 
     function frame() {
       var time = (performance.now() - t0) / 1000;
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uTime, time);
       gl.uniform1f(uDpr, dpr);
+      gl.uniform1f(uAmbient, prefersReduced ? 0.0 : 1.0);
       gl.uniform1i(uCount, count);
       gl.uniform2fv(uCenters, centers);
       gl.uniform1fv(uStarts, starts);

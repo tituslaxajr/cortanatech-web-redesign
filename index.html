@@ -65,50 +65,53 @@
       <p style="font-family: var(--font-body); font-size: clamp(16px, 1.8vw, 19px); color: rgba(255,255,255,0.76); line-height: 1.68; margin-bottom: 44px; max-width: 580px; margin-left: auto; margin-right: auto;">Practical, affordable digital systems — websites, email, chatbots, and web apps — so your organization can focus on what matters most.</p>
       <form id="hero-form" onsubmit="submitHeroEmail(event)" class="hero-email" style="display: flex; max-width: 500px; margin: 0 auto 52px; border-radius: 10px; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.28); background: rgba(255,255,255,0.1); backdrop-filter: blur(16px);">
         <input id="hero-email" type="email" placeholder="Enter your work email" required style="flex: 1; padding: 15px 20px; border: none; background: transparent; color: #fff; font-size: 15px; outline: none; min-width: 0;">
-        <button type="submit" style="padding: 15px 28px; background: #fff; color: #2B3990; border: none; font-family: var(--font-body); font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.2s;" onmouseover="this.style.background='#EBF4FB'" onmouseout="this.style.background='#fff'">Get Started →</button>
+        <button type="submit" style="padding: 15px 28px; background: var(--color-accent); color: #fff; border: none; font-family: var(--font-body); font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.2s;" onmouseover="this.style.background='var(--color-accent-strong)'" onmouseout="this.style.background='var(--color-accent)'">Get Started →</button>
       </form>
       <div style="min-height: 24px; margin-top: -40px; margin-bottom: 40px;">
         <span id="hero-message" style="font-family: var(--font-body); font-size: 14px; color: rgba(255,255,255,0.85);"></span>
       </div>
       <div class="stats-row" style="display: flex; justify-content: center; gap: 60px; padding-top: 36px; border-top: 1px solid rgba(255,255,255,0.15);">
-        <div><div style="font-family: var(--font-display); font-size: 34px; font-weight: 900; color: #fff; line-height: 1;">3+</div><div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.58); margin-top: 5px; letter-spacing: 0.04em;">Years Serving</div></div>
-        <div><div style="font-family: var(--font-display); font-size: 34px; font-weight: 900; color: #fff; line-height: 1;">10+</div><div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.58); margin-top: 5px; letter-spacing: 0.04em;">Projects Delivered</div></div>
-        <div><div style="font-family: var(--font-display); font-size: 34px; font-weight: 900; color: #fff; line-height: 1;">4</div><div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.58); margin-top: 5px; letter-spacing: 0.04em;">Core Services</div></div>
+        <div><div data-count="3" data-suffix="+" style="font-family: var(--font-display); font-size: 34px; font-weight: 900; color: #fff; line-height: 1;">3+</div><div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.58); margin-top: 5px; letter-spacing: 0.04em;">Years Serving</div></div>
+        <div><div data-count="10" data-suffix="+" style="font-family: var(--font-display); font-size: 34px; font-weight: 900; color: #fff; line-height: 1;">10+</div><div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.58); margin-top: 5px; letter-spacing: 0.04em;">Projects Delivered</div></div>
+        <div><div data-count="4" style="font-family: var(--font-display); font-size: 34px; font-weight: 900; color: #fff; line-height: 1;">4</div><div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.58); margin-top: 5px; letter-spacing: 0.04em;">Core Services</div></div>
       </div>
+    </div>
+    <div class="wave-divider bottom" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#fff"></path></svg>
     </div>
   </section>
 
   <!-- SERVICES -->
   <section style="background: #fff; padding: 96px 0;">
     <div class="container">
-      <div style="text-align: center; margin-bottom: 56px;">
-        <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 12px;">Our Services</div>
+      <div class="reveal" style="text-align: center; margin-bottom: 56px;">
+        <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: var(--color-accent); text-transform: uppercase; margin-bottom: 12px;">Our Services</div>
         <h2 style="font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: #2B3990; letter-spacing: -0.025em; line-height: 1.15;">Everything Your Organization Needs Online</h2>
         <p style="font-family: var(--font-body); font-size: 16px; color: #454C59; line-height: 1.7; max-width: 560px; margin: 16px auto 0;">Four simple starting points. Each one helps your mission reach further than before.</p>
       </div>
-      <div class="services-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
-        <a href="services.html" class="service-card">
+      <div class="services-grid reveal-stagger" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+        <a href="services.html" class="service-card reveal">
           <div style="width: 52px; height: 52px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #1C75BC;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Website Design &amp; Development</h3>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;">Custom, affordable websites that represent your mission and connect with your community.</p>
         </a>
-        <a href="services.html" class="service-card">
+        <a href="services.html" class="service-card reveal">
           <div style="width: 52px; height: 52px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #1C75BC;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Professional Email Setup</h3>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;">Branded email addresses that build trust and credibility with donors, students, and partners.</p>
         </a>
-        <a href="services.html" class="service-card">
+        <a href="services.html" class="service-card reveal">
           <div style="width: 52px; height: 52px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #1C75BC;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Chatbot Development</h3>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;">Intelligent chatbots that answer questions and support your community around the clock.</p>
         </a>
-        <a href="services.html" class="service-card">
+        <a href="services.html" class="service-card reveal">
           <div style="width: 52px; height: 52px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #1C75BC;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
           </div>
@@ -122,7 +125,7 @@
   <!-- TESTIMONIAL -->
   <section style="background: #F1EDED; padding: 96px 0;">
     <div class="container">
-      <div class="split-grid" style="grid-template-columns: 1fr 2.2fr;">
+      <div class="split-grid reveal" style="grid-template-columns: 1fr 2.2fr;">
         <div>
           <div style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: #1E1F1E; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px;">Baptist Bible Seminary</div>
           <div style="font-family: var(--font-body); font-size: 13px; color: #454C59; margin-bottom: 24px;">&amp; Institute, Inc.</div>
@@ -154,9 +157,9 @@
   <!-- PORTFOLIO -->
   <section style="background: #fff; padding: 96px 0;">
     <div class="container">
-      <div class="split-grid">
+      <div class="split-grid reveal">
         <div>
-          <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 16px;">See Our Work</div>
+          <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: var(--color-accent); text-transform: uppercase; margin-bottom: 16px;">See Our Work</div>
           <h2 style="font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 40px); font-weight: 900; color: #2B3990; letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 18px;">Baptist Bible Seminary and Institute, Inc.</h2>
           <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.72; margin-bottom: 28px;">A theological institution committed to training ministry leaders through sound biblical scholarship. We built their website and set up professional email infrastructure from the ground up.</p>
           <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 28px;">
@@ -182,6 +185,9 @@
 
   <!-- BLOG -->
   <section style="position: relative; padding: 96px 0; overflow: hidden; background: #1C75BC;">
+    <div class="wave-divider top" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C360,0 1080,80 1440,40 L1440,0 L0,0 Z" fill="#fff"></path></svg>
+    </div>
     <img src="assets/photos/team-excited-laptop.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; opacity: 0.1;">
     <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(41,171,226,0.93) 0%, rgba(43,57,144,0.97) 100%);"></div>
     <div class="container" style="position: relative; z-index: 2;">
@@ -192,20 +198,20 @@
         </div>
         <a href="blog.html" class="view-all">View all posts →</a>
       </div>
-      <div class="blog-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-        <a href="blog.html" class="hero-blog-card">
+      <div class="blog-grid reveal-stagger" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <a href="blog.html" class="hero-blog-card reveal">
           <div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 14px; letter-spacing: 0.04em;">Aug 8, 2024</div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; line-height: 1.35; margin-bottom: 12px;">How a Website Transforms a Church Organization</h3>
           <p style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 20px;">In today's digital age, a well-designed website enhances a church's outreach, communication, and community engagement.</p>
           <span class="blog-read-more">Read more →</span>
         </a>
-        <a href="blog.html" class="hero-blog-card">
+        <a href="blog.html" class="hero-blog-card reveal">
           <div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 14px; letter-spacing: 0.04em;">Jul 22, 2024</div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; line-height: 1.35; margin-bottom: 12px;">Boost Your Startup with a Single-Page Website</h3>
           <p style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 20px;">First impressions are everything for startups. A focused single-page site makes a quick, powerful impact.</p>
           <span class="blog-read-more">Read more →</span>
         </a>
-        <a href="blog.html" class="hero-blog-card">
+        <a href="blog.html" class="hero-blog-card reveal">
           <div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 14px; letter-spacing: 0.04em;">Jul 19, 2024</div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; line-height: 1.35; margin-bottom: 12px;">Our Partnership with Baptist Bible Seminary</h3>
           <p style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 20px;">Delivering innovative digital solutions to a leading seminary — a case study in mission-driven partnership.</p>
@@ -216,9 +222,9 @@
   </section>
 
   <!-- CONTACT CTA -->
-  <section style="background: #2B3990; padding: 96px 0;">
+  <section style="position: relative; overflow: hidden; background: #2B3990; padding: 96px 0;">
     <div class="container">
-      <div class="split-grid" style="align-items: start;">
+      <div class="split-grid reveal" style="align-items: start;">
         <div>
           <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); text-transform: uppercase; margin-bottom: 16px;">Get In Touch</div>
           <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: #fff; letter-spacing: -0.025em; line-height: 1.12; margin-bottom: 20px;">Ready to Start the Ripple?</h2>
@@ -256,6 +262,9 @@
         </div>
       </div>
     </div>
+    <div class="wave-divider bottom" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#fff"></path></svg>
+    </div>
   </section>
 
   <!-- FOOTER -->
@@ -292,5 +301,6 @@
     }
   </script>
   <script src="water-ripple.js"></script>
+  <script src="enhance.js"></script>
 </body>
 </html>

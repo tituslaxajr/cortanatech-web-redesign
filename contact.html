@@ -82,7 +82,7 @@
               </div>
               <div>
                 <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #6B7280; text-transform: uppercase; margin-bottom: 4px;">Email</div>
-                <div style="font-family: var(--font-body); font-size: 15px; color: #1E1F1E; font-weight: 500;">sales@cortanatechsolutions.com</div>
+                <div style="font-family: var(--font-body); font-size: 15px; color: #1E1F1E; font-weight: 500;">customers@cortanatechsolutions.com</div>
               </div>
             </div>
             <div style="display: flex; gap: 16px; align-items: flex-start;">
@@ -114,8 +114,7 @@
 
         <!-- Right: form -->
         <div style="background: #fff; border: 1.5px solid #E8E6E6; border-radius: 24px; padding: 44px; box-shadow: 0 8px 32px rgba(0,0,0,0.06);">
-          <!-- TODO: replace YOUR_FORM_ID with the real Formspree form ID from formspree.io (recipient: sales@cortanatechsolutions.com) -->
-          <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="submitContact(event)" style="display: flex; flex-direction: column; gap: 20px;">
+          <form id="contact-form" action="https://formspree.io/f/xkolqjkj" method="POST" onsubmit="submitContact(event)" style="display: flex; flex-direction: column; gap: 20px;">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
               <div>
                 <label class="form-label">First Name</label>
@@ -186,11 +185,11 @@
           msg.style.color = '#1C75BC';
           form.reset();
         } else {
-          msg.textContent = "Something went wrong. Please email us directly at sales@cortanatechsolutions.com.";
+          msg.textContent = "Something went wrong. Please email us directly at customers@cortanatechsolutions.com.";
           msg.style.color = '#DC2626';
         }
       }).catch(function () {
-        msg.textContent = "Something went wrong. Please email us directly at sales@cortanatechsolutions.com.";
+        msg.textContent = "Something went wrong. Please email us directly at customers@cortanatechsolutions.com.";
         msg.style.color = '#DC2626';
       });
     }

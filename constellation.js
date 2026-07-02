@@ -343,7 +343,9 @@ async function boot() {
     seed('constellation', (s) => {
       state.camXT = -38 + Math.max(0, Math.min(1, s.progress)) * 76;
     });
-    seed('yourlight', (s) => { state.yourT = s.progress; });
+    // Bottom-of-page scenes never reach progress 1 (the page can't scroll
+    // past the footer) — treat ~0.5 as journey's end.
+    seed('yourlight', (s) => { state.yourT = Math.min(1, s.progress / 0.5); });
     // Top-of-page default when Story is live: field waits to be kindled.
     const k = window.Story.get('kindle');
     if (k && k.progress >= 0) state.kindle = state.kindleT;

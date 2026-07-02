@@ -6,9 +6,9 @@
 @import url('_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/shadows.css');
 
 :root {
-  /* Motion vocabulary — water physics. Rings only expand, nothing rotates. */
-  --ease-ripple: cubic-bezier(0.22, 1, 0.36, 1);    /* water spreading — default */
-  --ease-drop:   cubic-bezier(0.5, 0, 0.9, 0.4);    /* gravity — entrances from above */
+  /* Motion vocabulary — calm and responsive; motion reacts to input, not scroll. */
+  --ease-ripple: cubic-bezier(0.22, 1, 0.36, 1);    /* smooth deceleration — default */
+  --ease-drop:   cubic-bezier(0.5, 0, 0.9, 0.4);    /* acceleration — exits */
   --ease-settle: cubic-bezier(0.34, 1.3, 0.64, 1);  /* slight overshoot — landing */
   --dur-micro: 200ms;
   --dur-reveal: 600ms;
@@ -135,12 +135,19 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 .js-anim .reveal-stagger > *:nth-child(3) { animation-delay: 0.16s; }
 .js-anim .reveal-stagger > *:nth-child(4) { animation-delay: 0.24s; }
 
-/* Mobile twin of .reveal for layers inside scroll scenes: on desktop these are
-   driven by --progress, on small screens they fall back to a plain fade-up. */
-@media (max-width: 900px) {
-  .js-anim .m-reveal:not(.reveal-in) { opacity: 0; transform: translateY(18px); transition: none; }
-  .js-anim .m-reveal.reveal-in { animation: fadeUp 0.6s var(--ease-ripple) both; }
-}
+/* "Viewing as" role chip (injected into nav by role.js) */
+.role-chip-wrap { position: relative; display: inline-flex; }
+.role-chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 12.5px; font-weight: 500; color: var(--color-text-secondary); background: var(--color-primary-subtle); border: 1px solid var(--color-blue-100); border-radius: var(--radius-full); padding: 7px 14px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.role-chip strong { font-weight: 700; color: var(--color-primary); }
+.role-chip:hover { border-color: var(--color-primary); }
+.role-chip-dark { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); }
+.role-chip-dark strong { color: #fff; }
+.role-chip-dark:hover { border-color: rgba(255,255,255,0.6); }
+.role-chip-menu { position: absolute; top: calc(100% + 8px); right: 0; z-index: 200; background: #fff; border: 1px solid var(--color-border-subtle); border-radius: 14px; box-shadow: var(--shadow-xl); padding: 6px; min-width: 180px; display: flex; flex-direction: column; }
+.role-chip-option { font-family: var(--font-body); font-size: 13.5px; font-weight: 500; color: var(--color-text-primary); background: transparent; border: none; border-radius: 9px; padding: 10px 14px; text-align: left; cursor: pointer; transition: background 0.15s; }
+.role-chip-option:hover { background: var(--color-primary-subtle); }
+.role-chip-option[aria-selected="true"] { font-weight: 700; color: var(--color-primary); }
+.mobile-nav .role-chip-wrap { margin-top: 4px; }
 
 /* Blog read more */
 .read-more { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--color-primary); transition: color 0.2s; }
@@ -163,72 +170,6 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 /* Testimonial blog read-more underline */
 .blog-read-more { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.94); border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 1px; transition: color 0.2s; }
 .blog-read-more:hover { color: #fff; border-bottom-color: rgba(255,255,255,0.7); }
-
-/* ============================================================
-   Scroll story (story.js) — pinned scenes driven by --progress.
-   THE INVARIANT: --progress defaults to 1, meaning "animation
-   finished". story.js only overrides it downward on desktop with
-   motion allowed. So no-JS, reduced-motion, mobile, and old
-   browsers all render the complete final composition.
-   ============================================================ */
-[data-scene] { --progress: 1; position: relative; }
-
-@media (min-width: 901px) {
-  .js-story [data-scene][data-pin] { height: var(--scene-length, 300vh); }
-  .js-story [data-scene][data-pin] > .scene-stage {
-    position: sticky; top: 0;
-    height: 100vh; height: 100svh;
-    overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
-}
-.scene-stage { position: relative; }
-
-/* Layer promotion only while a scene is mid-scrub */
-.js-story .scene-active .scene-layer { will-change: transform, opacity; }
-
-/* CSS ripple rings — compositor-only (transform/opacity), decorative.
-   Fired by story.js adding .is-rippling, or usable as a hover/reveal burst. */
-.ripple-rings { position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; pointer-events: none; }
-.ripple-rings i { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(255,255,255,0.35); opacity: 0; transform: scale(0); }
-.ripple-rings-blue i { border-color: rgba(28,117,188,0.4); }
-@keyframes ringExpand {
-  0%   { opacity: 0; transform: scale(0); }
-  12%  { opacity: 0.75; }
-  100% { opacity: 0; transform: scale(24); }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .is-rippling .ripple-rings i { animation: ringExpand 1.9s var(--ease-ripple) both; }
-  .is-rippling .ripple-rings i:nth-child(2) { animation-delay: 0.35s; }
-  .is-rippling .ripple-rings i:nth-child(3) { animation-delay: 0.7s; }
-}
-
-/* Ring-pulse: one-shot expanding circle on reveal (service cards, headshots).
-   The element gets position:relative and an ::after ring from its center. */
-.ring-pulse { position: relative; }
-.ring-pulse::after { content: ''; position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; border: 2px solid rgba(28,117,188,0.35); opacity: 0; transform: scale(0); pointer-events: none; }
-@media (prefers-reduced-motion: no-preference) {
-  .js-anim .reveal-in .ring-pulse::after,
-  .js-anim .reveal-in.ring-pulse::after { animation: ringExpand var(--dur-ring) var(--ease-ripple) both; }
-}
-
-/* Slow ambient ring pulse (CTA finale) */
-@keyframes ringPulseSlow {
-  0%   { opacity: 0; transform: scale(0.4); }
-  15%  { opacity: 0.5; }
-  100% { opacity: 0; transform: scale(3.2); }
-}
-.ambient-ring { position: absolute; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.25); pointer-events: none; opacity: 0; }
-@media (prefers-reduced-motion: no-preference) {
-  .ambient-ring { animation: ringPulseSlow 6s var(--ease-ripple) infinite; }
-}
-
-/* Scroll cue (hero): bobbing drop glyph */
-@keyframes cueBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
-.scroll-cue { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; }
-@media (prefers-reduced-motion: no-preference) {
-  .scroll-cue svg { animation: cueBob 2s ease-in-out infinite; }
-}
 
 /* Responsive */
 @media (max-width: 900px) {

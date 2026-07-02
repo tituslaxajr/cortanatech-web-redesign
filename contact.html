@@ -18,7 +18,8 @@
   <meta name="twitter:title" content="Contact — CortanaTech Solutions">
   <meta name="twitter:description" content="Get in touch with CortanaTech Solutions. Tell us about your church, school, nonprofit, or startup project and we'll respond within one business day.">
   <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
-  <link rel="stylesheet" href="shared.css?v=ripple1">
+  <script>try{var r=localStorage.getItem('ct-role');if(r)document.documentElement.setAttribute('data-role',r)}catch(e){}</script>
+  <link rel="stylesheet" href="shared.css?v=meeting1">
   <style>
     body { font-family: var(--font-body); }
     .contact-submit { background: var(--color-primary-dark); transition: background 0.2s; }
@@ -146,6 +147,7 @@
               <label class="form-label">Tell Us About Your Project</label>
               <textarea name="message" placeholder="Describe what you need, what you're trying to accomplish, and any deadlines..." rows="5" required class="form-input" style="resize: vertical; line-height: 1.6;"></textarea>
             </div>
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
             <button type="submit" class="contact-submit" style="width: 100%; padding: 15px 24px; color: #fff; border: none; border-radius: 100px; font-family: var(--font-body); font-size: 16px; font-weight: 700; cursor: pointer;">Send Message →</button>
             <p id="contact-msg" style="font-family: var(--font-body); font-size: 13px; color: #2B3990; text-align: center; line-height: 1.5; min-height: 20px;"></p>
           </form>
@@ -196,7 +198,8 @@
       });
     }
   </script>
-  <script src="water-ripple.js?v=ripple1"></script>
-  <script src="enhance.js?v=ripple1"></script>
+  <script src="meeting-data.js?v=meeting1"></script>
+  <script src="role.js?v=meeting1"></script>
+  <script src="enhance.js?v=meeting1"></script>
 </body>
 </html>

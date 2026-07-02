@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CortanaTech Solutions — Digital Partner for Churches, Schools &amp; Startups</title>
-  <meta name="description" content="CortanaTech Solutions helps churches, schools, nonprofits, and startups in the Philippines shine online — practical, affordable websites, professional email, chatbots, and custom web apps.">
+  <meta name="description" content="CortanaTech Solutions helps churches, schools, nonprofits, and startups in the Philippines thrive online — practical, affordable websites, professional email, chatbots, and custom web apps.">
   <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
@@ -12,13 +12,13 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://cortanatechsolutions.com/">
   <meta property="og:title" content="CortanaTech Solutions — Digital Partner for Churches, Schools & Startups">
-  <meta property="og:description" content="CortanaTech Solutions helps churches, schools, nonprofits, and startups in the Philippines shine online — practical, affordable websites, professional email, chatbots, and custom web apps.">
+  <meta property="og:description" content="CortanaTech Solutions helps churches, schools, nonprofits, and startups in the Philippines thrive online — practical, affordable websites, professional email, chatbots, and custom web apps.">
   <meta property="og:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="CortanaTech Solutions — Digital Partner for Churches, Schools & Startups">
-  <meta name="twitter:description" content="CortanaTech Solutions helps churches, schools, nonprofits, and startups in the Philippines shine online — practical, affordable websites, professional email, chatbots, and custom web apps.">
+  <meta name="twitter:description" content="CortanaTech Solutions helps churches, schools, nonprofits, and startups in the Philippines thrive online — practical, affordable websites, professional email, chatbots, and custom web apps.">
   <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
-  <link rel="stylesheet" href="shared.css?v=light1">
+  <link rel="stylesheet" href="shared.css?v=warm1">
   <style>
     /* Home-specific: absolute nav over hero */
     body { font-family: var(--font-body); }
@@ -27,70 +27,29 @@
       .home-nav { padding: 0 24px; }
     }
 
-    /* ============ CONSTELLATION OF LIGHT — scroll narrative ============ */
-
-    /* Scene 1 · One Light — hero content drifts up + fades on scroll-out.
-       --hxraw is the hero's viewport transit (0.5 at rest); default keeps it fully visible. */
-    [data-scene="sky"] { --hxraw: 0.5; }
+    /* Hero — content drifts up + fades on scroll-out. --hxraw is the hero's
+       viewport transit (0.5 at rest); default keeps it fully visible. */
+    [data-scene="hero"] { --hxraw: 0.5; }
     .hero-content {
       --hx: clamp(0, calc((var(--hxraw) - 0.5) / 0.45), 1);
       opacity: calc(1 - var(--hx) * 0.85);
       transform: translateY(calc(var(--hx) * -46px));
     }
 
-    /* Scene 2 · Lights Kindle — pinned. --progress: 1 (default) = the
-       finished composition: field aglow, stats resting in the light. */
-    .kindle-stage-inner { position: relative; width: 100%; max-width: 1000px; margin: 0 auto; padding: 48px 24px; text-align: center; }
-    .kindle-flare {
-      position: absolute; left: 50%; top: 52%; width: 420px; height: 420px; margin: -210px 0 0 -210px;
-      border-radius: 50%; pointer-events: none;
-      background: radial-gradient(circle, rgba(255,233,201,0.26) 0%, rgba(41,171,226,0.1) 42%, transparent 70%);
-      --f: clamp(0, calc((var(--progress) - 0.1) / 0.32), 1);
-      opacity: calc(0.15 + var(--f) * 0.85);
-      transform: scale(calc(0.35 + var(--f) * 0.65));
-    }
-    .kindle-star {
-      position: absolute; left: 50%; top: 52%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px;
-      border-radius: 50%; background: #fff; pointer-events: none;
-      box-shadow: 0 0 10px 3px rgba(255,244,220,0.9), 0 0 34px 12px rgba(41,171,226,0.4);
-      --s: clamp(0, calc((var(--progress) - 0.05) / 0.1), 1);
-      opacity: var(--s);
-      transform: scale(calc(0.4 + var(--s) * 0.6));
-    }
-    .kindle-stats { display: flex; justify-content: center; gap: 72px; margin: 120px 0 96px; position: relative; z-index: 2; }
-    .kindle-stat { --ps: 1; opacity: var(--ps); transform: translateY(calc((1 - var(--ps)) * 34px)); }
-    .kindle-stat:nth-child(1) { --ps: clamp(0, calc((var(--progress) - 0.34) / 0.1), 1); }
-    .kindle-stat:nth-child(2) { --ps: clamp(0, calc((var(--progress) - 0.46) / 0.1), 1); }
-    .kindle-stat:nth-child(3) { --ps: clamp(0, calc((var(--progress) - 0.58) / 0.1), 1); }
-    .kindle-close {
-      --cl: clamp(0, calc((var(--progress) - 0.76) / 0.14), 1);
-      opacity: var(--cl); transform: translateY(calc((1 - var(--cl)) * 20px));
-    }
-    @media (max-width: 900px) {
-      .kindle-stats { flex-direction: column; gap: 28px; margin: 64px 0 56px; }
-      .kindle-flare { width: 280px; height: 280px; margin: -140px 0 0 -140px; }
-    }
+    /* Stats strip */
+    .stats-row { display: flex; gap: 72px; }
+    .stat-num { font-family: var(--font-display); font-size: 52px; font-weight: 900; color: var(--color-primary-dark); line-height: 1; }
+    .stat-label { font-family: var(--font-body); font-size: 13px; color: #454C59; margin-top: 10px; letter-spacing: 0.04em; }
 
-    /* Scene 3 · Lights Like Yours — audience circles bloom in the dark field */
-    .aud-stage-inner { width: 100%; max-width: 1160px; margin: 0 auto; padding: 48px 24px; position: relative; }
-    .aud-row { display: flex; justify-content: center; align-items: flex-start; gap: 36px; margin-top: 56px; position: relative; z-index: 2; }
+    /* Who we serve — editorial photo circles */
+    .aud-row { display: flex; justify-content: center; align-items: flex-start; gap: 36px; margin-top: 56px; }
     .aud-card { display: block; text-align: center; width: 218px; color: inherit; }
     .aud-card:nth-child(2) { margin-top: 44px; }
     .aud-card:nth-child(3) { margin-top: 10px; }
     .aud-card:nth-child(4) { margin-top: 58px; }
-    .aud-photo { width: 190px; height: 190px; margin: 0 auto 18px; border-radius: 50%; overflow: hidden; border: 3px solid rgba(255,255,255,0.85); box-shadow: 0 0 0 6px rgba(41,171,226,0.12), 0 18px 44px rgba(5,10,35,0.55); }
+    .aud-photo { width: 190px; height: 190px; margin: 0 auto 18px; border-radius: 50%; overflow: hidden; border: 4px solid #fff; box-shadow: 0 12px 32px rgba(28,117,188,0.16); transition: box-shadow 0.2s, transform 0.2s; }
     .aud-photo img { width: 100%; height: 100%; object-fit: cover; }
-    .aud-bloom { --pa: 1; opacity: var(--pa); transform: scale(calc(0.15 + var(--pa) * 0.85)); }
-    .aud-card:nth-child(1) .aud-bloom { --pa: clamp(0, calc((var(--progress) - 0.12) / 0.18), 1); }
-    .aud-card:nth-child(2) .aud-bloom { --pa: clamp(0, calc((var(--progress) - 0.28) / 0.18), 1); }
-    .aud-card:nth-child(3) .aud-bloom { --pa: clamp(0, calc((var(--progress) - 0.44) / 0.18), 1); }
-    .aud-card:nth-child(4) .aud-bloom { --pa: clamp(0, calc((var(--progress) - 0.6) / 0.18), 1); }
-    .aud-label { --pa: 1; opacity: var(--pa); }
-    .aud-card:nth-child(1) .aud-label { --pa: clamp(0, calc((var(--progress) - 0.2) / 0.14), 1); }
-    .aud-card:nth-child(2) .aud-label { --pa: clamp(0, calc((var(--progress) - 0.36) / 0.14), 1); }
-    .aud-card:nth-child(3) .aud-label { --pa: clamp(0, calc((var(--progress) - 0.52) / 0.14), 1); }
-    .aud-card:nth-child(4) .aud-label { --pa: clamp(0, calc((var(--progress) - 0.68) / 0.14), 1); }
-    .aud-card:hover .aud-photo { box-shadow: 0 0 0 6px rgba(41,171,226,0.3), 0 18px 44px rgba(5,10,35,0.6); }
+    .aud-card:hover .aud-photo { box-shadow: 0 16px 40px rgba(28,117,188,0.28); transform: translateY(-3px); }
     @media (max-width: 900px) {
       .aud-row { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 16px; justify-items: center; margin-top: 40px; }
       .aud-card, .aud-card:nth-child(2), .aud-card:nth-child(3), .aud-card:nth-child(4) { margin-top: 0; width: auto; }
@@ -100,11 +59,11 @@
       .aud-row { grid-template-columns: 1fr; }
     }
 
-    /* Scene 5 · Missions We've Helped Shine — horizontal pan.
+    /* Work — pinned horizontal pan.
        Default (no-JS desktop): vertical stack. Desktop + story: scrubbed row.
        Mobile: native scroll-snap carousel. */
-    .work-scene-bg { background: rgba(13,19,53,0.42); }
     .work-stage { display: flex; flex-direction: column; justify-content: center; align-items: stretch; }
+    .work-stage > :not(.aurora-canvas) { position: relative; z-index: 2; }
     .work-head { max-width: 1200px; margin: 0 auto; padding: 64px 56px 40px; width: 100%; }
     .work-track { display: flex; flex-direction: column; gap: 72px; padding: 0 0 64px; }
     .work-panel { width: 100%; }
@@ -118,9 +77,9 @@
       }
       .js-story .work-panel { width: 25%; flex-shrink: 0; }
       .js-story .work-dots { display: flex; justify-content: center; gap: 10px; padding: 36px 0 48px; }
-      .work-dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: background 0.3s, transform 0.3s, box-shadow 0.3s; }
+      .work-dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: background 0.3s, transform 0.3s; }
       [data-step="0"] .work-dots i:nth-child(1), [data-step="1"] .work-dots i:nth-child(2),
-      [data-step="2"] .work-dots i:nth-child(3), [data-step="3"] .work-dots i:nth-child(4) { background: #fff; transform: scale(1.35); box-shadow: 0 0 10px 2px rgba(255,255,255,0.45); }
+      [data-step="2"] .work-dots i:nth-child(3), [data-step="3"] .work-dots i:nth-child(4) { background: #fff; transform: scale(1.35); }
     }
     @media (max-width: 900px) {
       .work-head { padding: 56px 24px 24px; }
@@ -129,21 +88,16 @@
       .work-panel-inner { grid-template-columns: 1fr; gap: 24px; padding: 0; }
     }
 
-    /* Scene 6 · Reflected Light — testimonial */
+    /* Testimonial team strip */
     .team-chip { width: 52px; height: 52px; border-radius: 50%; border: 2.5px solid #fff; object-fit: cover; margin-left: -14px; box-shadow: var(--shadow-sm); }
     .team-chip:first-child { margin-left: 0; }
 
-    /* Scene 8 · Your Light Is Next — content brightens into place */
-    .js-story [data-scene="yourlight"] .finale-reveal {
-      --fv: clamp(0, calc(var(--fp, 1) / 0.35), 1);
-      opacity: var(--fv);
-      transform: translateY(calc((1 - var(--fv)) * 28px));
-    }
+    /* CTA form */
     .cta-submit { width: 100%; padding: 14px 24px; background: var(--color-primary); color: #fff; border: none; border-radius: var(--radius-full); font-family: var(--font-body); font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.2s; }
     .cta-submit:hover { background: var(--color-blue-sky); transform: translateY(-1px); }
   </style>
 </head>
-<body class="sky" data-constellation="hero-full" style="font-family: var(--font-body);">
+<body style="font-family: var(--font-body);">
 
   <!-- NAV -->
   <nav class="home-nav">
@@ -167,13 +121,12 @@
     <a href="contact.html" onclick="closeMenu()">Get Started</a>
   </div>
 
-  <!-- SCENE 1 · ONE LIGHT (hero) -->
-  <section data-scene="sky" data-progress-var="--hxraw" class="css-stars" style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 62% 52% at 50% 38%, rgba(41,171,226,0.1) 0%, transparent 62%); pointer-events: none;"></div>
+  <!-- HERO -->
+  <section data-scene="hero" data-progress-var="--hxraw" data-aurora class="page-hero-full">
     <div class="container hero-content scene-layer" style="position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 128px 40px 64px; width: 100%;">
       <div class="fade-up">
       <div class="hero-badge" style="margin-bottom: 28px;">Trusted Digital Partner for Mission-Driven Organizations</div>
-      <h1 style="font-family: var(--font-display); font-size: clamp(42px, 6.5vw, 80px); font-weight: 900; color: #fff; line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 22px;">We Help Churches, Schools &amp; Startups Shine Brighter, Reach Farther</h1>
+      <h1 style="font-family: var(--font-display); font-size: clamp(42px, 6.5vw, 80px); font-weight: 900; color: #fff; line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 22px;">We Help Churches, Schools &amp; Startups Thrive Digitally</h1>
       <p style="font-family: var(--font-body); font-size: clamp(16px, 1.8vw, 19px); color: rgba(255,255,255,0.76); line-height: 1.68; margin-bottom: 44px; max-width: 580px; margin-left: auto; margin-right: auto;">Practical, affordable digital systems — websites, email, chatbots, and web apps — so your organization can focus on what matters most.</p>
       <form id="hero-form" onsubmit="submitHeroEmail(event)" class="hero-email" style="display: flex; max-width: 500px; margin: 0 auto 52px; border-radius: 100px; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.28); background: rgba(255,255,255,0.1); backdrop-filter: blur(16px);">
         <input id="hero-email" type="email" placeholder="Enter your email" required style="flex: 1; padding: 15px 24px; border: none; background: transparent; color: #fff; font-size: 15px; outline: none; min-width: 0;">
@@ -183,116 +136,95 @@
         <span id="hero-message" style="font-family: var(--font-body); font-size: 14px; color: rgba(255,255,255,0.85);"></span>
       </div>
       <div class="scroll-cue" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L13.8 10.2 L21 12 L13.8 13.8 L12 21 L10.2 13.8 L3 12 L10.2 10.2 Z"></path></svg>
-        <span style="font-family: var(--font-body); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55);">Watch how a light begins</span>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        <span style="font-family: var(--font-body); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55);">Scroll</span>
       </div>
       </div>
     </div>
   </section>
 
-  <!-- SCENE 2 · LIGHTS KINDLE -->
-  <section data-scene="kindle" data-pin data-scene-steps="10" data-count-at="3" style="--scene-length: 300vh;">
-    <div class="scene-stage css-stars" style="background: rgba(10,15,44,0.38);">
-      <div class="kindle-stage-inner">
-        <div class="eyebrow-light m-reveal" style="color: rgba(255,255,255,0.55);">Why &ldquo;light&rdquo;?</div>
-        <h2 class="m-reveal" style="font-family: var(--font-display); font-size: clamp(28px, 4vw, 48px); font-weight: 900; color: #fff; letter-spacing: -0.015em; line-height: 1.15; max-width: 640px; margin: 0 auto;">Every mission starts as a single light.</h2>
-
-        <div class="kindle-flare scene-layer" aria-hidden="true"></div>
-        <div class="kindle-star scene-layer" aria-hidden="true"></div>
-
-        <div class="kindle-stats">
-          <div class="kindle-stat scene-layer m-reveal"><div data-count="3" data-suffix="+" data-count-manual style="font-family: var(--font-display); font-size: 46px; font-weight: 900; color: #fff; line-height: 1;">3+</div><div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 8px; letter-spacing: 0.04em;">Years Serving</div></div>
-          <div class="kindle-stat scene-layer m-reveal"><div data-count="10" data-suffix="+" data-count-manual style="font-family: var(--font-display); font-size: 46px; font-weight: 900; color: #fff; line-height: 1;">10+</div><div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 8px; letter-spacing: 0.04em;">Projects Delivered</div></div>
-          <div class="kindle-stat scene-layer m-reveal"><div data-count="4" data-count-manual style="font-family: var(--font-display); font-size: 46px; font-weight: 900; color: #fff; line-height: 1;">4</div><div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 8px; letter-spacing: 0.04em;">Core Services</div></div>
+  <!-- STATS STRIP -->
+  <section class="section section-white" style="padding: 72px 0;">
+    <div class="container">
+      <div class="reveal" style="display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap;">
+        <div style="max-width: 380px;">
+          <div class="eyebrow">Track Record</div>
+          <h2 class="section-title" style="font-size: clamp(24px, 2.6vw, 32px);">A Small Team With a Growing Track Record</h2>
         </div>
-
-        <p class="kindle-close scene-layer m-reveal" style="font-family: var(--font-display); font-size: clamp(18px, 2.2vw, 26px); font-weight: 700; color: rgba(255,255,255,0.85); letter-spacing: -0.01em;">Then it shines farther. That&rsquo;s where we come in.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SCENE 3 · LIGHTS LIKE YOURS (who we serve) -->
-  <section data-scene="audiences" data-pin style="--scene-length: 300vh;">
-    <div class="scene-stage css-stars" style="background: rgba(13,19,53,0.3);">
-      <div class="aud-stage-inner">
-        <div style="text-align: center; position: relative; z-index: 2;">
-          <div class="eyebrow-light m-reveal" style="color: rgba(255,255,255,0.6);">Who we serve</div>
-          <h2 class="section-title section-title-light m-reveal">Lights like yours are everywhere.</h2>
-          <p class="section-sub m-reveal" style="margin-left: auto; margin-right: auto; color: rgba(255,255,255,0.72);">Pastors, principals, directors, and founders — people with a mission and not enough hours.</p>
-        </div>
-        <div class="aud-row">
-          <a href="services.html" class="aud-card">
-            <div class="aud-photo aud-bloom scene-layer m-reveal"><img src="assets/photos/audience/church-congregation.jpg" alt="A church congregation gathered in worship" loading="lazy" decoding="async" width="380" height="380"></div>
-            <div class="aud-label m-reveal">
-              <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 5px;">Churches</div>
-              <div style="font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.72); line-height: 1.5;">Reach your community beyond Sunday.</div>
-            </div>
-          </a>
-          <a href="services.html" class="aud-card">
-            <div class="aud-photo aud-bloom scene-layer m-reveal"><img src="assets/photos/audience/school-classroom.jpg" alt="Students learning in a classroom" loading="lazy" decoding="async" width="380" height="380"></div>
-            <div class="aud-label m-reveal">
-              <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 5px;">Schools</div>
-              <div style="font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.72); line-height: 1.5;">Modernize without overwhelming your staff.</div>
-            </div>
-          </a>
-          <a href="services.html" class="aud-card">
-            <div class="aud-photo aud-bloom scene-layer m-reveal"><img src="assets/photos/audience/nonprofit-volunteers.jpg" alt="Nonprofit volunteers working together" loading="lazy" decoding="async" width="380" height="380"></div>
-            <div class="aud-label m-reveal">
-              <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 5px;">Nonprofits</div>
-              <div style="font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.72); line-height: 1.5;">Turn goodwill into lasting support.</div>
-            </div>
-          </a>
-          <a href="services.html" class="aud-card">
-            <div class="aud-photo aud-bloom scene-layer m-reveal"><img src="assets/photos/audience/startup-entrepreneur.jpg" alt="A founder working on her startup" loading="lazy" decoding="async" width="380" height="380"></div>
-            <div class="aud-label m-reveal">
-              <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 5px;">Startups</div>
-              <div style="font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.72); line-height: 1.5;">Look established from day one.</div>
-            </div>
-          </a>
+        <div class="stats-row">
+          <div><div class="stat-num" data-count="3" data-suffix="+">3+</div><div class="stat-label">Years Serving</div></div>
+          <div><div class="stat-num" data-count="10" data-suffix="+">10+</div><div class="stat-label">Projects Delivered</div></div>
+          <div><div class="stat-num" data-count="4">4</div><div class="stat-label">Core Services</div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SCENE 4 · FOUR WAYS TO SHINE FARTHER (services) -->
-  <section class="section section-white" style="position: relative; overflow: hidden;">
-    <svg class="constellation-mark" style="left: 50%; top: 64px; width: 920px; height: 150px; margin-left: -460px;" viewBox="0 0 920 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M70 112 L300 42 L545 96 L850 30" stroke="rgba(28,117,188,0.16)" stroke-width="1.5"></path>
-      <circle cx="70" cy="112" r="3" fill="rgba(28,117,188,0.3)"></circle>
-      <circle cx="300" cy="42" r="3.5" fill="rgba(28,117,188,0.34)"></circle>
-      <circle cx="545" cy="96" r="3" fill="rgba(28,117,188,0.3)"></circle>
-      <circle cx="850" cy="30" r="3.5" fill="rgba(28,117,188,0.34)"></circle>
-    </svg>
-    <div class="container" style="position: relative; z-index: 2;">
+  <!-- WHO WE SERVE -->
+  <section class="section section-warm">
+    <div class="container">
+      <div class="reveal section-head-center" style="margin-bottom: 0;">
+        <div class="eyebrow">Who We Serve</div>
+        <h2 class="section-title">Built for People With a Mission</h2>
+        <p class="section-sub" style="margin-left: auto; margin-right: auto;">Pastors, principals, directors, and founders — people with real work to do and not enough hours to do it.</p>
+      </div>
+      <div class="aud-row reveal-stagger">
+        <a href="services.html" class="aud-card reveal">
+          <div class="aud-photo"><img src="assets/photos/audience/church-congregation.jpg" alt="A church congregation gathered in worship" loading="lazy" decoding="async" width="380" height="380"></div>
+          <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Churches</div>
+          <div style="font-family: var(--font-body); font-size: 13.5px; color: #454C59; line-height: 1.5;">Reach your community beyond Sunday.</div>
+        </a>
+        <a href="services.html" class="aud-card reveal">
+          <div class="aud-photo"><img src="assets/photos/audience/school-classroom.jpg" alt="Students learning in a classroom" loading="lazy" decoding="async" width="380" height="380"></div>
+          <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Schools</div>
+          <div style="font-family: var(--font-body); font-size: 13.5px; color: #454C59; line-height: 1.5;">Modernize without overwhelming your staff.</div>
+        </a>
+        <a href="services.html" class="aud-card reveal">
+          <div class="aud-photo"><img src="assets/photos/audience/nonprofit-volunteers.jpg" alt="Nonprofit volunteers working together" loading="lazy" decoding="async" width="380" height="380"></div>
+          <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Nonprofits</div>
+          <div style="font-family: var(--font-body); font-size: 13.5px; color: #454C59; line-height: 1.5;">Turn goodwill into lasting support.</div>
+        </a>
+        <a href="services.html" class="aud-card reveal">
+          <div class="aud-photo"><img src="assets/photos/audience/startup-entrepreneur.jpg" alt="A founder working on her startup" loading="lazy" decoding="async" width="380" height="380"></div>
+          <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Startups</div>
+          <div style="font-family: var(--font-body); font-size: 13.5px; color: #454C59; line-height: 1.5;">Look established from day one.</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section section-white">
+    <div class="container">
       <div class="reveal section-head-center">
         <div class="eyebrow">Our Services</div>
-        <h2 class="section-title">Four Ways to Shine Farther</h2>
-        <p class="section-sub">Four simple starting points. Each one helps your mission reach further than before.</p>
+        <h2 class="section-title">Four Ways We Can Help</h2>
+        <p class="section-sub">Four simple starting points — each one practical, affordable, and built around how your organization actually works.</p>
       </div>
       <div class="services-grid reveal-stagger" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
         <a href="services.html" class="service-card reveal">
-          <div class="icon-box kindle-in" style="margin-bottom: 20px;">
+          <div class="icon-box" style="margin-bottom: 20px;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Website Design &amp; Development</h3>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;">Custom, affordable websites that represent your mission and connect with your community.</p>
         </a>
         <a href="services.html" class="service-card reveal">
-          <div class="icon-box kindle-in" style="margin-bottom: 20px;">
+          <div class="icon-box" style="margin-bottom: 20px;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Professional Email Setup</h3>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;">Branded email addresses that build trust and credibility with donors, students, and partners.</p>
         </a>
         <a href="services.html" class="service-card reveal">
-          <div class="icon-box kindle-in" style="margin-bottom: 20px;">
+          <div class="icon-box" style="margin-bottom: 20px;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Chatbot Development</h3>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;">Intelligent chatbots that answer questions and support your community around the clock.</p>
         </a>
         <a href="services.html" class="service-card reveal">
-          <div class="icon-box kindle-in" style="margin-bottom: 20px;">
+          <div class="icon-box" style="margin-bottom: 20px;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Custom Web Applications</h3>
@@ -302,12 +234,12 @@
     </div>
   </section>
 
-  <!-- SCENE 5 · MISSIONS WE'VE HELPED SHINE (work) -->
-  <section data-scene="constellation" data-pin data-scene-steps="4" class="work-scene-bg" style="--scene-length: 400vh;">
-    <div class="scene-stage css-stars work-stage">
+  <!-- OUR WORK (pinned horizontal pan) -->
+  <section data-scene="work" data-pin data-scene-steps="4" class="band-navy" style="--scene-length: 400vh;">
+    <div class="scene-stage work-stage" data-aurora="deep">
       <div class="work-head">
-        <div class="eyebrow-light m-reveal">Where the light has reached</div>
-        <h2 class="section-title section-title-light m-reveal">Missions we&rsquo;ve helped shine.</h2>
+        <div class="eyebrow-light m-reveal">Our Work</div>
+        <h2 class="section-title section-title-light m-reveal">Work We&rsquo;re Proud Of</h2>
       </div>
       <div class="work-track">
         <div class="work-panel m-reveal">
@@ -395,20 +327,12 @@
     </div>
   </section>
 
-  <!-- SCENE 6 · REFLECTED LIGHT (testimonial + the people) -->
-  <section class="section section-warm" style="position: relative; overflow: hidden;">
-    <svg class="constellation-mark" style="left: 4%; top: 18%; width: 420px; height: 320px;" viewBox="0 0 420 320" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M40 250 L120 120 L235 180 L330 60 L395 110" stroke="rgba(28,117,188,0.08)" stroke-width="1.2"></path>
-      <circle cx="40" cy="250" r="2.5" fill="rgba(28,117,188,0.14)"></circle>
-      <circle cx="120" cy="120" r="3" fill="rgba(28,117,188,0.16)"></circle>
-      <circle cx="235" cy="180" r="2.5" fill="rgba(28,117,188,0.14)"></circle>
-      <circle cx="330" cy="60" r="3" fill="rgba(28,117,188,0.16)"></circle>
-      <circle cx="395" cy="110" r="2.5" fill="rgba(28,117,188,0.14)"></circle>
-    </svg>
-    <div class="container" style="position: relative; z-index: 2;">
+  <!-- TESTIMONIAL + THE PEOPLE -->
+  <section class="section section-warm">
+    <div class="container">
       <div class="split-grid reveal" style="grid-template-columns: 1fr 2.2fr;">
         <div>
-          <div class="eyebrow">From a partner</div>
+          <div class="eyebrow">From a Partner</div>
           <div style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: #1E1F1E; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px;">Baptist Bible Seminary</div>
           <div style="font-family: var(--font-body); font-size: 13px; color: #454C59; margin-bottom: 24px;">&amp; Institute, Inc.</div>
           <div style="display: flex; gap: 4px;">
@@ -452,7 +376,7 @@
     </div>
   </section>
 
-  <!-- SCENE 7 · LIGHT FOR THE ROAD (blog) -->
+  <!-- BLOG -->
   <section class="section section-white">
     <div class="container">
       <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 16px;">
@@ -494,14 +418,14 @@
     </div>
   </section>
 
-  <!-- SCENE 8 · YOUR LIGHT IS NEXT (contact CTA) -->
-  <section data-scene="yourlight" data-progress-var="--fp" class="css-stars" style="position: relative; overflow: hidden; background: rgba(13,19,53,0.4); padding: 96px 0;">
-    <div class="container finale-reveal" style="position: relative; z-index: 2;">
+  <!-- CTA + CONTACT FORM -->
+  <section class="band-navy" data-aurora="deep" style="padding: 96px 0;">
+    <div class="container" style="position: relative; z-index: 2;">
       <div class="split-grid reveal" style="align-items: start;">
         <div>
-          <div class="eyebrow-light">Your turn</div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: #fff; letter-spacing: -0.015em; line-height: 1.12; margin-bottom: 20px;">Your Light Is Next</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.72; margin-bottom: 32px;">Every light on this page started with one message. Tell us about your mission and what you&rsquo;re looking to achieve — we reply within one business day.</p>
+          <div class="eyebrow-light">Start a Project</div>
+          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: #fff; letter-spacing: -0.015em; line-height: 1.12; margin-bottom: 20px;">Let&rsquo;s Build Something Together</h2>
+          <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.72; margin-bottom: 32px;">Every partnership here started with a short message. Tell us about your organization and what you&rsquo;re trying to achieve — we reply within one business day.</p>
           <div style="display: flex; align-items: center; gap: 12px;">
             <div class="icon-box icon-box-xs icon-box-dark">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
@@ -509,7 +433,7 @@
             <span style="font-family: var(--font-body); font-size: 14px; color: rgba(255,255,255,0.72);">customers@cortanatechsolutions.com</span>
           </div>
         </div>
-        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11); border-radius: 20px; padding: 36px; backdrop-filter: blur(6px);">
+        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11); border-radius: 20px; padding: 36px;">
           <form id="contact-form" action="https://formspree.io/f/xkolqjkj" method="POST" onsubmit="submitContact(event)" style="display: flex; flex-direction: column; gap: 16px;">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
               <div>
@@ -584,8 +508,8 @@
       });
     }
   </script>
-  <script src="enhance.js?v=light1"></script>
-  <script src="story.js?v=light1"></script>
-  <script type="module" src="constellation.js?v=light1"></script>
+  <script src="enhance.js?v=warm1"></script>
+  <script src="story.js?v=warm1"></script>
+  <script type="module" src="aurora.js?v=warm1"></script>
 </body>
 </html>

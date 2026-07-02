@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="shared.css">
   <style>
     body { font-family: var(--font-body); }
+    .contact-submit { background: var(--color-primary-dark); transition: background 0.2s; }
+    .contact-submit:hover { background: var(--color-primary); }
     select.form-input { appearance: none; background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="%23454C59" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>'); background-repeat: no-repeat; background-position: right 16px center; }
   </style>
 </head>
@@ -59,25 +61,25 @@
       <circle cx="190" cy="190" r="115" stroke="rgba(255,255,255,0.04)" stroke-width="1"></circle>
     </svg>
     <div class="container" style="position: relative; z-index: 2; text-align: center;">
-      <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.14em; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 16px;">Let's Talk</div>
-      <h1 style="font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 18px;">Start a Conversation</h1>
+      <div class="eyebrow-light">Let's Talk</div>
+      <h1 style="font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 18px;">Start a Conversation</h1>
       <p style="font-family: var(--font-body); font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.68; max-width: 500px; margin: 0 auto;">Tell us about your organization and what you need. We'll follow up within one business day.</p>
     </div>
   </section>
 
   <!-- CONTACT FORM + INFO -->
-  <section style="background: #fff; padding: 96px 0;">
+  <section class="section section-warm">
     <div class="container">
       <div class="split-grid" style="grid-template-columns: 1fr 1.4fr; align-items: start;">
 
         <!-- Left: info -->
         <div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: #2B3990; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 20px;">We'd love to hear from you</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 48px;">Whether you're just exploring, have a specific project in mind, or need help figuring out where to start — send us a message and we'll get back to you promptly.</p>
+          <h2 class="section-title" style="font-size: clamp(24px, 3vw, 36px); margin-bottom: 20px;">We'd love to hear from you</h2>
+          <p class="section-sub" style="margin-top: 0; margin-bottom: 48px;">Whether you're just exploring, have a specific project in mind, or need help figuring out where to start — send us a message and we'll get back to you promptly.</p>
 
           <div style="display: flex; flex-direction: column; gap: 28px;">
             <div style="display: flex; gap: 16px; align-items: flex-start;">
-              <div style="width: 48px; height: 48px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #1C75BC; flex-shrink: 0;">
+              <div class="icon-box">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
               </div>
               <div>
@@ -86,7 +88,7 @@
               </div>
             </div>
             <div style="display: flex; gap: 16px; align-items: flex-start;">
-              <div style="width: 48px; height: 48px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #1C75BC; flex-shrink: 0;">
+              <div class="icon-box">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
               </div>
               <div>
@@ -95,7 +97,7 @@
               </div>
             </div>
             <div style="display: flex; gap: 16px; align-items: flex-start;">
-              <div style="width: 48px; height: 48px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #1C75BC; flex-shrink: 0;">
+              <div class="icon-box">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
               </div>
               <div>
@@ -106,7 +108,7 @@
           </div>
 
           <!-- Testimonial mini -->
-          <div style="margin-top: 52px; background: #F1EDED; border-radius: 16px; padding: 28px;">
+          <div style="margin-top: 52px; background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.05);">
             <div style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: #2B3990; line-height: 1.5; margin-bottom: 16px;">"The professionalism of their services is commendable."</div>
             <div style="font-family: var(--font-body); font-size: 13px; color: #454C59;">— Evangel Balmes, Baptist Bible Seminary &amp; Institute, Inc.</div>
           </div>
@@ -144,7 +146,7 @@
               <label class="form-label">Tell Us About Your Project</label>
               <textarea name="message" placeholder="Describe what you need, what you're trying to accomplish, and any deadlines..." rows="5" required class="form-input" style="resize: vertical; line-height: 1.6;"></textarea>
             </div>
-            <button type="submit" style="width: 100%; padding: 15px 24px; background: #2B3990; color: #fff; border: none; border-radius: 8px; font-family: var(--font-body); font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#1C75BC'" onmouseout="this.style.background='#2B3990'">Send Message →</button>
+            <button type="submit" class="contact-submit" style="width: 100%; padding: 15px 24px; color: #fff; border: none; border-radius: 100px; font-family: var(--font-body); font-size: 16px; font-weight: 700; cursor: pointer;">Send Message →</button>
             <p id="contact-msg" style="font-family: var(--font-body); font-size: 13px; color: #2B3990; text-align: center; line-height: 1.5; min-height: 20px;"></p>
           </form>
         </div>

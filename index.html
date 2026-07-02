@@ -45,8 +45,9 @@
     .pick-card { display: flex; flex-direction: column; align-items: center; gap: 14px; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.16); border-radius: 20px; padding: 26px 14px 22px; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s; color: #fff; }
     .pick-card:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.4); transform: translateY(-4px); }
     .pick-card[aria-pressed="true"] { background: rgba(255,255,255,0.18); border-color: #fff; }
-    .pick-photo { width: 84px; height: 84px; border-radius: 50%; overflow: hidden; border: 3px solid rgba(255,255,255,0.85); box-shadow: var(--shadow-lg); }
-    .pick-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .pick-photo { width: 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.3); color: #fff; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+    .pick-card:hover .pick-photo { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.55); transform: scale(1.05); }
+    .pick-card[aria-pressed="true"] .pick-photo { background: #fff; color: var(--color-primary-dark); border-color: #fff; }
     .pick-name { font-family: var(--font-display); font-size: 17px; font-weight: 800; }
     .pick-tag { font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.62); line-height: 1.45; }
     .pick-skip { font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.55); border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 2px; transition: color 0.2s; }
@@ -227,22 +228,22 @@
         <p class="ask-q fade-up">What kind of organization do you run?</p>
         <div class="pick-row fade-up">
           <a href="services.html" class="pick-card" data-role-pick="church" role="button" aria-pressed="false">
-            <span class="pick-photo"><img src="assets/photos/audience/church-congregation.jpg" alt="" loading="lazy" decoding="async" width="168" height="168"></span>
+            <span class="pick-photo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="36" height="36"><path d="M12 2v3"/><path d="M10.5 3.5h3"/><path d="M4 21V11l8-6 8 6v10"/><path d="M4 21h16"/><path d="M9.5 21v-6.5a2.5 2.5 0 0 1 5 0V21"/></svg></span>
             <span class="pick-name">A church</span>
             <span class="pick-tag">Reach your community beyond Sunday.</span>
           </a>
           <a href="services.html" class="pick-card" data-role-pick="school" role="button" aria-pressed="false">
-            <span class="pick-photo"><img src="assets/photos/audience/school-classroom.jpg" alt="" loading="lazy" decoding="async" width="168" height="168"></span>
+            <span class="pick-photo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="36" height="36"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.5 3 6 3s6-1.5 6-3v-5"/></svg></span>
             <span class="pick-name">A school</span>
             <span class="pick-tag">Modernize without overwhelming staff.</span>
           </a>
           <a href="services.html" class="pick-card" data-role-pick="nonprofit" role="button" aria-pressed="false">
-            <span class="pick-photo"><img src="assets/photos/audience/nonprofit-volunteers.jpg" alt="" loading="lazy" decoding="async" width="168" height="168"></span>
+            <span class="pick-photo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="36" height="36"><path d="M12 21.35 10.55 20.03C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54Z"/></svg></span>
             <span class="pick-name">A nonprofit</span>
             <span class="pick-tag">Turn goodwill into lasting support.</span>
           </a>
           <a href="services.html" class="pick-card" data-role-pick="startup" role="button" aria-pressed="false">
-            <span class="pick-photo"><img src="assets/photos/audience/startup-entrepreneur.jpg" alt="" loading="lazy" decoding="async" width="168" height="168"></span>
+            <span class="pick-photo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="36" height="36"><path d="M12 2c3 2 5 6 5 10 0 2-1 4-2 5l-3 3-3-3c-1-1-2-3-2-5 0-4 2-8 5-10Z"/><circle cx="12" cy="10" r="2"/><path d="M8 15c-2 0-3 2-3 5 2 0 4-1 5-3"/><path d="M16 15c2 0 3 2 3 5-2 0-4-1-5-3"/></svg></span>
             <span class="pick-name">A startup</span>
             <span class="pick-tag">Look established from day one.</span>
           </a>

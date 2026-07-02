@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Contact — CortanaTech Solutions">
   <meta name="twitter:description" content="Get in touch with CortanaTech Solutions. Tell us about your church, school, nonprofit, or startup project and we'll respond within one business day.">
   <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
-  <link rel="stylesheet" href="shared.css?v=ripple1">
+  <link rel="stylesheet" href="shared.css?v=light1">
   <style>
     body { font-family: var(--font-body); }
     .contact-submit { background: var(--color-primary-dark); transition: background 0.2s; }
@@ -26,7 +26,7 @@
     select.form-input { appearance: none; background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="%23454C59" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>'); background-repeat: no-repeat; background-position: right 16px center; }
   </style>
 </head>
-<body>
+<body class="sky" data-constellation="cta-burst">
 
   <!-- NAV -->
   <nav style="position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #E8E6E6; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; height: 80px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
@@ -51,15 +51,7 @@
   </div>
 
   <!-- PAGE HERO -->
-  <section class="page-hero">
-    <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs><pattern id="contact-dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.5" fill="rgba(255,255,255,0.07)"></circle></pattern></defs>
-      <rect width="100%" height="100%" fill="url(#contact-dots)"></rect>
-    </svg>
-    <svg style="position: absolute; right: -60px; top: -80px; width: 380px; height: 380px; pointer-events: none;" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="190" cy="190" r="170" stroke="rgba(255,255,255,0.055)" stroke-width="1.5"></circle>
-      <circle cx="190" cy="190" r="115" stroke="rgba(255,255,255,0.04)" stroke-width="1"></circle>
-    </svg>
+  <section class="page-hero css-stars">
     <div class="container" style="position: relative; z-index: 2; text-align: center;">
       <div class="eyebrow-light">Let's Talk</div>
       <h1 style="font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 18px;">Start a Conversation</h1>
@@ -196,7 +188,7 @@
       });
     }
   </script>
-  <script src="water-ripple.js?v=ripple1"></script>
-  <script src="enhance.js?v=ripple1"></script>
+  <script src="enhance.js?v=light1"></script>
+  <script type="module" src="constellation.js?v=light1"></script>
 </body>
 </html>

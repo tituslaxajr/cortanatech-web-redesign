@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About — CortanaTech Solutions</title>
-  <meta name="description" content="Meet the team behind CortanaTech Solutions and learn how we partner with churches, schools, and startups to deliver practical, mission-driven digital solutions.">
+  <meta name="description" content="Meet the team bridging the gap between mission and technology — a Philippines-based digital partner for churches, schools, nonprofits, and startups without a tech team.">
   <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
@@ -12,13 +12,13 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://cortanatechsolutions.com/about.html">
   <meta property="og:title" content="About — CortanaTech Solutions">
-  <meta property="og:description" content="Meet the team behind CortanaTech Solutions and learn how we partner with churches, schools, and startups to deliver practical, mission-driven digital solutions.">
+  <meta property="og:description" content="Meet the team bridging the gap between mission and technology — a Philippines-based digital partner for churches, schools, nonprofits, and startups without a tech team.">
   <meta property="og:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="About — CortanaTech Solutions">
-  <meta name="twitter:description" content="Meet the team behind CortanaTech Solutions and learn how we partner with churches, schools, and startups to deliver practical, mission-driven digital solutions.">
+  <meta name="twitter:description" content="Meet the team bridging the gap between mission and technology — a Philippines-based digital partner for churches, schools, nonprofits, and startups without a tech team.">
   <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
-  <link rel="stylesheet" href="shared.css?v=ripple1">
+  <link rel="stylesheet" href="shared.css?v=light1">
   <style>
     body { font-family: var(--font-body); }
     .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -29,7 +29,7 @@
     }
   </style>
 </head>
-<body>
+<body class="sky" data-constellation="ambient">
 
   <!-- NAV -->
   <nav style="position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #E8E6E6; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; height: 80px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
@@ -54,15 +54,7 @@
   </div>
 
   <!-- PAGE HERO -->
-  <section class="page-hero">
-    <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs><pattern id="about-dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.5" fill="rgba(255,255,255,0.07)"></circle></pattern></defs>
-      <rect width="100%" height="100%" fill="url(#about-dots)"></rect>
-    </svg>
-    <svg style="position: absolute; right: -60px; top: -80px; width: 380px; height: 380px; pointer-events: none;" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="190" cy="190" r="170" stroke="rgba(255,255,255,0.055)" stroke-width="1.5"></circle>
-      <circle cx="190" cy="190" r="115" stroke="rgba(255,255,255,0.04)" stroke-width="1"></circle>
-    </svg>
+  <section class="page-hero css-stars">
     <div class="container" style="position: relative; z-index: 2; text-align: center;">
       <div class="eyebrow-light">Who We Are</div>
       <h1 style="font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 18px;">We're Your Digital Partner, Not Your Vendor</h1>
@@ -193,7 +185,7 @@
   </section>
 
   <!-- CTA BANNER -->
-  <section style="background: #2B3990; padding: 80px 0;">
+  <section class="css-stars" style="position: relative; overflow: hidden; background: rgba(31,43,105,0.55); padding: 80px 0;">
     <div class="container cta-inner" style="display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap;">
       <div>
         <h2 style="font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 40px); font-weight: 900; color: #fff; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 10px;">Let's build something together.</h2>
@@ -222,7 +214,7 @@
     function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
     function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
   </script>
-  <script src="water-ripple.js?v=ripple1"></script>
-  <script src="enhance.js?v=ripple1"></script>
+  <script src="enhance.js?v=light1"></script>
+  <script type="module" src="constellation.js?v=light1"></script>
 </body>
 </html>

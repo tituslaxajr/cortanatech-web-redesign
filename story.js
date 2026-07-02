@@ -8,9 +8,6 @@
  *   [data-scene-steps="N"]  engine mirrors progress to data-step="0..N-1"
  *   [data-progress-var]     custom property name (default: --progress)
  *   [data-count-at="k"]     at step >= k, fire Enhance.countIn(scene) once
- *   [data-ripple-at="k"]    at step >= k, add .is-rippling (CSS rings) and,
- *                           if a [data-water] canvas is reachable, land a
- *                           WebGL drop at [data-ripple-pos="x,y"] (0..1)
  *
  * Output per frame: ONE CSS custom property per scene (--progress, 0..1),
  * quantized and change-gated. CSS does all the visual mapping.
@@ -39,9 +36,7 @@
       steps: parseInt(el.getAttribute('data-scene-steps'), 10) || 0,
       varName: el.getAttribute('data-progress-var') || '--progress',
       countAt: el.hasAttribute('data-count-at') ? parseInt(el.getAttribute('data-count-at'), 10) : -1,
-      rippleAt: el.hasAttribute('data-ripple-at') ? parseInt(el.getAttribute('data-ripple-at'), 10) : -1,
       counted: false,
-      rippled: false,
       top: 0, span: 1, p: -1, step: -1,
       subs: []
     });
@@ -59,15 +54,6 @@
     });
   }
 
-  function fireRipple(s) {
-    s.el.classList.add('is-rippling');
-    var pos = (s.el.getAttribute('data-ripple-pos') || '0.5,0.5').split(',');
-    var host = s.el.closest('[data-water]') || s.el.querySelector('[data-water]');
-    if (host && host.waterAPI && window.WaterRipple) {
-      window.WaterRipple.burst(host, parseFloat(pos[0]), parseFloat(pos[1]));
-    }
-  }
-
   function stepCheck(s, p) {
     var step = Math.min(s.steps - 1, Math.floor(p * s.steps));
     if (step === s.step) return;
@@ -77,10 +63,6 @@
     if (s.countAt >= 0 && !s.counted && step >= s.countAt && window.Enhance) {
       s.counted = true;
       window.Enhance.countIn(s.el);
-    }
-    if (s.rippleAt >= 0 && !s.rippled && step >= s.rippleAt) {
-      s.rippled = true;
-      fireRipple(s);
     }
     s.el.dispatchEvent(new CustomEvent('story:step', {
       bubbles: true,

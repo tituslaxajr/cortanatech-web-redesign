@@ -2,7 +2,11 @@
  * aurora.js — ambient gradient texture for navy bands (Three.js r170,
  * vendored at assets/vendor/three/three.module.min.js).
  *
- * A slow, domain-warped noise field flowing through the brand blues.
+ * Two layers per band, both quiet:
+ *   1. A slow, domain-warped noise field flowing through the brand blues.
+ *   2. A drifting node network — thin lines connect nearby nodes; on
+ *      fine-pointer devices the cursor joins the network and carries a
+ *      soft radial glow in the brand blues.
  * Pure material texture — nothing representational, no narrative.
  *
  * Contract (HTML):
@@ -53,9 +57,9 @@ function detectTier() {
 }
 
 const TIER = {
-  1: { dpr: 0.75, octaves: 3, frameSkip: 1 },
-  2: { dpr: 1.25, octaves: 4, frameSkip: 0 },
-  3: { dpr: 1.5, octaves: 4, frameSkip: 0 }
+  1: { dpr: 0.75, octaves: 3, frameSkip: 1, nodes: 35 },
+  2: { dpr: 1.25, octaves: 4, frameSkip: 0, nodes: 70 },
+  3: { dpr: 1.5, octaves: 4, frameSkip: 0, nodes: 100 }
 };
 
 function cssColor(name, fallback) {
@@ -78,6 +82,8 @@ const FRAG = [
   'uniform vec3 uColorB;',     // navy
   'uniform vec3 uColorC;',     // primary blue
   'uniform vec3 uColorD;',     // sky highlight
+  'uniform vec2 uGlowPos;',    // cursor, band UV (y up)
+  'uniform float uGlow;',      // 0..1, eased while the cursor is in the band
   '',
   'float hash(vec2 p) {',
   '  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);',
@@ -117,9 +123,58 @@ const FRAG = [
   '  float vig = smoothstep(1.25, 0.45, distance(uv, vec2(0.5)));',
   '  col = mix(col * 0.92, col, vig);',
   '',
+  // Cursor glow — soft radial in the brand blues, capped so white copy
+  // inside it stays readable.
+  '  vec2 pg = uGlowPos * vec2(uRes.x / uRes.y, 1.0) * 1.6;',
+  '  float gd = distance(p, pg);',
+  '  float glow = exp(-(gd * gd) / 0.2) * uGlow;',
+  '  col += mix(uColorC, uColorD, clamp(glow, 0.0, 1.0)) * glow * 0.34;',
+  '',
   // Dither to kill gradient banding.
   '  col += (hash(gl_FragCoord.xy) - 0.5) / 255.0;',
   '  gl_FragColor = vec4(col, 1.0);',
+  '}'
+].join('\n');
+
+// ---- Node-network layer shaders (positions arrive pre-mapped to clip space) ----
+const NODE_VERT = [
+  'attribute float aSize;',
+  'attribute float aAlpha;',
+  'uniform float uPr;',
+  'varying float vA;',
+  'void main() {',
+  '  vA = aAlpha;',
+  '  gl_PointSize = aSize * uPr;',
+  '  gl_Position = vec4(position.xy, 0.0, 1.0);',
+  '}'
+].join('\n');
+
+const NODE_FRAG = [
+  'precision mediump float;',
+  'uniform vec3 uColor;',
+  'varying float vA;',
+  'void main() {',
+  '  float d = length(gl_PointCoord - 0.5);',
+  '  float f = smoothstep(0.5, 0.12, d);',
+  '  gl_FragColor = vec4(uColor, vA * f);',
+  '}'
+].join('\n');
+
+const LINE_VERT = [
+  'attribute float aAlpha;',
+  'varying float vA;',
+  'void main() {',
+  '  vA = aAlpha;',
+  '  gl_Position = vec4(position.xy, 0.0, 1.0);',
+  '}'
+].join('\n');
+
+const LINE_FRAG = [
+  'precision mediump float;',
+  'uniform vec3 uColor;',
+  'varying float vA;',
+  'void main() {',
+  '  gl_FragColor = vec4(uColor, vA);',
   '}'
 ].join('\n');
 
@@ -135,12 +190,16 @@ async function boot() {
   const colB = new THREE.Color(cssColor('--color-blue-800', '#2B3990'));
   const colC = new THREE.Color(cssColor('--color-blue-500', '#1C75BC'));
   const colD = new THREE.Color(cssColor('--color-blue-sky', '#29ABE2'));
+  const colPale = new THREE.Color(cssColor('--color-blue-100', '#C5DFF2'));
 
-  const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
-  if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+  const pointer = { x: 0, y: 0, tx: 0, ty: 0, cx: -1, cy: -1 };
+  const pointerFine = !!(window.matchMedia && window.matchMedia('(pointer: fine)').matches);
+  if (pointerFine) {
     window.addEventListener('pointermove', (e) => {
       pointer.tx = (e.clientX / window.innerWidth - 0.5) * 2;
       pointer.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+      pointer.cx = e.clientX;
+      pointer.cy = e.clientY;
     }, { passive: true });
   }
 
@@ -170,7 +229,9 @@ async function boot() {
       uColorA: { value: colA },
       uColorB: { value: colB },
       uColorC: { value: colC },
-      uColorD: { value: colD }
+      uColorD: { value: colD },
+      uGlowPos: { value: new THREE.Vector2(0.5, 0.5) },
+      uGlow: { value: 0 }
     };
     const mat = new THREE.ShaderMaterial({
       uniforms: uniforms,
@@ -182,14 +243,23 @@ async function boot() {
 
     const band = {
       el: el, canvas: canvas, renderer: renderer, scene: scene, camera: camera,
-      uniforms: uniforms, visible: false, driftT: 0
+      uniforms: uniforms, visible: false, driftT: 0,
+      A: 1, net: null, glow: 0, glowT: 0, gx: 0.5, gy: 0.5
     };
+    band.net = makeNetwork(band, deep);
 
     function size() {
       const w = Math.max(1, el.clientWidth);
       const h = Math.max(1, el.clientHeight);
       renderer.setSize(w, h, false);
       uniforms.uRes.value.set(renderer.domElement.width, renderer.domElement.height);
+      const A = w / h;
+      // Keep node x positions proportional when the band's aspect changes.
+      if (band.net && band.A !== A) {
+        const k = A / band.A;
+        for (let i = 0; i < band.net.count; i++) band.net.px[i] *= k;
+      }
+      band.A = A;
     }
     size();
     if ('ResizeObserver' in window) new ResizeObserver(size).observe(el);
@@ -214,6 +284,149 @@ async function boot() {
     return band;
   }
 
+  // ---- Node network: drifting points, distance-linked lines, cursor node ----
+  const LINK_R = 0.16;          // link radius, in band-height units
+  const CURSOR_R = LINK_R * 1.4;
+
+  function makeNetwork(band, deep) {
+    const count = Math.max(16, Math.round(conf.nodes * (deep ? 0.7 : 1)));
+    const px = new Float32Array(count), py = new Float32Array(count);
+    const vx = new Float32Array(count), vy = new Float32Array(count);
+    const sx = new Float32Array(count); // scratch: displayed x (drift applied)
+    for (let i = 0; i < count; i++) {
+      px[i] = Math.random();          // x spans [0, A]; A is 1 until size() runs
+      py[i] = Math.random();
+      const ang = Math.random() * Math.PI * 2;
+      const spd = 0.012 + Math.random() * 0.01;   // band-heights per second
+      vx[i] = Math.cos(ang) * spd;
+      vy[i] = Math.sin(ang) * spd;
+    }
+
+    const pgeo = new THREE.BufferGeometry();
+    const ppos = new Float32Array(count * 3);
+    const psize = new Float32Array(count);
+    const palpha = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      psize[i] = 2.2 + Math.random() * 2.4;
+      palpha[i] = 0.3 + Math.random() * 0.25;
+    }
+    pgeo.setAttribute('position', new THREE.BufferAttribute(ppos, 3).setUsage(THREE.DynamicDrawUsage));
+    pgeo.setAttribute('aSize', new THREE.BufferAttribute(psize, 1));
+    pgeo.setAttribute('aAlpha', new THREE.BufferAttribute(palpha, 1));
+    const pmat = new THREE.ShaderMaterial({
+      uniforms: { uColor: { value: colPale }, uPr: { value: band.renderer.getPixelRatio() } },
+      vertexShader: NODE_VERT, fragmentShader: NODE_FRAG,
+      transparent: true, depthTest: false, depthWrite: false, blending: THREE.AdditiveBlending
+    });
+    band.scene.add(new THREE.Points(pgeo, pmat));
+
+    const maxSegs = (count * (count - 1)) / 2 + count;
+    const lgeo = new THREE.BufferGeometry();
+    const lpos = new Float32Array(maxSegs * 2 * 3);
+    const lalpha = new Float32Array(maxSegs * 2);
+    lgeo.setAttribute('position', new THREE.BufferAttribute(lpos, 3).setUsage(THREE.DynamicDrawUsage));
+    lgeo.setAttribute('aAlpha', new THREE.BufferAttribute(lalpha, 1).setUsage(THREE.DynamicDrawUsage));
+    lgeo.setDrawRange(0, 0);
+    const lmat = new THREE.ShaderMaterial({
+      uniforms: { uColor: { value: colD } },
+      vertexShader: LINE_VERT, fragmentShader: LINE_FRAG,
+      transparent: true, depthTest: false, depthWrite: false, blending: THREE.AdditiveBlending
+    });
+    band.scene.add(new THREE.LineSegments(lgeo, lmat));
+
+    return { count: count, activeN: count, px: px, py: py, vx: vx, vy: vy, sx: sx,
+             pgeo: pgeo, ppos: ppos, pmat: pmat, lgeo: lgeo, lpos: lpos, lalpha: lalpha, maxSegs: maxSegs };
+  }
+
+  function updateNetwork(b, dt) {
+    const net = b.net;
+    if (!net) return;
+    const A = b.A;
+    const n = net.activeN;
+    const px = net.px, py = net.py, vx = net.vx, vy = net.vy, sx = net.sx;
+
+    // Cursor in band-local network space (x in [0,A], y up).
+    let cx = 0, cy = 0, inBand = false;
+    if (pointerFine && pointer.cx >= 0) {
+      const rect = b.el.getBoundingClientRect();
+      const lx = (pointer.cx - rect.left) / Math.max(1, rect.width);
+      const ly = (pointer.cy - rect.top) / Math.max(1, rect.height);
+      if (lx >= 0 && lx <= 1 && ly >= 0 && ly <= 1) {
+        cx = lx * A;
+        cy = 1 - ly;
+        inBand = true;
+        b.gx = ease(b.gx, lx, 10, dt);
+        b.gy = ease(b.gy, 1 - ly, 10, dt);
+      }
+    }
+    b.glowT = inBand ? 1 : 0;
+    b.glow = ease(b.glow, b.glowT, 5, dt);
+    b.uniforms.uGlow.value = b.glow;
+    b.uniforms.uGlowPos.value.set(b.gx, b.gy);
+
+    const drift = b.uniforms.uDrift.value * 0.25;
+    const wrapW = A + 0.12;
+
+    for (let i = 0; i < n; i++) {
+      // Gentle pull toward the cursor for nearby nodes.
+      if (inBand) {
+        const dx = cx - px[i] - drift, dy = cy - py[i];
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d > 0.001 && d < CURSOR_R) {
+          vx[i] += (dx / d) * 0.008 * dt;
+          vy[i] += (dy / d) * 0.008 * dt;
+          const spd = Math.sqrt(vx[i] * vx[i] + vy[i] * vy[i]);
+          if (spd > 0.04) { vx[i] *= 0.04 / spd; vy[i] *= 0.04 / spd; }
+        }
+      }
+      px[i] += vx[i] * dt;
+      py[i] += vy[i] * dt;
+      if (px[i] < -0.06) px[i] += wrapW;
+      else if (px[i] > A + 0.06) px[i] -= wrapW;
+      if (py[i] < -0.06) py[i] += 1.12;
+      else if (py[i] > 1.06) py[i] -= 1.12;
+
+      // Displayed x: scroll drift pans the whole field on the work band.
+      let xd = px[i] + drift;
+      if (xd > A + 0.06) xd -= wrapW;
+      sx[i] = xd;
+      net.ppos[i * 3] = (xd / A) * 2 - 1;
+      net.ppos[i * 3 + 1] = py[i] * 2 - 1;
+    }
+    net.pgeo.setDrawRange(0, n);
+    net.pgeo.attributes.position.needsUpdate = true;
+
+    // Distance links (n <= 100 -> at most 4,950 pairs; trivial per frame).
+    const lpos = net.lpos, lalpha = net.lalpha;
+    let s = 0;
+    const put = (x1, y1, x2, y2, a) => {
+      const o = s * 6;
+      lpos[o] = (x1 / A) * 2 - 1; lpos[o + 1] = y1 * 2 - 1; lpos[o + 2] = 0;
+      lpos[o + 3] = (x2 / A) * 2 - 1; lpos[o + 4] = y2 * 2 - 1; lpos[o + 5] = 0;
+      lalpha[s * 2] = a; lalpha[s * 2 + 1] = a;
+      s++;
+    };
+    for (let i = 0; i < n && s < net.maxSegs; i++) {
+      for (let j = i + 1; j < n && s < net.maxSegs; j++) {
+        const dx = sx[i] - sx[j], dy = py[i] - py[j];
+        const d2 = dx * dx + dy * dy;
+        if (d2 < LINK_R * LINK_R) {
+          put(sx[i], py[i], sx[j], py[j], (1 - Math.sqrt(d2) / LINK_R) * 0.28);
+        }
+      }
+      if (inBand && s < net.maxSegs) {
+        const dx = sx[i] - cx, dy = py[i] - cy;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < CURSOR_R) {
+          put(sx[i], py[i], cx, cy, (1 - d / CURSOR_R) * 0.4 * (1 + b.glow * 0.5));
+        }
+      }
+    }
+    net.lgeo.setDrawRange(0, s * 2);
+    net.lgeo.attributes.position.needsUpdate = true;
+    net.lgeo.attributes.aAlpha.needsUpdate = true;
+  }
+
   // ---- Shared render loop: only visible bands draw ----
   let running = false, rafId = 0, frameNo = 0;
   let last = performance.now();
@@ -227,6 +440,10 @@ async function boot() {
       b.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, conf.dpr));
       b.renderer.setSize(Math.max(1, b.el.clientWidth), Math.max(1, b.el.clientHeight), false);
       b.uniforms.uRes.value.set(b.renderer.domElement.width, b.renderer.domElement.height);
+      if (b.net) {
+        b.net.activeN = Math.max(18, b.net.activeN >> 1);
+        b.net.pmat.uniforms.uPr.value = b.renderer.getPixelRatio();
+      }
     });
     acc = 0; samples = 0;
   }
@@ -253,6 +470,7 @@ async function boot() {
       b.uniforms.uTime.value += dt * 0.12;
       b.uniforms.uPointer.value.set(pointer.x, pointer.y);
       b.uniforms.uDrift.value = ease(b.uniforms.uDrift.value, b.driftT, 4, dt);
+      updateNetwork(b, dt);
       b.renderer.render(b.scene, b.camera);
     }
 

@@ -1,7 +1,7 @@
 /*
  * role.js — shared role runtime for every page.
  *
- * Owns the visitor's chosen role ("church" | "school" | "nonprofit" | "startup"):
+ * Owns the visitor's chosen role ("church" | "school" | "nonprofit" | "smallbiz"):
  *  - persists it in localStorage('ct-role') with an in-memory fallback
  *  - mirrors it as <html data-role="..."> (an inline head snippet on each page
  *    sets this pre-paint; this script keeps it in sync afterwards)
@@ -15,7 +15,11 @@
  */
 (function () {
   var KEY = 'ct-role';
-  var VALID = ['church', 'school', 'nonprofit', 'startup'];
+  // 'startup' was renamed to 'smallbiz' — migrate stored values from early visitors
+  var VALID = ['church', 'school', 'nonprofit', 'smallbiz'];
+  try {
+    if (localStorage.getItem('ct-role') === 'startup') localStorage.setItem('ct-role', 'smallbiz');
+  } catch (e) { /* storage unavailable */ }
   var memoryRole = null; // fallback when storage is unavailable
 
   function read() {

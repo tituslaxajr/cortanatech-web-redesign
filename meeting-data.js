@@ -296,28 +296,28 @@ window.MEETING_ROLES = {
     }
   },
 
-  startup: {
-    key: 'startup',
-    label: 'Startup',
-    noun: 'startup',
-    photo: 'assets/photos/audience/startup-entrepreneur.jpg',
-    photoAlt: 'A founder working on her startup',
-    pickTag: 'Look established from day one.',
-    headline: 'Look established from day one.',
-    subline: 'Professional website, branded email, and automation — agency-quality presence without agency prices.',
-    painsIntro: 'Every founder we meet is fighting the same credibility battle. Tap what you’re fighting right now.',
+  smallbiz: {
+    key: 'smallbiz',
+    label: 'Small Business',
+    noun: 'business',
+    photo: 'assets/photos/audience/small-business-vendor.jpg',
+    photoAlt: 'A small business owner serving a customer',
+    pickTag: 'Get found and trusted online.',
+    headline: 'Be found. Be trusted. Sell more.',
+    subline: 'A professional website, branded email, and simple systems — so customers find you, trust you, and buy from you.',
+    painsIntro: 'Every small business owner we meet is stretched thin. Tap what sounds like your week.',
     pains: [
-      { id: 'web', label: 'Great product, no professional web presence yet', detail: 'Prospects Google you before they reply to you — and right now they find nothing (or worse).' },
-      { id: 'data', label: 'Manual processes are eating hours we should spend selling', detail: 'Onboarding, invoicing, follow-ups — copy-paste work that a system should be doing.' },
-      { id: 'questions', label: 'Leads ask the same questions before every deal', detail: 'Pricing, features, timelines — answered one email at a time while the lead cools off.' },
-      { id: 'email', label: 'We’re still emailing clients from @gmail.com', detail: 'Enterprise clients notice. hello@yourstartup.com closes doors slower.' },
-      { id: 'time', label: 'We can’t afford a full-time developer or big agency', detail: 'You need senior-level execution at a stage-appropriate price.' }
+      { id: 'web', label: 'Customers can’t find us online', detail: 'People search Google and Facebook before they visit or buy — and right now they find little or nothing.' },
+      { id: 'data', label: 'Orders and records live in notebooks and spreadsheets', detail: 'Sales, stock, and customers tracked by hand — errors creep in and hours disappear.' },
+      { id: 'questions', label: 'We answer the same questions on Messenger all day', detail: '“How much?” “Open today?” “Do you deliver?” — answered one chat at a time while customers wait in line.' },
+      { id: 'email', label: 'We’re still emailing customers from a personal Gmail', detail: 'Suppliers and customers notice. you@yourbusiness.com builds trust before you say a word.' },
+      { id: 'time', label: 'No time or budget for anything “techy”', detail: 'You need someone to just handle it — at a price that makes sense for a small business.' }
     ],
     services: {
-      web:     { title: 'Website Design & Development', blurb: 'A site that makes you look established from day one — fast, credible, and built to convert.' },
-      email:   { title: 'Professional Email Setup', blurb: 'hello@yourstartup.com in under 48 hours — look enterprise-ready in every inbox.' },
-      chatbot: { title: 'Chatbot Development', blurb: 'Qualify leads and answer pricing questions instantly — even while you sleep.' },
-      app:     { title: 'Custom Web Applications', blurb: 'Automate onboarding, bookings, and internal ops — built on React, C#, and Azure.' }
+      web:     { title: 'Website Design & Development', blurb: 'A clean, professional site customers actually find on Google — hours, location, and products in one place.' },
+      email:   { title: 'Professional Email Setup', blurb: 'you@yourbusiness.com in under 48 hours — instantly more credible than a personal Gmail.' },
+      chatbot: { title: 'Chatbot Development', blurb: 'Answer “How much?”, “Open today?”, and “Do you deliver?” instantly — even after closing time.' },
+      app:     { title: 'Custom Web Applications', blurb: 'Simple tools for orders, bookings, and inventory — retire the notebook and the spreadsheet.' }
     },
     proof: {
       name: 'Megopic — Taylor University',
@@ -330,31 +330,32 @@ window.MEETING_ROLES = {
       link: 'work.html', linkLabel: 'View case study →'
     },
     calc: {
-      intro: 'Founder hours are the most expensive hours in the company. Put rough numbers on where yours are leaking.',
-      hoursDefault: 12, rateDefault: 500,
-      hoursLabel: 'Hours per week lost to manual ops & repeated questions',
-      rateLabel: 'What an hour of founder/team time is worth (₱)',
-      reframe: 'That’s runway burning on copy-paste. Most systems we build cost a fraction of one year of that — and scale with you.'
+      intro: 'Your hours are the business. Put rough numbers on where they’re leaking.',
+      hoursDefault: 10, rateDefault: 300,
+      hoursLabel: 'Hours per week spent on repeated questions & manual tracking',
+      rateLabel: 'What an hour of your time is worth (₱)',
+      reframe: 'That’s time not spent serving customers. Most systems we build cost a fraction of one year of that.'
     },
     chat: {
-      intro: 'This is a working demo — imagine it qualifying your leads while you’re in a pitch meeting. Try it.',
-      greeting: 'Hi! 👋 Welcome to LaunchPad PH (a demo startup). I’m the company’s assistant — what can I help with?',
+      intro: 'This is a working demo — imagine it answering your Messenger inbox while you serve the shop. Try it.',
+      greeting: 'Hi! 👋 Welcome to Casa Verde Café (a demo small business). I’m the shop’s assistant — how can I help?',
       nodes: {
         start: { options: [
-          { label: 'What does your product cost?', next: 'pricing' },
-          { label: 'Can I book a demo?', next: 'demo' },
-          { label: 'How can my startup get this?', next: 'pitch' }
+          { label: 'Are you open today?', next: 'hours' },
+          { label: 'Do you deliver?', next: 'delivery' },
+          { label: 'How can my business get this?', next: 'pitch' }
         ]},
-        pricing: { bot: ['Plans start at ₱2,499/month for small teams, with a 14-day free trial — no credit card needed. Want me to send a full pricing sheet to your email?'], options: [
-          { label: 'Can I book a demo?', next: 'demo' },
-          { label: 'How can my startup get this?', next: 'pitch' },
+        hours: { bot: ['We’re open 8:00 AM to 9:00 PM daily, including holidays. You’ll find us at 12 Mabini St., Quezon City — want me to send directions?'], options: [
+          { label: 'Do you deliver?', next: 'delivery' },
+          { label: 'How can my business get this?', next: 'pitch' },
           { label: '↺ Start over', next: 'start' }
         ]},
-        demo: { bot: ['Absolutely — I can book you straight into the team’s calendar. Most demos run 20 minutes. I’ll just need your name and email, and you’ll get an invite instantly.'], options: [
-          { label: 'How can my startup get this?', next: 'pitch' },
+        delivery: { bot: ['Yes! We deliver within Quezon City via Grab and Lalamove, usually within 30–45 minutes. Orders over ₱500 get free delivery. Want to see the menu?'], options: [
+          { label: 'Are you open today?', next: 'hours' },
+          { label: 'How can my business get this?', next: 'pitch' },
           { label: '↺ Start over', next: 'start' }
         ]},
-        pitch: { bot: ['I just quoted pricing and offered to book a meeting — no salesperson awake. CortanaTech builds assistants like me trained on YOUR product, pricing, and calendar.', 'Your leads get answers in seconds, not next-business-day.'], options: [
+        pitch: { bot: ['I just answered in seconds what usually sits in a Messenger inbox all day. CortanaTech builds assistants like me trained on YOUR products, prices, and hours.', 'Your customers get answers instantly — even while you’re busy running the shop.'], options: [
           { label: 'Talk to a human about it →', next: '#contact' },
           { label: '↺ Start over', next: 'start' }
         ]}
@@ -364,8 +365,8 @@ window.MEETING_ROLES = {
       heading: 'Your message is already half-written.',
       sub: 'Everything you told us on this page is below — edit anything, add anything, and send. A real person replies within one business day.',
       button: 'Send it →',
-      subject: 'Website inquiry — Startup',
-      opener: 'Hi CortanaTech — we’re a startup.'
+      subject: 'Website inquiry — Small Business',
+      opener: 'Hi CortanaTech — we run a small business.'
     }
   }
 };

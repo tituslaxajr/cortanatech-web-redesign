@@ -235,7 +235,9 @@
   </section>
 
   <!-- OUR WORK (pinned horizontal pan) -->
-  <section data-scene="work" data-pin data-scene-steps="4" class="band-navy" style="--scene-length: 400vh;">
+  <!-- The pinned wrapper must NOT clip overflow (position: sticky dies inside
+       overflow: hidden), so it carries the gradient directly, not .band-navy. -->
+  <section data-scene="work" data-pin data-scene-steps="4" style="--scene-length: 400vh; background: linear-gradient(135deg, #2B3990 0%, #1E2A70 100%);">
     <div class="scene-stage work-stage" data-aurora="deep">
       <div class="work-head">
         <div class="eyebrow-light m-reveal">Our Work</div>

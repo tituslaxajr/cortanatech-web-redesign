@@ -39,9 +39,20 @@
     return r.top < vh * margin && r.bottom > 0;
   }
 
+  // Public hooks for story.js scenes: countIn(root) fires every counter
+  // inside root (double-fires are safe via the dataset.counted guard).
+  window.Enhance = {
+    countUp: countUp,
+    countIn: function (root) {
+      [].slice.call(root.querySelectorAll('[data-count]')).forEach(countUp);
+      if (root.hasAttribute && root.hasAttribute('data-count')) countUp(root);
+    }
+  };
+
   function init() {
     var counters = [].slice.call(document.querySelectorAll('[data-count]'));
-    var reveals = [].slice.call(document.querySelectorAll('.reveal'));
+    // .m-reveal = mobile-scoped reveal for scene layers (CSS hides it only <=900px)
+    var reveals = [].slice.call(document.querySelectorAll('.reveal, .m-reveal'));
 
     // Reduced motion: show everything immediately, set final counter values.
     if (prefersReduced) {
@@ -63,6 +74,13 @@
         return true;
       });
       counters = counters.filter(function (el) {
+        if (el.dataset.counted === '1') return false; // fired by a scene
+        // Manual counters are triggered by story.js at a scene step; only
+        // defer when the story engine is actually driving (desktop + armed).
+        // On small screens scenes are static, so counters auto-fire in view.
+        if (el.hasAttribute('data-count-manual') &&
+            document.documentElement.classList.contains('js-story') &&
+            window.matchMedia('(min-width: 901px)').matches) return true;
         if (inView(el, 0.85)) { countUp(el); return false; }
         return true;
       });

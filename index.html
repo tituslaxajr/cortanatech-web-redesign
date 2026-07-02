@@ -26,6 +26,147 @@
     @media (max-width: 900px) {
       .home-nav { padding: 0 24px; }
     }
+
+    /* ============ THE RIPPLE — scroll narrative ============ */
+
+    /* Scene 1 · The Surface — hero content drifts up + fades on scroll-out.
+       --hxraw is the hero's viewport transit (0.5 at rest); default keeps it fully visible. */
+    [data-scene="surface"] { --hxraw: 0.5; }
+    .hero-content {
+      --hx: clamp(0, calc((var(--hxraw) - 0.5) / 0.45), 1);
+      opacity: calc(1 - var(--hx) * 0.85);
+      transform: translateY(calc(var(--hx) * -46px));
+    }
+
+    /* Scene 2 · The Drop — deep navy, pinned. --progress: 1 (default) = the
+       finished composition: rings expanded, stats resting on them. */
+    .drop-scene-bg { background: linear-gradient(180deg, #19235a 0%, #1a2a68 60%, #1e2a70 100%); }
+    .drop-stage-inner { position: relative; width: 100%; max-width: 1000px; margin: 0 auto; padding: 48px 24px; text-align: center; }
+
+    .drop-glyph {
+      position: absolute; left: 50%; top: 0; width: 14px; height: 14px; margin-left: -7px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: #fff; pointer-events: none;
+      --dp: clamp(0, calc((var(--progress) - 0.14) / 0.14), 1);
+      transform: translateY(calc(46vh * var(--dp) - 4vh));
+      opacity: min(clamp(0, calc((var(--progress) - 0.12) / 0.03), 1), clamp(0, calc((0.32 - var(--progress)) / 0.04), 1));
+    }
+    .impact-flash {
+      position: absolute; left: 50%; top: 50%; width: 220px; height: 220px; margin: -110px 0 0 -110px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(178,217,255,0.55) 0%, transparent 70%);
+      pointer-events: none;
+      --f: min(clamp(0, calc((var(--progress) - 0.26) / 0.05), 1), clamp(0, calc((0.52 - var(--progress)) / 0.14), 1));
+      opacity: var(--f);
+      transform: scale(calc(0.4 + var(--f) * 1.1));
+    }
+    .impact-rings { position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; }
+    .impact-rings i { position: absolute; left: 50%; top: 50%; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.3); transform: translate(-50%, -50%) scale(var(--rs, 1)); }
+    .impact-rings i:nth-child(1) { width: 300px; height: 300px; --rs: clamp(0.001, calc((var(--progress) - 0.28) / 0.2), 1); opacity: calc(clamp(0.001, calc((var(--progress) - 0.28) / 0.2), 1) * 0.9); }
+    .impact-rings i:nth-child(2) { width: 500px; height: 500px; border-color: rgba(255,255,255,0.22); --rs: clamp(0.001, calc((var(--progress) - 0.36) / 0.24), 1); opacity: calc(clamp(0.001, calc((var(--progress) - 0.36) / 0.24), 1) * 0.8); }
+    .impact-rings i:nth-child(3) { width: 700px; height: 700px; border-color: rgba(255,255,255,0.14); --rs: clamp(0.001, calc((var(--progress) - 0.44) / 0.28), 1); opacity: calc(clamp(0.001, calc((var(--progress) - 0.44) / 0.28), 1) * 0.7); }
+
+    .drop-stats { display: flex; justify-content: center; gap: 72px; margin: 120px 0 96px; position: relative; z-index: 2; }
+    .drop-stat { --ps: 1; opacity: var(--ps); transform: translateY(calc((1 - var(--ps)) * 34px)); }
+    .drop-stat:nth-child(1) { --ps: clamp(0, calc((var(--progress) - 0.34) / 0.1), 1); }
+    .drop-stat:nth-child(2) { --ps: clamp(0, calc((var(--progress) - 0.46) / 0.1), 1); }
+    .drop-stat:nth-child(3) { --ps: clamp(0, calc((var(--progress) - 0.58) / 0.1), 1); }
+    .drop-close {
+      --cl: clamp(0, calc((var(--progress) - 0.76) / 0.14), 1);
+      opacity: var(--cl); transform: translateY(calc((1 - var(--cl)) * 20px));
+    }
+    @media (max-width: 900px) {
+      .drop-stats { flex-direction: column; gap: 28px; margin: 64px 0 56px; }
+      .impact-rings i:nth-child(1) { width: 240px; height: 240px; }
+      .impact-rings i:nth-child(2) { width: 380px; height: 380px; }
+      .impact-rings i:nth-child(3) { width: 520px; height: 520px; }
+      .drop-glyph, .impact-flash { display: none; }
+    }
+
+    /* Scene 3 · The First Ring — audience circles bloom on guide rings */
+    .aud-stage-inner { width: 100%; max-width: 1160px; margin: 0 auto; padding: 48px 24px; position: relative; }
+    .aud-guides { position: absolute; left: 50%; top: 58%; width: 0; height: 0; pointer-events: none; }
+    .aud-guides i { position: absolute; left: 50%; top: 50%; border-radius: 50%; border: 1px solid rgba(28,117,188,0.1); transform: translate(-50%, -50%) scale(calc(1 + (1 - var(--progress)) * -0.06 + 0.06)); }
+    .aud-guides i:nth-child(1) { width: 560px; height: 560px; }
+    .aud-guides i:nth-child(2) { width: 880px; height: 880px; border-color: rgba(28,117,188,0.07); }
+    .aud-row { display: flex; justify-content: center; align-items: flex-start; gap: 36px; margin-top: 56px; position: relative; z-index: 2; }
+    .aud-card { display: block; text-align: center; width: 218px; color: inherit; }
+    .aud-card:nth-child(2) { margin-top: 44px; }
+    .aud-card:nth-child(3) { margin-top: 10px; }
+    .aud-card:nth-child(4) { margin-top: 58px; }
+    .aud-photo { width: 190px; height: 190px; margin: 0 auto 18px; border-radius: 50%; overflow: hidden; box-shadow: var(--shadow-lg); border: 4px solid #fff; }
+    .aud-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .aud-bloom { --pa: 1; opacity: var(--pa); transform: scale(calc(0.15 + var(--pa) * 0.85)); }
+    .aud-card:nth-child(1) .aud-bloom { --pa: clamp(0, calc((var(--progress) - 0.12) / 0.18), 1); }
+    .aud-card:nth-child(2) .aud-bloom { --pa: clamp(0, calc((var(--progress) - 0.28) / 0.18), 1); }
+    .aud-card:nth-child(3) .aud-bloom { --pa: clamp(0, calc((var(--progress) - 0.44) / 0.18), 1); }
+    .aud-card:nth-child(4) .aud-bloom { --pa: clamp(0, calc((var(--progress) - 0.6) / 0.18), 1); }
+    .aud-label { --pa: 1; opacity: var(--pa); }
+    .aud-card:nth-child(1) .aud-label { --pa: clamp(0, calc((var(--progress) - 0.2) / 0.14), 1); }
+    .aud-card:nth-child(2) .aud-label { --pa: clamp(0, calc((var(--progress) - 0.36) / 0.14), 1); }
+    .aud-card:nth-child(3) .aud-label { --pa: clamp(0, calc((var(--progress) - 0.52) / 0.14), 1); }
+    .aud-card:nth-child(4) .aud-label { --pa: clamp(0, calc((var(--progress) - 0.68) / 0.14), 1); }
+    .aud-card:hover .aud-photo { box-shadow: var(--shadow-card-hover); }
+    @media (max-width: 900px) {
+      .aud-row { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 16px; justify-items: center; margin-top: 40px; }
+      .aud-card, .aud-card:nth-child(2), .aud-card:nth-child(3), .aud-card:nth-child(4) { margin-top: 0; width: auto; }
+      .aud-photo { width: 150px; height: 150px; }
+      .aud-guides { display: none; }
+    }
+    @media (max-width: 360px) {
+      .aud-row { grid-template-columns: 1fr; }
+    }
+
+    /* Scene 4 · services arc backdrop */
+    .services-arc { position: absolute; left: 50%; top: -420px; width: 1400px; height: 1400px; margin-left: -700px; border-radius: 50%; border: 1px solid rgba(28,117,188,0.08); pointer-events: none; }
+
+    /* Scene 5 · Where the ripple has reached — horizontal pan.
+       Default (no-JS desktop): vertical stack. Desktop + story: scrubbed row.
+       Mobile: native scroll-snap carousel. */
+    .work-scene-bg { background: linear-gradient(135deg, #29ABE2 0%, #2E3192 100%); }
+    .work-stage { display: flex; flex-direction: column; justify-content: center; align-items: stretch; }
+    .work-head { max-width: 1200px; margin: 0 auto; padding: 64px 56px 40px; width: 100%; }
+    .work-track { display: flex; flex-direction: column; gap: 72px; padding: 0 0 64px; }
+    .work-panel { width: 100%; }
+    .work-panel-inner { max-width: 1060px; margin: 0 auto; padding: 0 56px; display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: center; }
+    .work-dots { display: none; }
+    @media (min-width: 901px) {
+      .js-story .work-track {
+        flex-direction: row; width: 400%; gap: 0; padding: 0;
+        --tx: clamp(0, calc((var(--progress) - 0.08) / 0.84), 1);
+        transform: translateX(calc(var(--tx) * -75%));
+      }
+      .js-story .work-panel { width: 25%; flex-shrink: 0; }
+      .js-story .work-dots { display: flex; justify-content: center; gap: 10px; padding: 36px 0 48px; }
+      .work-dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: background 0.3s, transform 0.3s; }
+      [data-step="0"] .work-dots i:nth-child(1), [data-step="1"] .work-dots i:nth-child(2),
+      [data-step="2"] .work-dots i:nth-child(3), [data-step="3"] .work-dots i:nth-child(4) { background: #fff; transform: scale(1.35); }
+    }
+    @media (max-width: 900px) {
+      .work-head { padding: 56px 24px 24px; }
+      .work-track { flex-direction: row; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 0 24px 48px; }
+      .work-panel { min-width: 86vw; scroll-snap-align: center; }
+      .work-panel-inner { grid-template-columns: 1fr; gap: 24px; padding: 0; }
+    }
+
+    /* Scene 6 · The Echo — testimonial watermark rings */
+    .echo-rings { position: absolute; left: 24%; top: 30%; width: 0; height: 0; pointer-events: none; }
+    .echo-rings i { position: absolute; left: 50%; top: 50%; border-radius: 50%; border: 1px solid rgba(28,117,188,0.07); transform: translate(-50%, -50%); }
+    .echo-rings i:nth-child(1) { width: 420px; height: 420px; }
+    .echo-rings i:nth-child(2) { width: 700px; height: 700px; border-color: rgba(28,117,188,0.05); }
+    .echo-rings i:nth-child(3) { width: 1000px; height: 1000px; border-color: rgba(28,117,188,0.035); }
+    .team-chip { width: 52px; height: 52px; border-radius: 50%; border: 2.5px solid #fff; object-fit: cover; margin-left: -14px; box-shadow: var(--shadow-sm); }
+    .team-chip:first-child { margin-left: 0; }
+
+    /* Scene 8 · Your Drop Is Next — radial entry + ambient ring */
+    @supports (clip-path: circle(20% at 50% 0%)) {
+      @media (min-width: 901px) {
+        .js-story [data-scene="finale"] {
+          --fpm: clamp(0, calc(var(--fp, 1) / 0.45), 1);
+          clip-path: circle(calc(18% + var(--fpm) * 135%) at 50% 0%);
+        }
+      }
+    }
+    .cta-submit { width: 100%; padding: 14px 24px; background: var(--color-primary); color: #fff; border: none; border-radius: var(--radius-full); font-family: var(--font-body); font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+    .cta-submit:hover { background: var(--color-blue-sky); transform: translateY(-1px); }
   </style>
 </head>
 <body style="font-family: var(--font-body);">
@@ -52,8 +193,8 @@
     <a href="contact.html" onclick="closeMenu()">Get Started</a>
   </div>
 
-  <!-- HERO -->
-  <section data-water style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+  <!-- SCENE 1 · THE SURFACE (hero) -->
+  <section data-water data-scene="surface" data-progress-var="--hxraw" style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden;">
     <div style="position: absolute; inset: 0; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 42%, #19235a 100%);"></div>
     <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 55% 55% at 105% 95%, rgba(43,57,144,0.5) 0%, transparent 55%);"></div>
     <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -65,64 +206,131 @@
       <circle cx="340" cy="340" r="240" stroke="rgba(255,255,255,0.055)" stroke-width="1.2"></circle>
       <circle cx="340" cy="340" r="170" stroke="rgba(255,255,255,0.05)" stroke-width="1"></circle>
       <circle cx="340" cy="340" r="100" stroke="rgba(255,255,255,0.04)" stroke-width="0.8"></circle>
-      <line x1="0" y1="340" x2="680" y2="340" stroke="rgba(255,255,255,0.04)" stroke-width="0.8"></line>
-      <line x1="340" y1="0" x2="340" y2="680" stroke="rgba(255,255,255,0.04)" stroke-width="0.8"></line>
     </svg>
     <svg style="position: absolute; left: -60px; bottom: -60px; width: 340px; height: 340px; pointer-events: none;" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <circle cx="170" cy="170" r="150" stroke="rgba(255,255,255,0.045)" stroke-width="1"></circle>
       <circle cx="170" cy="170" r="100" stroke="rgba(255,255,255,0.04)" stroke-width="0.8"></circle>
     </svg>
-    <div class="container fade-up" style="position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 128px 40px 80px; width: 100%;">
-      <div style="display: inline-block; font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.14em; color: rgba(255,255,255,0.68); text-transform: uppercase; margin-bottom: 28px; border: 1px solid rgba(255,255,255,0.22); padding: 6px 18px; border-radius: 100px;">Trusted Digital Partner for Mission-Driven Organizations</div>
-      <h1 style="font-family: var(--font-display); font-size: clamp(42px, 6.5vw, 80px); font-weight: 900; color: #fff; line-height: 1.06; letter-spacing: -0.035em; margin-bottom: 22px;">We Help Churches, Schools &amp; Startups Ripple Their Impact Digitally</h1>
+    <div class="container hero-content scene-layer" style="position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 128px 40px 64px; width: 100%;">
+      <div class="fade-up">
+      <div class="hero-badge" style="margin-bottom: 28px;">Trusted Digital Partner for Mission-Driven Organizations</div>
+      <h1 style="font-family: var(--font-display); font-size: clamp(42px, 6.5vw, 80px); font-weight: 900; color: #fff; line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 22px;">We Help Churches, Schools &amp; Startups Ripple Their Impact Digitally</h1>
       <p style="font-family: var(--font-body); font-size: clamp(16px, 1.8vw, 19px); color: rgba(255,255,255,0.76); line-height: 1.68; margin-bottom: 44px; max-width: 580px; margin-left: auto; margin-right: auto;">Practical, affordable digital systems — websites, email, chatbots, and web apps — so your organization can focus on what matters most.</p>
-      <form id="hero-form" onsubmit="submitHeroEmail(event)" class="hero-email" style="display: flex; max-width: 500px; margin: 0 auto 52px; border-radius: 10px; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.28); background: rgba(255,255,255,0.1); backdrop-filter: blur(16px);">
-        <input id="hero-email" type="email" placeholder="Enter your work email" required style="flex: 1; padding: 15px 20px; border: none; background: transparent; color: #fff; font-size: 15px; outline: none; min-width: 0;">
+      <form id="hero-form" onsubmit="submitHeroEmail(event)" class="hero-email" style="display: flex; max-width: 500px; margin: 0 auto 52px; border-radius: 100px; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.28); background: rgba(255,255,255,0.1); backdrop-filter: blur(16px);">
+        <input id="hero-email" type="email" placeholder="Enter your email" required style="flex: 1; padding: 15px 24px; border: none; background: transparent; color: #fff; font-size: 15px; outline: none; min-width: 0;">
         <button type="submit" style="padding: 15px 28px; background: #fff; color: #2B3990; border: none; font-family: var(--font-body); font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.2s;" onmouseover="this.style.background='#EBF4FB'" onmouseout="this.style.background='#fff'">Get Started →</button>
       </form>
-      <div style="min-height: 24px; margin-top: -40px; margin-bottom: 40px;">
+      <div style="min-height: 24px; margin-top: -40px; margin-bottom: 32px;">
         <span id="hero-message" style="font-family: var(--font-body); font-size: 14px; color: rgba(255,255,255,0.85);"></span>
       </div>
-      <div class="stats-row" style="display: flex; justify-content: center; gap: 60px; padding-top: 36px; border-top: 1px solid rgba(255,255,255,0.15);">
-        <div><div data-count="3" data-suffix="+" style="font-family: var(--font-display); font-size: 34px; font-weight: 900; color: #fff; line-height: 1;">3+</div><div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.58); margin-top: 5px; letter-spacing: 0.04em;">Years Serving</div></div>
-        <div><div data-count="10" data-suffix="+" style="font-family: var(--font-display); font-size: 34px; font-weight: 900; color: #fff; line-height: 1;">10+</div><div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.58); margin-top: 5px; letter-spacing: 0.04em;">Projects Delivered</div></div>
-        <div><div data-count="4" style="font-family: var(--font-display); font-size: 34px; font-weight: 900; color: #fff; line-height: 1;">4</div><div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.58); margin-top: 5px; letter-spacing: 0.04em;">Core Services</div></div>
+      <div class="scroll-cue" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7 C12 2.7 5.5 10.5 5.5 15 a6.5 6.5 0 0 0 13 0 C18.5 10.5 12 2.7 12 2.7 z"></path></svg>
+        <span style="font-family: var(--font-body); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55);">Watch how a ripple starts</span>
+      </div>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section style="background: #fff; padding: 96px 0;">
-    <div class="container">
-      <div class="reveal" style="text-align: center; margin-bottom: 56px;">
-        <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 12px;">Our Services</div>
-        <h2 style="font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: #2B3990; letter-spacing: -0.025em; line-height: 1.15;">Everything Your Organization Needs Online</h2>
-        <p style="font-family: var(--font-body); font-size: 16px; color: #454C59; line-height: 1.7; max-width: 560px; margin: 16px auto 0;">Four simple starting points. Each one helps your mission reach further than before.</p>
+  <!-- SCENE 2 · THE DROP -->
+  <section data-scene="drop" data-pin data-scene-steps="10" data-count-at="3" data-ripple-at="2" class="drop-scene-bg" style="--scene-length: 300vh;">
+    <div class="scene-stage">
+      <div class="drop-stage-inner">
+        <div class="eyebrow-light m-reveal" style="color: rgba(255,255,255,0.55);">Why &ldquo;ripple&rdquo;?</div>
+        <h2 class="m-reveal" style="font-family: var(--font-display); font-size: clamp(28px, 4vw, 48px); font-weight: 900; color: #fff; letter-spacing: -0.015em; line-height: 1.15; max-width: 640px; margin: 0 auto;">Every mission starts as a single drop.</h2>
+
+        <div class="drop-glyph scene-layer" aria-hidden="true"></div>
+        <div class="impact-flash scene-layer" aria-hidden="true"></div>
+        <div class="impact-rings" aria-hidden="true"><i class="scene-layer"></i><i class="scene-layer"></i><i class="scene-layer"></i></div>
+        <div class="ripple-rings" aria-hidden="true" style="top: 50%;"><i></i><i></i><i></i></div>
+
+        <div class="drop-stats">
+          <div class="drop-stat scene-layer m-reveal"><div data-count="3" data-suffix="+" data-count-manual style="font-family: var(--font-display); font-size: 46px; font-weight: 900; color: #fff; line-height: 1;">3+</div><div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 8px; letter-spacing: 0.04em;">Years Serving</div></div>
+          <div class="drop-stat scene-layer m-reveal"><div data-count="10" data-suffix="+" data-count-manual style="font-family: var(--font-display); font-size: 46px; font-weight: 900; color: #fff; line-height: 1;">10+</div><div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 8px; letter-spacing: 0.04em;">Projects Delivered</div></div>
+          <div class="drop-stat scene-layer m-reveal"><div data-count="4" data-count-manual style="font-family: var(--font-display); font-size: 46px; font-weight: 900; color: #fff; line-height: 1;">4</div><div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 8px; letter-spacing: 0.04em;">Core Services</div></div>
+        </div>
+
+        <p class="drop-close scene-layer m-reveal" style="font-family: var(--font-display); font-size: clamp(18px, 2.2vw, 26px); font-weight: 700; color: rgba(255,255,255,0.85); letter-spacing: -0.01em;">Then it ripples. That&rsquo;s where we come in.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 3 · THE FIRST RING (who we serve) -->
+  <section data-scene="audiences" data-pin class="section-warm" style="--scene-length: 300vh;">
+    <div class="scene-stage">
+      <div class="aud-stage-inner">
+        <div class="aud-guides" aria-hidden="true"><i></i><i></i></div>
+        <div style="text-align: center; position: relative; z-index: 2;">
+          <div class="eyebrow m-reveal">Who we serve</div>
+          <h2 class="section-title m-reveal">The ripple reaches people like yours.</h2>
+          <p class="section-sub m-reveal" style="margin-left: auto; margin-right: auto;">Pastors, principals, directors, and founders — people with a mission and not enough hours.</p>
+        </div>
+        <div class="aud-row">
+          <a href="services.html" class="aud-card">
+            <div class="aud-photo aud-bloom scene-layer m-reveal"><img src="assets/photos/audience/church-congregation.jpg" alt="A church congregation gathered in worship" loading="lazy" decoding="async" width="380" height="380"></div>
+            <div class="aud-label m-reveal">
+              <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Churches</div>
+              <div style="font-family: var(--font-body); font-size: 13.5px; color: #454C59; line-height: 1.5;">Reach your community beyond Sunday.</div>
+            </div>
+          </a>
+          <a href="services.html" class="aud-card">
+            <div class="aud-photo aud-bloom scene-layer m-reveal"><img src="assets/photos/audience/school-classroom.jpg" alt="Students learning in a classroom" loading="lazy" decoding="async" width="380" height="380"></div>
+            <div class="aud-label m-reveal">
+              <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Schools</div>
+              <div style="font-family: var(--font-body); font-size: 13.5px; color: #454C59; line-height: 1.5;">Modernize without overwhelming your staff.</div>
+            </div>
+          </a>
+          <a href="services.html" class="aud-card">
+            <div class="aud-photo aud-bloom scene-layer m-reveal"><img src="assets/photos/audience/nonprofit-volunteers.jpg" alt="Nonprofit volunteers working together" loading="lazy" decoding="async" width="380" height="380"></div>
+            <div class="aud-label m-reveal">
+              <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Nonprofits</div>
+              <div style="font-family: var(--font-body); font-size: 13.5px; color: #454C59; line-height: 1.5;">Turn goodwill into lasting support.</div>
+            </div>
+          </a>
+          <a href="services.html" class="aud-card">
+            <div class="aud-photo aud-bloom scene-layer m-reveal"><img src="assets/photos/audience/startup-entrepreneur.jpg" alt="A founder working on her startup" loading="lazy" decoding="async" width="380" height="380"></div>
+            <div class="aud-label m-reveal">
+              <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; margin-bottom: 5px;">Startups</div>
+              <div style="font-family: var(--font-body); font-size: 13.5px; color: #454C59; line-height: 1.5;">Look established from day one.</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 4 · WIDENING THE RIPPLE (services) -->
+  <section class="section section-white" style="position: relative; overflow: hidden;">
+    <div class="services-arc" aria-hidden="true"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <div class="reveal section-head-center">
+        <div class="eyebrow">Our Services</div>
+        <h2 class="section-title">Four Ways to Ripple Farther</h2>
+        <p class="section-sub">Four simple starting points. Each one helps your mission reach further than before.</p>
       </div>
       <div class="services-grid reveal-stagger" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
         <a href="services.html" class="service-card reveal">
-          <div style="width: 52px; height: 52px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #1C75BC;">
+          <div class="icon-box ring-pulse" style="margin-bottom: 20px;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Website Design &amp; Development</h3>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;">Custom, affordable websites that represent your mission and connect with your community.</p>
         </a>
         <a href="services.html" class="service-card reveal">
-          <div style="width: 52px; height: 52px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #1C75BC;">
+          <div class="icon-box ring-pulse" style="margin-bottom: 20px;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Professional Email Setup</h3>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;">Branded email addresses that build trust and credibility with donors, students, and partners.</p>
         </a>
         <a href="services.html" class="service-card reveal">
-          <div style="width: 52px; height: 52px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #1C75BC;">
+          <div class="icon-box ring-pulse" style="margin-bottom: 20px;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Chatbot Development</h3>
           <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;">Intelligent chatbots that answer questions and support your community around the clock.</p>
         </a>
         <a href="services.html" class="service-card reveal">
-          <div style="width: 52px; height: 52px; background: #EBF4FB; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #1C75BC;">
+          <div class="icon-box ring-pulse" style="margin-bottom: 20px;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
           </div>
           <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Custom Web Applications</h3>
@@ -132,11 +340,106 @@
     </div>
   </section>
 
-  <!-- TESTIMONIAL -->
-  <section style="background: #F1EDED; padding: 96px 0;">
-    <div class="container">
+  <!-- SCENE 5 · WHERE THE RIPPLE HAS REACHED (work) -->
+  <section data-scene="reach" data-pin data-scene-steps="4" class="work-scene-bg" style="--scene-length: 400vh;">
+    <div class="scene-stage work-stage">
+      <div class="work-head">
+        <div class="eyebrow-light m-reveal">Where the ripple has reached</div>
+        <h2 class="section-title section-title-light m-reveal">Ripples we&rsquo;ve helped start.</h2>
+      </div>
+      <div class="work-track">
+        <div class="work-panel m-reveal">
+          <div class="work-panel-inner">
+            <div>
+              <h3 style="font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 32px); font-weight: 900; color: #fff; letter-spacing: -0.015em; line-height: 1.2; margin-bottom: 14px;">Baptist Bible Seminary &amp; Institute, Inc.</h3>
+              <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.7; margin-bottom: 20px;">A seminary&rsquo;s full digital presence — website and professional email, built from the ground up.</p>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px;">
+                <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.16); padding: 6px 12px; border-radius: 100px;">Website Design</span>
+                <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.16); padding: 6px 12px; border-radius: 100px;">Professional Email</span>
+              </div>
+              <a href="https://bbsi.edu.ph" target="_blank" rel="noopener noreferrer" class="btn-white">See it live →</a>
+            </div>
+            <div class="img-card" style="aspect-ratio: 16/10;">
+              <img src="assets/photos/bbsi-homepage.jpg" alt="Screenshot of the Baptist Bible Seminary and Institute homepage" loading="lazy" decoding="async" style="object-position: top center;">
+              <div class="img-overlay"></div>
+              <div class="img-caption">
+                <div style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: #fff;">bbsi.edu.ph</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="work-panel m-reveal">
+          <div class="work-panel-inner">
+            <div>
+              <h3 style="font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 32px); font-weight: 900; color: #fff; letter-spacing: -0.015em; line-height: 1.2; margin-bottom: 14px;">Kalinga — Kapatid Ministry</h3>
+              <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.7; margin-bottom: 20px;">Connecting sponsors to children — records in seconds instead of scattered spreadsheets.</p>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px;">
+                <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.16); padding: 6px 12px; border-radius: 100px;">Custom Web App</span>
+                <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.16); padding: 6px 12px; border-radius: 100px;">Nonprofit Software</span>
+              </div>
+              <a href="work.html" class="btn-white">View case study →</a>
+            </div>
+            <div class="img-card" style="aspect-ratio: 16/10;">
+              <img src="assets/photos/kalinga-homepage.jpg" alt="Screenshot of the Kalinga child sponsorship platform" loading="lazy" decoding="async" style="object-position: top center;">
+              <div class="img-overlay"></div>
+              <div class="img-caption">
+                <div style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: #fff;">Kalinga Platform</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="work-panel m-reveal">
+          <div class="work-panel-inner">
+            <div>
+              <h3 style="font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 32px); font-weight: 900; color: #fff; letter-spacing: -0.015em; line-height: 1.2; margin-bottom: 14px;">Megopic — Taylor University</h3>
+              <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.7; margin-bottom: 20px;">A medical conference moved online — registration, agenda, and abstract submission on one site.</p>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px;">
+                <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.16); padding: 6px 12px; border-radius: 100px;">Event Website</span>
+                <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.16); padding: 6px 12px; border-radius: 100px;">Registration &amp; Ticketing</span>
+              </div>
+              <a href="work.html" class="btn-white">View case study →</a>
+            </div>
+            <div class="img-card" style="aspect-ratio: 16/10;">
+              <img src="assets/photos/megopic-homepage.jpg" alt="Screenshot of the Megopic conference website" loading="lazy" decoding="async" style="object-position: top center;">
+              <div class="img-overlay"></div>
+              <div class="img-caption">
+                <div style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: #fff;">Conference Site</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="work-panel m-reveal">
+          <div class="work-panel-inner">
+            <div>
+              <h3 style="font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 32px); font-weight: 900; color: #fff; letter-spacing: -0.015em; line-height: 1.2; margin-bottom: 14px;">StewardTrack</h3>
+              <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.7; margin-bottom: 20px;">Our own product — helping Philippine churches manage membership, giving, and events in one place.</p>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px;">
+                <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.16); padding: 6px 12px; border-radius: 100px;">SaaS Platform</span>
+                <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.16); padding: 6px 12px; border-radius: 100px;">Church Management</span>
+              </div>
+              <a href="work.html" class="btn-white">View case study →</a>
+            </div>
+            <div class="img-card" style="aspect-ratio: 16/10;">
+              <img src="assets/photos/stewardtrack-homepage.jpg" alt="Screenshot of the StewardTrack church management platform" loading="lazy" decoding="async" style="object-position: top center;">
+              <div class="img-overlay"></div>
+              <div class="img-caption">
+                <div style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: #fff;">Our Product</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <!-- SCENE 6 · THE ECHO (testimonial + the people) -->
+  <section class="section section-warm" style="position: relative; overflow: hidden;">
+    <div class="echo-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="container" style="position: relative; z-index: 2;">
       <div class="split-grid reveal" style="grid-template-columns: 1fr 2.2fr;">
         <div>
+          <div class="eyebrow">From a partner</div>
           <div style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: #1E1F1E; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px;">Baptist Bible Seminary</div>
           <div style="font-family: var(--font-body); font-size: 13px; color: #454C59; margin-bottom: 24px;">&amp; Institute, Inc.</div>
           <div style="display: flex; gap: 4px;">
@@ -148,11 +451,11 @@
           </div>
         </div>
         <div>
-          <div style="font-family: var(--font-display); font-size: 80px; font-weight: 900; color: #D1D0CE; line-height: 0.55; margin-bottom: 20px;">"</div>
+          <div style="font-family: var(--font-display); font-size: 80px; font-weight: 900; color: #C5DFF2; line-height: 0.55; margin-bottom: 20px;">&ldquo;</div>
           <blockquote style="font-family: var(--font-display); font-size: clamp(18px, 2.2vw, 24px); font-weight: 700; color: #2B3990; line-height: 1.55; letter-spacing: -0.01em; margin-bottom: 28px;">We are thankful for the privilege of partnering with Cortanatech Solutions in advanced technology web development and email setup. The professionalism of their services is commendable. We look forward to more partnership opportunities.</blockquote>
           <div style="display: flex; align-items: center; gap: 14px;">
-            <div style="width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: #D1D0CE;">
-              <img src="assets/photos/woman-laptop-smiling.jpg" alt="Evangel Balmes" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, #29ABE2 0%, #2E3192 100%); display: flex; align-items: center; justify-content: center;">
+              <span style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: #fff;">EB</span>
             </div>
             <div>
               <div style="font-family: var(--font-body); font-size: 14px; font-weight: 700; color: #1E1F1E;">Evangel Balmes</div>
@@ -161,83 +464,78 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- PORTFOLIO -->
-  <section style="background: #fff; padding: 96px 0;">
-    <div class="container">
-      <div class="split-grid reveal">
-        <div>
-          <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #1C75BC; text-transform: uppercase; margin-bottom: 16px;">See Our Work</div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 40px); font-weight: 900; color: #2B3990; letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 18px;">Baptist Bible Seminary and Institute, Inc.</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.72; margin-bottom: 28px;">A theological institution committed to training ministry leaders through sound biblical scholarship. We built their website and set up professional email infrastructure from the ground up.</p>
-          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 28px;">
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 12px; border-radius: 100px;">Website Design</span>
-            <span style="font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #1C75BC; background: #EBF4FB; padding: 6px 12px; border-radius: 100px;">Professional Email</span>
+      <div class="reveal" style="margin-top: 64px; background: #fff; border-radius: 24px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; box-shadow: var(--shadow-card);">
+        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+          <div style="display: flex;">
+            <img class="team-chip" src="assets/photos/team/faithful-eli-coronel.jpg" alt="Faithful Eli Coronel" loading="lazy" decoding="async" width="52" height="52">
+            <img class="team-chip" src="assets/photos/team/titus-jr-laxa.jpg" alt="Titus Jr Laxa" loading="lazy" decoding="async" width="52" height="52">
+            <img class="team-chip" src="assets/photos/team/aiza-nosa.jpg" alt="Aiza Nosa" loading="lazy" decoding="async" width="52" height="52">
+            <img class="team-chip" src="assets/photos/team/jennifer-dimino.jpg" alt="Jennifer Dimino" loading="lazy" decoding="async" width="52" height="52">
+            <img class="team-chip" src="assets/photos/team/mervin-hernandez.jpg" alt="Mervin Hernandez" loading="lazy" decoding="async" width="52" height="52">
           </div>
-          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-            <a href="https://bbsi.edu.ph" target="_blank" rel="noopener noreferrer" class="btn-primary">See it live →</a>
-            <a href="work.html" class="port-link">View all work</a>
+          <div>
+            <div style="font-family: var(--font-display); font-size: 17px; font-weight: 700; color: #1E1F1E;">Real people, a message away.</div>
+            <div style="font-family: var(--font-body); font-size: 13.5px; color: #454C59;">Partner, not vendor — we&rsquo;re in it with you, not just for you.</div>
           </div>
         </div>
-        <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 20px 52px rgba(0,0,0,0.11); aspect-ratio: 16/10; position: relative;">
-          <img src="assets/photos/bbsi-homepage.jpg" alt="Screenshot of the Baptist Bible Seminary and Institute homepage" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-          <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(43,57,144,0.88) 0%, transparent 55%);"></div>
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 24px;">
-            <div style="font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: rgba(255,255,255,0.65); text-transform: uppercase; margin-bottom: 5px;">Live Project</div>
-            <div style="font-family: var(--font-display); font-size: 17px; font-weight: 700; color: #fff;">bbsi.edu.ph</div>
-          </div>
-        </div>
+        <a href="about.html" class="btn-primary">Meet the team →</a>
       </div>
     </div>
   </section>
 
-  <!-- BLOG -->
-  <section style="position: relative; padding: 96px 0; overflow: hidden; background: #1C75BC;">
-    <img src="assets/photos/team-excited-laptop.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; opacity: 0.1;">
-    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(24,80,150,0.95) 0%, rgba(30,42,105,0.97) 100%);"></div>
-    <div class="container" style="position: relative; z-index: 2;">
+  <!-- SCENE 7 · KEEP THE WATER MOVING (blog) -->
+  <section class="section section-white">
+    <div class="container">
       <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 16px;">
         <div>
-          <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.9); text-transform: uppercase; margin-bottom: 12px;">From the Blog</div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 40px); font-weight: 900; color: #fff; letter-spacing: -0.02em; line-height: 1.15;">Learn How to Grow Your Organization</h2>
+          <div class="eyebrow">From the Blog</div>
+          <h2 class="section-title">Learn How to Grow Your Organization</h2>
         </div>
-        <a href="blog.html" class="view-all">View all posts →</a>
+        <a href="blog.html" class="view-all-dark">View all posts →</a>
       </div>
       <div class="blog-grid reveal-stagger" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-        <a href="blog-church-website.html" class="hero-blog-card reveal">
-          <div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.85); margin-bottom: 14px; letter-spacing: 0.04em;">Jul 1, 2026</div>
-          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; line-height: 1.35; margin-bottom: 12px;">How a Website Transforms a Church Organization</h3>
-          <p style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.88); line-height: 1.65; margin-bottom: 20px;">In today's digital age, a well-designed website enhances a church's outreach, communication, and community engagement.</p>
-          <span class="blog-read-more">Read more →</span>
+        <a href="blog-church-website.html" class="blog-card reveal" style="padding: 26px;">
+          <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 18px;">
+            <img src="assets/photos/audience/church-congregation.jpg" alt="" loading="lazy" decoding="async" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover;" width="52" height="52">
+            <div style="font-family: var(--font-body); font-size: 12px; color: #8C909A; letter-spacing: 0.04em;">Jul 1, 2026 · Church &amp; Ministry</div>
+          </div>
+          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; line-height: 1.35; margin-bottom: 12px;">How a Website Transforms a Church Organization</h3>
+          <p style="font-family: var(--font-body); font-size: 13px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">In today's digital age, a well-designed website enhances a church's outreach, communication, and community engagement.</p>
+          <span class="read-more">Read more →</span>
         </a>
-        <a href="blog-nonprofit-digital-tools.html" class="hero-blog-card reveal">
-          <div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.85); margin-bottom: 14px; letter-spacing: 0.04em;">Jun 30, 2026</div>
-          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; line-height: 1.35; margin-bottom: 12px;">The Real Cost of Nonprofits Sticking with Spreadsheets</h3>
-          <p style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.88); line-height: 1.65; margin-bottom: 20px;">Spreadsheets feel free — until they start costing your nonprofit time, accuracy, and trust.</p>
-          <span class="blog-read-more">Read more →</span>
+        <a href="blog-nonprofit-digital-tools.html" class="blog-card reveal" style="padding: 26px;">
+          <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 18px;">
+            <img src="assets/photos/audience/nonprofit-volunteers.jpg" alt="" loading="lazy" decoding="async" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover;" width="52" height="52">
+            <div style="font-family: var(--font-body); font-size: 12px; color: #8C909A; letter-spacing: 0.04em;">Jun 30, 2026 · Nonprofits</div>
+          </div>
+          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; line-height: 1.35; margin-bottom: 12px;">The Real Cost of Nonprofits Sticking with Spreadsheets</h3>
+          <p style="font-family: var(--font-body); font-size: 13px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Spreadsheets feel free — until they start costing your nonprofit time, accuracy, and trust.</p>
+          <span class="read-more">Read more →</span>
         </a>
-        <a href="blog-school-digital-tools.html" class="hero-blog-card reveal">
-          <div style="font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.85); margin-bottom: 14px; letter-spacing: 0.04em;">Jun 27, 2026</div>
-          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; line-height: 1.35; margin-bottom: 12px;">Modernizing Your School Without Overwhelming Your Staff</h3>
-          <p style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.88); line-height: 1.65; margin-bottom: 20px;">Schools don't fall behind because they don't care — every option just feels like more work.</p>
-          <span class="blog-read-more">Read more →</span>
+        <a href="blog-school-digital-tools.html" class="blog-card reveal" style="padding: 26px;">
+          <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 18px;">
+            <img src="assets/photos/audience/school-classroom.jpg" alt="" loading="lazy" decoding="async" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover;" width="52" height="52">
+            <div style="font-family: var(--font-body); font-size: 12px; color: #8C909A; letter-spacing: 0.04em;">Jun 27, 2026 · Education</div>
+          </div>
+          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; line-height: 1.35; margin-bottom: 12px;">Modernizing Your School Without Overwhelming Your Staff</h3>
+          <p style="font-family: var(--font-body); font-size: 13px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Schools don't fall behind because they don't care — every option just feels like more work.</p>
+          <span class="read-more">Read more →</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT CTA -->
-  <section style="position: relative; overflow: hidden; background: #2B3990; padding: 96px 0;">
-    <div class="container">
+  <!-- SCENE 8 · YOUR DROP IS NEXT (contact CTA) -->
+  <section data-scene="finale" data-progress-var="--fp" style="position: relative; overflow: hidden; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 42%, #19235a 100%); padding: 96px 0;">
+    <div class="ambient-ring" aria-hidden="true" style="left: 8%; top: 20%; width: 340px; height: 340px;"></div>
+    <div class="container" style="position: relative; z-index: 2;">
       <div class="split-grid reveal" style="align-items: start;">
         <div>
-          <div style="font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.65); text-transform: uppercase; margin-bottom: 16px;">Get In Touch</div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: #fff; letter-spacing: -0.025em; line-height: 1.12; margin-bottom: 20px;">Ready to Start the Ripple?</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.72; margin-bottom: 32px;">Tell us about your mission and what you're looking to achieve, and we'll help it reach further. We follow up within one business day.</p>
+          <div class="eyebrow-light">Your turn</div>
+          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: #fff; letter-spacing: -0.015em; line-height: 1.12; margin-bottom: 20px;">Ready to Start the Ripple?</h2>
+          <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.72; margin-bottom: 32px;">Every ripple on this page started with one message. Tell us about your mission and what you&rsquo;re looking to achieve — we reply within one business day.</p>
           <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.65); flex-shrink: 0;">
+            <div class="icon-box icon-box-xs icon-box-dark">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
             </div>
             <span style="font-family: var(--font-body); font-size: 14px; color: rgba(255,255,255,0.72);">customers@cortanatechsolutions.com</span>
@@ -263,7 +561,7 @@
               <label class="form-label-dark">Message</label>
               <textarea name="message" placeholder="Tell us about your project..." rows="4" required class="form-input-dark" style="resize: vertical;"></textarea>
             </div>
-            <button type="submit" style="width: 100%; padding: 14px 24px; background: #1C75BC; color: #fff; border: none; border-radius: 8px; font-family: var(--font-body); font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#29ABE2'" onmouseout="this.style.background='#1C75BC'">Send Message →</button>
+            <button type="submit" class="cta-submit">Send Message →</button>
             <p id="contact-msg" style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.85); text-align: center; line-height: 1.5;"></p>
           </form>
         </div>
@@ -320,5 +618,6 @@
   </script>
   <script src="water-ripple.js"></script>
   <script src="enhance.js"></script>
+  <script src="story.js"></script>
 </body>
 </html>

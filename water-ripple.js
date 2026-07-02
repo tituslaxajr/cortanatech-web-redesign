@@ -127,7 +127,9 @@
     var uCenters = gl.getUniformLocation(prog, 'u_centers');
     var uStarts = gl.getUniformLocation(prog, 'u_starts');
 
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Clamp DPR harder on narrow screens: quarter-to-half the fill cost on
+    // cheap phones, invisible on a soft gradient.
+    var dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth < 720 ? 1.25 : 2);
     function resize() {
       var r = section.getBoundingClientRect();
       canvas.width = Math.max(1, Math.round(r.width * dpr));
@@ -161,14 +163,15 @@
     });
 
     // Idle / touch coverage: a slow auto-ripple so the surface always has life
-    // on mobile and when the cursor is still.
+    // on mobile and when the cursor is still. Paused while off-screen.
     if (!prefersReduced) {
       setInterval(function () {
+        if (!running) return;
         spawn(Math.random() * canvas.width, Math.random() * canvas.height);
       }, 2500);
     }
 
-    function frame() {
+    function draw() {
       var time = (performance.now() - t0) / 1000;
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uTime, time);
@@ -178,10 +181,62 @@
       gl.uniform2fv(uCenters, centers);
       gl.uniform1fv(uStarts, starts);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
-      requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
+
+    // Render loop with start/stop so the GPU idles while the hero is
+    // off-screen (the section keeps its last frame as a static image).
+    var running = false, rafId = 0;
+    function frame() {
+      if (!running) return;
+      draw();
+      rafId = requestAnimationFrame(frame);
+    }
+    function start() {
+      if (running || prefersReduced) return;
+      running = true;
+      rafId = requestAnimationFrame(frame);
+    }
+    function stop() {
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+    }
+
+    if (prefersReduced) {
+      draw(); // one static frame; never loop, never spawn
+    } else if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries[0].isIntersecting ? start() : stop();
+      }, { threshold: 0 }).observe(section);
+    } else {
+      start();
+    }
+
+    // Programmatic drop API (coords are 0..1 ratios of the section box) so
+    // scroll scenes can land a ripple on cue. No-ops under reduced motion.
+    section.waterAPI = {
+      drop: function (rx, ry) {
+        if (prefersReduced) return;
+        spawn(rx * canvas.width, ry * canvas.height);
+        start();
+      },
+      burst: function (rx, ry, n, gapMs) {
+        n = n || 3; gapMs = gapMs || 180;
+        for (var i = 0; i < n; i++) setTimeout(section.waterAPI.drop, i * gapMs, rx, ry);
+      }
+    };
   }
+
+  // Global facade: WaterRipple.drop('#hero', 0.5, 0.4) from other scripts.
+  window.WaterRipple = window.WaterRipple || {
+    drop: function (target, rx, ry) {
+      var el = typeof target === 'string' ? document.querySelector(target) : target;
+      if (el && el.waterAPI) el.waterAPI.drop(rx, ry);
+    },
+    burst: function (target, rx, ry, n, gapMs) {
+      var el = typeof target === 'string' ? document.querySelector(target) : target;
+      if (el && el.waterAPI) el.waterAPI.burst(rx, ry, n, gapMs);
+    }
+  };
 
   function init() {
     var heroes = document.querySelectorAll('.page-hero, [data-water]');

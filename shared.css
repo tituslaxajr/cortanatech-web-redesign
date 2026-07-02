@@ -152,11 +152,13 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 .view-all-dark { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--color-primary); border-bottom: 1px solid var(--color-blue-100); padding-bottom: 2px; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
 .view-all-dark:hover { color: var(--color-primary-dark); border-color: var(--color-primary); }
 
-/* Page hero (inner pages) — a window onto the night sky. Solid enough to
-   read on its own (no-JS / no-WebGL over the .sky body gradient), and it
-   thins out once the WebGL starfield is running behind it. */
-.page-hero { position: relative; padding: 80px 0 88px; overflow: hidden; background: linear-gradient(160deg, rgba(29,84,155,0.55) 0%, rgba(31,56,130,0.42) 45%, rgba(16,23,64,0.5) 100%); }
-.js-constellation .page-hero { background: linear-gradient(160deg, rgba(29,84,155,0.34) 0%, rgba(31,56,130,0.26) 45%, rgba(16,23,64,0.34) 100%); }
+/* Page hero (inner pages) — opaque brand gradient. This is also the
+   fallback art beneath the ambient aurora canvas (aurora.js). */
+.page-hero { position: relative; padding: 80px 0 88px; overflow: hidden; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 42%, #19235a 100%); }
+.page-hero::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: radial-gradient(ellipse 55% 55% at 105% 95%, rgba(43,57,144,0.5) 0%, transparent 55%);
+}
 
 /* Portfolio image link */
 .port-link { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--color-primary); padding: 13px 12px; transition: color 0.2s; }

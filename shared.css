@@ -6,13 +6,12 @@
 @import url('_ds/cortanatech-design-system-bb1f31c6-d264-4dcb-8e4e-e193a53ac1cd/tokens/shadows.css');
 
 :root {
-  /* Motion vocabulary — water physics. Rings only expand, nothing rotates. */
-  --ease-ripple: cubic-bezier(0.22, 1, 0.36, 1);    /* water spreading — default */
-  --ease-drop:   cubic-bezier(0.5, 0, 0.9, 0.4);    /* gravity — entrances from above */
-  --ease-settle: cubic-bezier(0.34, 1.3, 0.64, 1);  /* slight overshoot — landing */
+  /* Motion vocabulary — light. Things kindle, glow and drift; nothing rotates. */
+  --ease-glow:   cubic-bezier(0.22, 1, 0.36, 1);    /* light spreading — default */
+  --ease-drift:  cubic-bezier(0.5, 0, 0.9, 0.4);    /* slow approach — entrances */
+  --ease-arrive: cubic-bezier(0.34, 1.3, 0.64, 1);  /* slight overshoot — landing */
   --dur-micro: 200ms;
   --dur-reveal: 600ms;
-  --dur-ring: 900ms;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,7 +44,7 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 .section-head-center { text-align: center; margin-bottom: 56px; }
 .section-head-center .section-sub { margin-left: auto; margin-right: auto; }
 
-/* Icon boxes — circular ripple nodes */
+/* Icon boxes — circular light nodes */
 .icon-box { width: 52px; height: 52px; background: var(--color-primary-subtle); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--color-primary); flex-shrink: 0; }
 .icon-box-sm { width: 44px; height: 44px; }
 .icon-box-xs { width: 36px; height: 36px; }
@@ -120,7 +119,7 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 
 /* Animation */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-.fade-up { animation: fadeUp 0.6s var(--ease-ripple) both; }
+.fade-up { animation: fadeUp 0.6s var(--ease-glow) both; }
 
 /* Scroll reveal (driven by enhance.js).
    Hidden state applies ONLY when JS adds `js-anim` to <html>, so content
@@ -129,7 +128,7 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 /* Hidden state must be instant even on components that carry `transition: all`. */
 .js-anim .reveal:not(.reveal-in) { transition: none; }
 /* Reveal via a one-shot animation so the component's own hover transition survives. */
-.js-anim .reveal.reveal-in { animation: fadeUp 0.6s var(--ease-ripple) both; }
+.js-anim .reveal.reveal-in { animation: fadeUp 0.6s var(--ease-glow) both; }
 /* Stagger children of a revealed grid/row */
 .js-anim .reveal-stagger > *:nth-child(2) { animation-delay: 0.08s; }
 .js-anim .reveal-stagger > *:nth-child(3) { animation-delay: 0.16s; }
@@ -139,7 +138,7 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
    driven by --progress, on small screens they fall back to a plain fade-up. */
 @media (max-width: 900px) {
   .js-anim .m-reveal:not(.reveal-in) { opacity: 0; transform: translateY(18px); transition: none; }
-  .js-anim .m-reveal.reveal-in { animation: fadeUp 0.6s var(--ease-ripple) both; }
+  .js-anim .m-reveal.reveal-in { animation: fadeUp 0.6s var(--ease-glow) both; }
 }
 
 /* Blog read more */
@@ -153,8 +152,11 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 .view-all-dark { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--color-primary); border-bottom: 1px solid var(--color-blue-100); padding-bottom: 2px; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
 .view-all-dark:hover { color: var(--color-primary-dark); border-color: var(--color-primary); }
 
-/* Page hero (inner pages) */
-.page-hero { position: relative; padding: 80px 0 88px; overflow: hidden; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 42%, #19235a 100%); }
+/* Page hero (inner pages) — a window onto the night sky. Solid enough to
+   read on its own (no-JS / no-WebGL over the .sky body gradient), and it
+   thins out once the WebGL starfield is running behind it. */
+.page-hero { position: relative; padding: 80px 0 88px; overflow: hidden; background: linear-gradient(160deg, rgba(29,84,155,0.55) 0%, rgba(31,56,130,0.42) 45%, rgba(16,23,64,0.5) 100%); }
+.js-constellation .page-hero { background: linear-gradient(160deg, rgba(29,84,155,0.34) 0%, rgba(31,56,130,0.26) 45%, rgba(16,23,64,0.34) 100%); }
 
 /* Portfolio image link */
 .port-link { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--color-primary); padding: 13px 12px; transition: color 0.2s; }
@@ -187,47 +189,78 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 /* Layer promotion only while a scene is mid-scrub */
 .js-story .scene-active .scene-layer { will-change: transform, opacity; }
 
-/* CSS ripple rings — compositor-only (transform/opacity), decorative.
-   Fired by story.js adding .is-rippling, or usable as a hover/reveal burst. */
-.ripple-rings { position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; pointer-events: none; }
-.ripple-rings i { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(255,255,255,0.35); opacity: 0; transform: scale(0); }
-.ripple-rings-blue i { border-color: rgba(28,117,188,0.4); }
-@keyframes ringExpand {
-  0%   { opacity: 0; transform: scale(0); }
-  12%  { opacity: 0.75; }
-  100% { opacity: 0; transform: scale(24); }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .is-rippling .ripple-rings i { animation: ringExpand 1.9s var(--ease-ripple) both; }
-  .is-rippling .ripple-rings i:nth-child(2) { animation-delay: 0.35s; }
-  .is-rippling .ripple-rings i:nth-child(3) { animation-delay: 0.7s; }
-}
+/* ============================================================
+   Night sky — the "Constellation of Light" visual system.
+   Baseline is pure CSS (below); constellation.js fades a WebGL
+   starfield canvas in over it when the device can afford one.
+   ============================================================ */
 
-/* Ring-pulse: one-shot expanding circle on reveal (service cards, headshots).
-   The element gets position:relative and an ::after ring from its center. */
-.ring-pulse { position: relative; }
-.ring-pulse::after { content: ''; position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; border: 2px solid rgba(28,117,188,0.35); opacity: 0; transform: scale(0); pointer-events: none; }
-@media (prefers-reduced-motion: no-preference) {
-  .js-anim .reveal-in .ring-pulse::after,
-  .js-anim .reveal-in.ring-pulse::after { animation: ringExpand var(--dur-ring) var(--ease-ripple) both; }
-}
+/* Deep-navy sky. Set on <body>: with <html> unstyled it propagates to
+   the root canvas, so the fixed WebGL canvas (z-index: -1) still paints
+   above it while opaque white sections keep occluding both. */
+.sky { background: linear-gradient(180deg, #101740 0%, #19235a 48%, #1E2A70 100%); }
 
-/* Slow ambient ring pulse (CTA finale) */
-@keyframes ringPulseSlow {
-  0%   { opacity: 0; transform: scale(0.4); }
-  15%  { opacity: 0.5; }
-  100% { opacity: 0; transform: scale(3.2); }
-}
-.ambient-ring { position: absolute; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.25); pointer-events: none; opacity: 0; }
-@media (prefers-reduced-motion: no-preference) {
-  .ambient-ring { animation: ringPulseSlow 6s var(--ease-ripple) infinite; }
-}
+/* WebGL starfield canvas (injected by constellation.js) */
+.constellation-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 0.8s var(--ease-glow); }
+.js-constellation .constellation-canvas { opacity: 1; }
 
-/* Scroll cue (hero): bobbing drop glyph */
+/* CSS starfield — zero-JS fallback art. ::before tiles faint dot layers;
+   ::after places ~16 brighter "named" stars with a soft sky-blue halo. */
+.css-stars::before,
+.css-stars::after { content: ''; position: absolute; inset: 0; pointer-events: none; transition: opacity 0.8s var(--ease-glow); }
+.css-stars::before {
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(197,223,242,0.38) 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(255,255,255,0.22) 0.8px, transparent 1.4px);
+  background-size: 210px 190px, 140px 130px, 90px 80px;
+  background-position: 12px 7px, 67px 43px, 33px 19px;
+}
+.css-stars::after {
+  width: 2px; height: 2px; inset: auto; left: 0; top: 0; border-radius: 50%;
+  box-shadow:
+    12vw 18vh 0 0.5px rgba(255,255,255,0.9), 12vw 18vh 7px 2px rgba(41,171,226,0.4),
+    26vw 8vh  0 0.5px rgba(255,255,255,0.75), 26vw 8vh 6px 1.5px rgba(41,171,226,0.3),
+    38vw 26vh 0 0px   rgba(255,255,255,0.7),
+    47vw 12vh 0 1px   rgba(255,244,220,0.95), 47vw 12vh 9px 2.5px rgba(255,233,201,0.4),
+    58vw 30vh 0 0px   rgba(197,223,242,0.8),
+    66vw 9vh  0 0.5px rgba(255,255,255,0.8), 66vw 9vh 6px 1.5px rgba(41,171,226,0.3),
+    74vw 22vh 0 0px   rgba(255,255,255,0.65),
+    83vw 14vh 0 0.5px rgba(255,255,255,0.85), 83vw 14vh 7px 2px rgba(41,171,226,0.35),
+    91vw 28vh 0 0px   rgba(197,223,242,0.7),
+    7vw  32vh 0 0px   rgba(255,255,255,0.6),
+    19vw 38vh 0 0.5px rgba(255,255,255,0.7),
+    54vw 42vh 0 0px   rgba(255,255,255,0.55),
+    88vw 44vh 0 0.5px rgba(197,223,242,0.65),
+    31vw 48vh 0 0px   rgba(255,255,255,0.5),
+    70vw 52vh 0 0.5px rgba(255,255,255,0.6),
+    44vw 58vh 0 0px   rgba(197,223,242,0.5);
+}
+/* Once WebGL stars are live, the CSS layer recedes so the field doesn't double up. */
+.js-constellation .css-stars::before,
+.js-constellation .css-stars::after { opacity: 0.3; }
+
+/* Translucent navy scrims — let the starfield glow through while keeping
+   text at AA contrast against the brightest possible backdrop. */
+.scrim-navy { background: linear-gradient(160deg, rgba(23,45,110,0.62) 0%, rgba(25,35,90,0.55) 55%, rgba(16,23,64,0.66) 100%); }
+.scrim-navy-deep { background: rgba(13,19,53,0.72); }
+
+/* Constellation watermark — faint line-art accent for light sections */
+.constellation-mark { position: absolute; pointer-events: none; opacity: 0.5; }
+
+/* Scroll cue (hero): bobbing star glyph */
 @keyframes cueBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
 .scroll-cue { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; }
 @media (prefers-reduced-motion: no-preference) {
   .scroll-cue svg { animation: cueBob 2s ease-in-out infinite; }
+}
+
+/* Kindle-in: soft scale/brighten for icon nodes on reveal (replaces the
+   old expanding-ring pulse) */
+@keyframes kindleIn { from { opacity: 0; transform: scale(0.6); filter: brightness(1.6); } to { opacity: 1; transform: scale(1); filter: brightness(1); } }
+@media (prefers-reduced-motion: no-preference) {
+  .js-anim .reveal-in .kindle-in,
+  .js-anim .reveal-in.kindle-in { animation: kindleIn 0.7s var(--ease-arrive) both; }
 }
 
 /* Responsive */

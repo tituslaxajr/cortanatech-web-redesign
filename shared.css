@@ -149,6 +149,42 @@ input::placeholder, textarea::placeholder { color: rgba(120,126,140,0.65); }
 .role-chip-option[aria-selected="true"] { font-weight: 700; color: var(--color-primary); }
 .mobile-nav .role-chip-wrap { margin-top: 4px; }
 
+/* Chat demo widget (chat-demo.js — homepage + services) */
+.chat-panel { background: #fff; border-radius: 24px; box-shadow: var(--shadow-2xl); overflow: hidden; display: flex; flex-direction: column; max-height: 560px; }
+.chat-head { display: flex; align-items: center; gap: 10px; padding: 16px 22px; border-bottom: 1px solid var(--color-border-subtle); background: #fff; }
+.chat-status-dot { width: 9px; height: 9px; border-radius: 50%; background: #22C55E; flex-shrink: 0; }
+.chat-head-label { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--color-text-secondary); }
+.chat-log { flex: 1; overflow-y: auto; padding: 22px; display: flex; flex-direction: column; gap: 12px; min-height: 260px; max-height: 360px; background: var(--color-surface-subtle); }
+.chat-row { display: flex; }
+.chat-row-bot { justify-content: flex-start; }
+.chat-row-user { justify-content: flex-end; }
+.chat-bubble { max-width: 82%; padding: 12px 16px; border-radius: 16px; font-family: var(--font-body); font-size: 14px; line-height: 1.55; }
+.chat-bubble-bot { background: #fff; color: var(--color-text-primary); border-bottom-left-radius: 4px; box-shadow: var(--shadow-sm); }
+.chat-bubble-user { background: var(--color-primary); color: #fff; border-bottom-right-radius: 4px; }
+.chat-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 22px 20px; background: #fff; border-top: 1px solid var(--color-border-subtle); min-height: 68px; }
+.chat-chip { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--color-primary); background: var(--color-primary-subtle); border: 1.5px solid transparent; border-radius: 100px; padding: 10px 16px; cursor: pointer; transition: border-color 0.15s, background 0.15s; min-height: 44px; }
+.chat-chip:hover { border-color: var(--color-primary); background: #fff; }
+.chat-typing { display: flex; gap: 4px; align-items: center; }
+.chat-typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--color-text-muted); display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes typingBlink { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+  .chat-typing i { animation: typingBlink 1s infinite; }
+  .chat-typing i:nth-child(2) { animation-delay: 0.2s; }
+  .chat-typing i:nth-child(3) { animation-delay: 0.4s; }
+}
+@media (max-width: 900px) {
+  .chat-log { max-height: 300px; }
+}
+
+/* Role-aware callout on inner pages ("For your church: ...").
+   Hidden until the visitor has chosen a role on the homepage. */
+.role-note { display: flex; gap: 10px; align-items: baseline; background: var(--color-primary-subtle); border-left: 3px solid var(--color-primary); border-radius: 10px; padding: 14px 18px; margin-bottom: 28px; font-family: var(--font-body); font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; }
+.role-note strong { color: var(--color-primary-dark); white-space: nowrap; }
+html:not([data-role]) .role-note { display: none; }
+
+/* "Picked for you" badge on role-matched cards; per-page CSS reveals the match */
+.role-pick-badge { display: none; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #fff; background: var(--color-primary); padding: 5px 10px; border-radius: 100px; }
+
 /* Blog read more */
 .read-more { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--color-primary); transition: color 0.2s; }
 .read-more:hover { color: var(--color-primary-dark); }

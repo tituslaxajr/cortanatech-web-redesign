@@ -18,7 +18,8 @@
   <meta name="twitter:title" content="Services — CortanaTech Solutions">
   <meta name="twitter:description" content="Explore CortanaTech Solutions' digital services — website design, professional email, chatbots, and custom web applications built for mission-driven organizations.">
   <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
-  <link rel="stylesheet" href="shared.css?v=meeting1">
+  <script>try{var r=localStorage.getItem('ct-role');if(r)document.documentElement.setAttribute('data-role',r)}catch(e){}</script>
+  <link rel="stylesheet" href="shared.css?v=meeting2">
   <style>
     body { font-family: var(--font-body); }
     .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
@@ -77,6 +78,7 @@
             <span class="eyebrow" style="margin-bottom: 0;">Website Design &amp; Development</span>
           </div>
           <h2 class="section-title" style="font-size: clamp(28px, 3.5vw, 42px); margin-bottom: 20px;">A Website That Works as Hard as You Do</h2>
+          <div class="role-note"><strong>For your <span data-role-slot="noun">organization</span>:</strong> <span data-role-slot="services.web.blurb">A clear, credible website that represents your mission — built affordably, maintained by us.</span></div>
           <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 16px;">Your website is often the first impression people have of your organization. We build sites that are fast, accessible, and true to your mission — whether you're a church, a school, or a growing startup.</p>
           <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 32px;">From initial design to launch, we walk with you through every step — making sure the final product actually reflects who you are.</p>
           <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px;">
@@ -144,6 +146,7 @@
             <span class="eyebrow" style="margin-bottom: 0;">Professional Email Setup</span>
           </div>
           <h2 class="section-title" style="font-size: clamp(28px, 3.5vw, 42px); margin-bottom: 20px;">Build Trust Before You Even Say Hello</h2>
+          <div class="role-note"><strong>For your <span data-role-slot="noun">organization</span>:</strong> <span data-role-slot="services.email.blurb">Branded addresses on Microsoft 365 or Google Workspace, usually set up within 48 hours.</span></div>
           <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 16px;">A branded email address — pastor@yourchurch.org, admin@yourschool.edu — signals credibility to donors, parents, and partners before they even read your message.</p>
           <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 32px;">We handle the full setup: domain configuration, mailbox creation, security settings, and a walkthrough so your team knows exactly how to use it.</p>
           <a href="contact.html" class="btn-primary">Set Up Your Email →</a>
@@ -176,18 +179,22 @@
           <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.75; margin-bottom: 32px;">We build chatbots tailored to your organization's language and needs — so they sound like you, not a generic AI.</p>
           <a href="contact.html" class="btn-outline-white">Build a Chatbot →</a>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 14px;">
-          <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 20px 22px; backdrop-filter: blur(12px);">
-            <div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 8px;">Visitor asks:</div>
-            <div style="font-family: var(--font-body); font-size: 15px; color: #fff; font-weight: 500;">"What time is the Sunday service?"</div>
-          </div>
-          <div style="background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 20px 22px; backdrop-filter: blur(12px); margin-left: 24px;">
-            <div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 8px;">Your chatbot responds:</div>
-            <div style="font-family: var(--font-body); font-size: 15px; color: #fff; font-weight: 500;">"Our Sunday service starts at 9:00 AM and 11:00 AM. Would you like directions to the church?"</div>
-          </div>
-          <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 20px 22px; backdrop-filter: blur(12px);">
-            <div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 8px;">Visitor:</div>
-            <div style="font-family: var(--font-body); font-size: 15px; color: #fff; font-weight: 500;">"Yes please!"</div>
+        <div>
+          <div id="svc-chat-demo" class="chat-panel" hidden aria-label="Chatbot demo"></div>
+          <p id="svc-chat-caption" style="font-family: var(--font-body); font-size: 12.5px; color: rgba(255,255,255,0.6); margin-top: 12px; text-align: center;" hidden>This is a live demo — go ahead, try it.</p>
+          <div id="svc-chat-static" style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 20px 22px; backdrop-filter: blur(12px);">
+              <div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 8px;">Visitor asks:</div>
+              <div style="font-family: var(--font-body); font-size: 15px; color: #fff; font-weight: 500;">"What time is the Sunday service?"</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 20px 22px; backdrop-filter: blur(12px); margin-left: 24px;">
+              <div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 8px;">Your chatbot responds:</div>
+              <div style="font-family: var(--font-body); font-size: 15px; color: #fff; font-weight: 500;">"Our Sunday service starts at 9:00 AM and 11:00 AM. Would you like directions to the church?"</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 20px 22px; backdrop-filter: blur(12px);">
+              <div style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 8px;">Visitor:</div>
+              <div style="font-family: var(--font-body); font-size: 15px; color: #fff; font-weight: 500;">"Yes please!"</div>
+            </div>
           </div>
         </div>
       </div>
@@ -206,6 +213,7 @@
             <span class="eyebrow" style="margin-bottom: 0;">Custom Web Applications</span>
           </div>
           <h2 class="section-title" style="font-size: clamp(28px, 3.5vw, 42px); margin-bottom: 20px;">Software Built Around Your Workflow</h2>
+          <div class="role-note"><strong>For your <span data-role-slot="noun">organization</span>:</strong> <span data-role-slot="services.app.blurb">Registration systems, databases, and portals built around your exact workflow.</span></div>
           <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 16px;">Off-the-shelf software rarely fits the way mission-driven organizations actually work. We build custom tools — registration systems, internal portals, member databases — that fit your exact processes.</p>
           <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 32px;">Built on React, C#, and Azure — enterprise-grade technology delivered at a price that makes sense for your organization.</p>
           <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px;">
@@ -292,6 +300,19 @@
     function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
     function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
   </script>
-  <script src="enhance.js?v=meeting1"></script>
+  <script src="meeting-data.js?v=meeting2"></script>
+  <script src="role.js?v=meeting2"></script>
+  <script src="chat-demo.js?v=meeting2"></script>
+  <script src="enhance.js?v=meeting2"></script>
+  <script>
+    (function () {
+      var host = document.getElementById('svc-chat-demo');
+      if (!window.ChatDemo || !host) return;
+      host.hidden = false;
+      document.getElementById('svc-chat-caption').hidden = false;
+      document.getElementById('svc-chat-static').style.display = 'none';
+      window.ChatDemo.mount(host);
+    })();
+  </script>
 </body>
 </html>

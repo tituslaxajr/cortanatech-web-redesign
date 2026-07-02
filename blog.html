@@ -18,9 +18,18 @@
   <meta name="twitter:title" content="Blog — CortanaTech Solutions">
   <meta name="twitter:description" content="Read practical articles from CortanaTech Solutions about websites, digital tools, and technology for mission-driven organizations.">
   <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
-  <link rel="stylesheet" href="shared.css?v=meeting1">
+  <script>try{var r=localStorage.getItem('ct-role');if(r)document.documentElement.setAttribute('data-role',r)}catch(e){}</script>
+  <link rel="stylesheet" href="shared.css?v=meeting2">
   <style>
     body { font-family: var(--font-body); }
+    /* Role-matched article floats to the front of the grid with a badge */
+    html[data-role="nonprofit"] [data-post="nonprofit"],
+    html[data-role="school"] [data-post="school"],
+    html[data-role="startup"] [data-post="startup"] { order: -1; }
+    html[data-role="nonprofit"] [data-post="nonprofit"] .role-pick-badge,
+    html[data-role="school"] [data-post="school"] .role-pick-badge,
+    html[data-role="startup"] [data-post="startup"] .role-pick-badge,
+    html[data-role="church"] .role-pick-badge[data-post="church"] { display: inline-block; }
   </style>
 </head>
 <body>
@@ -75,7 +84,7 @@
         </div>
         <div style="padding: 48px 48px 48px 0;">
           <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-            <span class="badge">Church &amp; Ministry</span>
+            <span class="badge">Church &amp; Ministry</span><span class="role-pick-badge" data-post="church">For you</span>
             <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 1, 2026</span>
           </div>
           <h2 style="font-family: var(--font-display); font-size: clamp(22px, 2.8vw, 32px); font-weight: 900; color: #2B3990; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px;">How a Website Transforms a Church Organization</h2>
@@ -90,13 +99,13 @@
   <section style="background: #F1EDED; padding: 80px 0;">
     <div class="container">
       <div class="blog-grid reveal-stagger" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
-        <a href="blog-nonprofit-digital-tools.html" class="blog-card reveal">
+        <a href="blog-nonprofit-digital-tools.html" class="blog-card reveal" data-post="nonprofit">
           <div style="aspect-ratio: 16/9; overflow: hidden;">
             <img src="assets/photos/audience/nonprofit-volunteers.jpg" alt="Group of young Filipino volunteers smiling together outdoors" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
           </div>
           <div style="padding: 28px 32px 32px;">
             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Nonprofits</span>
+              <span class="badge">Nonprofits</span><span class="role-pick-badge">For you</span>
               <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jun 30, 2026</span>
             </div>
             <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">The Real Cost of Nonprofits Sticking with Spreadsheets</h3>
@@ -104,13 +113,13 @@
             <span class="read-more">Read more →</span>
           </div>
         </a>
-        <a href="blog-school-digital-tools.html" class="blog-card reveal">
+        <a href="blog-school-digital-tools.html" class="blog-card reveal" data-post="school">
           <div style="aspect-ratio: 16/9; overflow: hidden;">
             <img src="assets/photos/audience/school-classroom.jpg" alt="Filipino students seated at desks inside a classroom" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
           </div>
           <div style="padding: 28px 32px 32px;">
             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Education</span>
+              <span class="badge">Education</span><span class="role-pick-badge">For you</span>
               <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jun 27, 2026</span>
             </div>
             <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">Modernizing Your School Without Overwhelming Your Staff</h3>
@@ -118,13 +127,13 @@
             <span class="read-more">Read more →</span>
           </div>
         </a>
-        <a href="blog-startup-single-page.html" class="blog-card reveal">
+        <a href="blog-startup-single-page.html" class="blog-card reveal" data-post="startup">
           <div style="aspect-ratio: 16/9; overflow: hidden;">
             <img src="assets/photos/audience/startup-entrepreneur.jpg" alt="Asian entrepreneur working focused on a laptop at a cafe table" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
           </div>
           <div style="padding: 28px 32px 32px;">
             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Startups</span>
+              <span class="badge">Startups</span><span class="role-pick-badge">For you</span>
               <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jun 24, 2026</span>
             </div>
             <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">Boost Your Startup Business with a Single-Page Website</h3>
@@ -201,6 +210,8 @@
       document.getElementById('newsletter-email').value = '';
     }
   </script>
-  <script src="enhance.js?v=meeting1"></script>
+  <script src="meeting-data.js?v=meeting2"></script>
+  <script src="role.js?v=meeting2"></script>
+  <script src="enhance.js?v=meeting2"></script>
 </body>
 </html>

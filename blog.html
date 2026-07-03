@@ -25,10 +25,12 @@
     /* Role-matched article floats to the front of the grid with a badge */
     html[data-role="nonprofit"] [data-post="nonprofit"],
     html[data-role="school"] [data-post="school"],
-    html[data-role="smallbiz"] [data-post="smallbiz"] { order: -1; }
+    html[data-role="smallbiz"] [data-post="smallbiz"],
+    html[data-role="church"] [data-post="church"] { order: -1; }
     html[data-role="nonprofit"] [data-post="nonprofit"] .role-pick-badge,
     html[data-role="school"] [data-post="school"] .role-pick-badge,
     html[data-role="smallbiz"] [data-post="smallbiz"] .role-pick-badge,
+    html[data-role="church"] [data-post="church"] .role-pick-badge,
     html[data-role="church"] .role-pick-badge[data-post="church"] { display: inline-block; }
   </style>
 </head>
@@ -79,17 +81,17 @@
       <div class="eyebrow" style="margin-bottom: 32px;">Featured Post</div>
       <div class="split-grid" style="grid-template-columns: 1.1fr 1fr; border: 1.5px solid #E8E6E6; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.05);">
         <div style="aspect-ratio: 4/3; overflow: hidden; position: relative;">
-          <img src="assets/photos/audience/church-congregation.jpg" alt="Filipino congregation praying together during a worship service" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
+          <img src="assets/photos/audience/church-professional-email.jpg" alt="A church staff member typing an email at her desk" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
           <div style="position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, #fff 100%);"></div>
         </div>
         <div style="padding: 48px 48px 48px 0;">
           <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
             <span class="badge">Church &amp; Ministry</span><span class="role-pick-badge" data-post="church">For you</span>
-            <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 1, 2026</span>
+            <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 3, 2026</span>
           </div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(22px, 2.8vw, 32px); font-weight: 900; color: #2B3990; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px;">How a Website Transforms a Church Organization</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.72; margin-bottom: 28px;">In today's digital age, a well-designed website does more than look good — it becomes the front door of your congregation. We explore how churches are using their digital presence to reach more people, communicate better, and serve their communities more effectively.</p>
-          <a href="blog-church-website.html" class="btn-primary">Read the article →</a>
+          <h2 style="font-family: var(--font-display); font-size: clamp(22px, 2.8vw, 32px); font-weight: 900; color: #2B3990; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px;">The Hidden Cost of Running Your Church From a Personal Gmail Account</h2>
+          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.72; margin-bottom: 28px;">A personal Gmail account might work for now, but it's quietly costing your church trust. Here's why — and how to set up a professional email address instead.</p>
+          <a href="blog-church-email.html" class="btn-primary">Read the article →</a>
         </div>
       </div>
     </div>
@@ -99,6 +101,20 @@
   <section style="background: #F1EDED; padding: 80px 0;">
     <div class="container">
       <div class="blog-grid reveal-stagger" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        <a href="blog-church-website.html" class="blog-card reveal" data-post="church">
+          <div style="aspect-ratio: 16/9; overflow: hidden;">
+            <img src="assets/photos/audience/church-congregation.jpg" alt="Filipino congregation praying together during a worship service" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
+          </div>
+          <div style="padding: 28px 32px 32px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <span class="badge">Church &amp; Ministry</span><span class="role-pick-badge">For you</span>
+              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 1, 2026</span>
+            </div>
+            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">How a Website Transforms a Church Organization</h3>
+            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">A well-designed website does more than look good — it becomes your congregation's front door. Here's how churches use their site to reach further.</p>
+            <span class="read-more">Read more →</span>
+          </div>
+        </a>
         <a href="blog-nonprofit-digital-tools.html" class="blog-card reveal" data-post="nonprofit">
           <div style="aspect-ratio: 16/9; overflow: hidden;">
             <img src="assets/photos/audience/nonprofit-volunteers.jpg" alt="Group of young Filipino volunteers smiling together outdoors" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">

@@ -208,6 +208,12 @@ html:not([data-role]) .role-note { display: none; }
 .blog-read-more:hover { color: #fff; border-bottom-color: rgba(255,255,255,0.7); }
 
 /* Responsive */
+/* Six nav items leave little room just above the mobile breakpoint. Close the
+   gaps instead of letting a link wrap into the logo if the display font is
+   slow to load and a wider fallback is used for the first paint. */
+@media (max-width: 1080px) {
+  .desktop-nav { gap: 20px !important; }
+}
 @media (max-width: 900px) {
   .desktop-nav { display: none !important; }
   .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; }

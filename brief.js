@@ -13,10 +13,18 @@
  * a soft "what we'll explore" note for the client, and a blunter internal
  * assessment stapled to the emailed brief.
  *
+ * Long option lists are kept scannable three ways:
+ *   - `groups` chunks a list into small labelled clusters (~3-5 each)
+ *   - `for:` tags hide options that cannot apply to the org type picked in
+ *     step 1, behind a "Show all options" escape hatch
+ *   - `t:'collapse'` puts secondary questions behind a disclosure
+ * A `t:'rank'` field then asks which of the chosen problems hurts most, so a
+ * client who ticks ten boxes still hands us a priority.
+ *
  * All steps render up front into one <form> and are toggled with [hidden], so
  * FormData() always sees every answer and nothing is lost on navigation.
- * Answers autosave to localStorage; inapplicable steps are disabled so they
- * never submit.
+ * Answers autosave to localStorage; inapplicable steps and filtered-out
+ * options are disabled so they never submit.
  */
 (function () {
   'use strict';
@@ -24,6 +32,16 @@
   var ENDPOINT = 'https://formspree.io/f/xkolqjkj';
   var STORE = 'ct-brief-v1';
   var CONTACT_EMAIL = 'customers@cortanatechsolutions.com';
+
+  /* Org-type codes used by `for:` tags. '*' means show everything. */
+  var ORG_CODE = {
+    'Church or ministry': 'c',
+    'School or academy': 's',
+    'Nonprofit or foundation': 'n',
+    'Small business': 'b',
+    'Startup': 't',
+    'Something else': '*'
+  };
 
   /* ------------------------------------------------------------------ *
    * Capability vocabulary — shared by problems, solutions and the read. *
@@ -46,41 +64,65 @@
     content:   'writing and photos for the site'
   };
 
-  /* ---------------- Step 2: what is not working ---------------- */
-  var PROBLEMS = [
-    { v: "People can't find us when they search online",        need: ['seo', 'site'] },
-    { v: 'We look less professional online than we really are',  need: ['site'] },
-    { v: 'Our site is old, or breaks on phones',                 need: ['redesign'] },
-    { v: 'Everything we have is buried in Facebook posts',       need: ['site'] },
-    { v: 'We answer the same questions over and over',           need: ['chatbot'] },
-    { v: 'Inquiries get lost in Messenger and DMs',              need: ['inquiry', 'chatbot'] },
-    { v: 'Enrollment or registration means long lines on-site',  need: ['forms'] },
-    { v: 'Booking appointments is endless back-and-forth',       need: ['booking'] },
-    { v: "Giving or donating is hard for people who want to",    need: ['giving', 'payments'] },
-    { v: "We can't show donors where their money went",          need: ['receipts'] },
-    { v: "We can't accept payments online",                      need: ['payments'] },
-    { v: 'Staff lose hours retyping things by hand',             need: ['db'] },
-    { v: 'Our records live in scattered spreadsheets',           need: ['db'] },
-    { v: 'Our email address looks unprofessional',               need: ['email'] },
-    { v: 'We have no way to reach everyone at once',             need: ['newsletter'] },
-    { v: 'Members have nowhere private to log in',               need: ['members'] },
-    { v: "We don't have the words or photos to show what we do", need: ['content'] }
+  /* ---------------- Step 2: what is not working ----------------
+   * Chunked into four clusters. `need` drives the want-vs-need read;
+   * `for` hides options that cannot apply to the chosen org type.     */
+  var PROBLEM_GROUPS = [
+    { label: 'Being found, and looking credible', opts: [
+      { v: "People can't find us when they search online",        need: ['seo', 'site'] },
+      { v: 'We look less professional online than we really are',  need: ['site'] },
+      { v: 'Our site is old, or breaks on phones',                 need: ['redesign'] },
+      { v: 'Everything we have is buried in Facebook posts',       need: ['site'] },
+      { v: "We don't have the words or photos to show what we do",  need: ['content'] }
+    ] },
+    { label: 'Answering people, and catching enquiries', opts: [
+      { v: 'We answer the same questions over and over',           need: ['chatbot'] },
+      { v: 'Inquiries get lost in Messenger and DMs',              need: ['inquiry', 'chatbot'] }
+    ] },
+    { label: 'Sign-ups, bookings and money', opts: [
+      { v: 'Enrollment or registration means long lines on-site',  need: ['forms'],    for: ['c', 's', 'n'] },
+      { v: 'Booking appointments is endless back-and-forth',        need: ['booking'],  for: ['b', 't', 'c'] },
+      { v: "Giving or donating is hard for people who want to",     need: ['giving', 'payments'], for: ['c', 'n'] },
+      { v: "We can't show donors where their money went",           need: ['receipts'], for: ['c', 'n'] },
+      { v: "We can't accept payments online",                       need: ['payments'], for: ['b', 't', 's'] }
+    ] },
+    { label: 'Admin, records and reaching people', opts: [
+      { v: 'Staff lose hours on manual paperwork and spreadsheets', need: ['db'] },
+      { v: 'Our email address looks unprofessional',                need: ['email'] },
+      { v: 'We have no way to reach everyone at once',              need: ['newsletter'] },
+      { v: 'Members have nowhere private to log in',                need: ['members'], for: ['c', 's', 'n'] }
+    ] }
   ];
 
   /* ---------------- Step 3: what they think would fix it ---------------- */
-  var SOLUTIONS = [
-    { v: 'A brand-new website',            gives: ['site', 'seo', 'content'] },
-    { v: 'A redesign of our current site', gives: ['redesign', 'site', 'seo'] },
-    { v: 'A chatbot for our page',         gives: ['chatbot', 'inquiry'] },
-    { v: 'Online forms or registration',   gives: ['forms', 'inquiry'] },
-    { v: 'Online booking or appointments', gives: ['booking'] },
-    { v: 'Online giving or payments',      gives: ['giving', 'payments', 'receipts'] },
-    { v: 'Professional email setup',       gives: ['email', 'newsletter'] },
-    { v: 'A database or internal system',  gives: ['db'] },
-    { v: 'A mobile app',                   gives: ['mobileapp'] },
-    { v: 'Help writing content and taking photos', gives: ['content'] },
-    { v: "Honestly not sure — that's why we're asking", gives: ['unsure'] }
+  var SOLUTION_GROUPS = [
+    { label: 'A website', opts: [
+      { v: 'A brand-new website',            gives: ['site', 'seo', 'content'] },
+      { v: 'A redesign of our current site', gives: ['redesign', 'site', 'seo'] }
+    ] },
+    { label: 'Something that automates work', opts: [
+      { v: 'A chatbot for our page',         gives: ['chatbot', 'inquiry'] },
+      { v: 'Online forms or registration',   gives: ['forms', 'inquiry'] },
+      { v: 'Online booking or appointments', gives: ['booking'] },
+      { v: 'Online giving or payments',      gives: ['giving', 'payments', 'receipts'] },
+      { v: 'A database or internal system',  gives: ['db'] },
+      { v: 'A mobile app',                   gives: ['mobileapp'] }
+    ] },
+    { label: 'Support around it', opts: [
+      { v: 'Professional email setup',       gives: ['email', 'newsletter'] },
+      { v: 'Help writing content and taking photos', gives: ['content'] },
+      { v: "Honestly not sure — that's why we're asking", gives: ['unsure'] }
+    ] }
   ];
+
+  /* Flatten a grouped list for lookups. */
+  function flatOpts(groups) {
+    var out = [];
+    groups.forEach(function (g) { g.opts.forEach(function (o) { out.push(o); }); });
+    return out;
+  }
+  var PROBLEMS = flatOpts(PROBLEM_GROUPS);
+  var SOLUTIONS = flatOpts(SOLUTION_GROUPS);
 
   /* -------------------------------- Steps -------------------------------- */
   var STEPS = [
@@ -91,12 +133,30 @@
       sub: 'Not us — the people your organization exists for. This shapes every decision that follows, so it comes before anything about websites.',
       fields: [
         { t: 'radio', k: 'orgtype', label: 'What kind of organization are you?', req: true, cols: 2,
+          hint: 'This trims the rest of the questions down to what actually applies to you.',
           opts: ['Church or ministry', 'School or academy', 'Nonprofit or foundation', 'Small business', 'Startup', 'Something else'] },
         { t: 'chips', k: 'audience', label: 'And who are you serving?', req: true,
           hint: 'Pick as many as apply.',
-          opts: ['Our own members or congregation', 'Newcomers and visitors', 'Parents', 'Students', 'Donors and supporters',
-                 'Volunteers', 'Walk-in customers nearby', 'Customers across the country', 'Overseas Filipinos / OFWs',
-                 'Other businesses', 'Partner organizations', 'Our own staff and team'],
+          groups: [
+            { label: 'People you already have', opts: [
+              { v: 'Our own members or congregation', for: ['c', 'n'] },
+              { v: 'Parents', for: ['s', 'c'] },
+              { v: 'Students', for: ['s', 'c'] },
+              { v: 'Volunteers', for: ['c', 'n'] },
+              { v: 'Our own staff and team' }
+            ] },
+            { label: 'People you want to reach', opts: [
+              { v: 'Newcomers and visitors' },
+              { v: 'Donors and supporters', for: ['c', 'n'] },
+              { v: 'Walk-in customers nearby', for: ['b', 't'] },
+              { v: 'Customers across the country', for: ['b', 't'] },
+              { v: 'Overseas Filipinos / OFWs' }
+            ] },
+            { label: 'Organizations', opts: [
+              { v: 'Other businesses' },
+              { v: 'Partner organizations' }
+            ] }
+          ],
           other: 'Someone else — who?' }
       ] },
 
@@ -106,16 +166,25 @@
       sub: "This is the most useful thing you can tell us. Don't worry about solutions yet — just what's frustrating.",
       fields: [
         { t: 'chips', k: 'problems', label: "What's the trouble?", req: true,
-          hint: 'Pick everything that stings. Most people pick three or four.',
-          opts: PROBLEMS.map(function (p) { return p.v; }),
+          hint: 'Tick whatever stings. Most people pick three or four.',
+          count: true, groups: PROBLEM_GROUPS,
           other: 'Something else — what?' },
-        { t: 'chips', k: 'current', label: 'How are you handling it today?',
-          hint: "The workaround usually tells us more than the problem does.",
+        { t: 'rank', k: 'worst', from: 'problems',
+          label: 'And which of those hurts the most?',
+          hint: 'If you could only fix one thing this year, which would it be?' }
+      ] },
+
+    { id: 'coping',
+      eyebrow: 'Today',
+      title: 'How are you handling it now?',
+      sub: "The workaround usually tells us more than the problem does — it shows us what this is really costing you.",
+      fields: [
+        { t: 'chips', k: 'current', label: 'What happens at the moment?',
           opts: ['By hand, on paper', 'Facebook page only', 'Messenger or Viber chats', 'Spreadsheets',
                  'Phone calls and texts', 'People have to come in person', 'A staff member does it manually',
                  "We're not — it just doesn't get done"] },
         { t: 'area', k: 'problem_words', label: 'Anything you want to say in your own words?', rows: 3,
-          hint: 'Optional. Even one sentence helps.',
+          hint: 'Optional, but the single most useful box on this form. Even one sentence helps.',
           ph: "e.g. Parents call the office all day asking the same enrollment questions and we can't keep up." }
       ] },
 
@@ -125,8 +194,7 @@
       sub: "We ask this third on purpose. Sometimes the answer you have in mind is exactly right — and sometimes there's a simpler or cheaper way to get the same result. We'd rather find that out now than after you've paid for it.",
       fields: [
         { t: 'chips', k: 'solutions', label: 'What are you picturing?', req: true,
-          opts: SOLUTIONS.map(function (s) { return s.v; }),
-          other: 'Something else — what?' },
+          groups: SOLUTION_GROUPS, other: 'Something else — what?' },
         { t: 'radio', k: 'certainty', label: 'How settled is that decision?',
           hint: "Be honest — there's no wrong answer, and it changes how we talk to you.",
           opts: [
@@ -145,16 +213,39 @@
       sub: "If we do this well, what changes for you six months from now?",
       fields: [
         { t: 'chips', k: 'success', label: 'What does a win look like?', req: true,
-          opts: ['More inquiries coming in', 'More people giving or donating', 'More enrollments or sign-ups',
-                 'More sales', 'Fewer repetitive questions to answer', 'Hours of staff time saved',
-                 'Looking credible to people who check us out', 'Reaching people outside our area',
-                 'Members staying engaged', 'One place to send people instead of explaining'],
+          groups: [
+            { label: 'More of something', opts: [
+              { v: 'More inquiries coming in' },
+              { v: 'More people giving or donating', for: ['c', 'n'] },
+              { v: 'More enrollments or sign-ups', for: ['s', 'c', 'n'] },
+              { v: 'More sales', for: ['b', 't'] },
+              { v: 'Reaching people outside our area' }
+            ] },
+            { label: 'Less of something', opts: [
+              { v: 'Fewer repetitive questions to answer' },
+              { v: 'Hours of staff time saved' },
+              { v: 'One place to send people instead of explaining' }
+            ] },
+            { label: 'Standing', opts: [
+              { v: 'Looking credible to people who check us out' },
+              { v: 'Members staying engaged', for: ['c', 's', 'n'] }
+            ] }
+          ],
           other: 'Something else — what?' },
         { t: 'chips', k: 'action', label: 'And what should a visitor DO before they leave?',
           hint: 'The one thing you most want to happen.',
-          opts: ['Send us an inquiry', 'Give or donate', 'Book an appointment', 'Enroll or register',
-                 'Buy something', 'Visit us in person', 'Follow our social pages', 'Join our mailing list',
-                 'Watch or listen to something', 'Just understand who we are'] },
+          opts: [
+            { v: 'Send us an inquiry' },
+            { v: 'Give or donate', for: ['c', 'n'] },
+            { v: 'Book an appointment', for: ['b', 't', 'c'] },
+            { v: 'Enroll or register', for: ['s', 'c', 'n'] },
+            { v: 'Buy something', for: ['b', 't'] },
+            { v: 'Visit us in person' },
+            { v: 'Follow our social pages' },
+            { v: 'Join our mailing list' },
+            { v: 'Watch or listen to something', for: ['c', 'n'] },
+            { v: 'Just understand who we are' }
+          ] },
         { t: 'text', k: 'measure', label: "How would you know it worked?",
           hint: 'Optional. A number or a feeling — either is fine.',
           ph: 'e.g. 10 enrollment inquiries a month instead of 2' }
@@ -180,45 +271,78 @@
       optional: true,
       when: function (d) { return !isAppOnly(d); },
       fields: [
-        { t: 'chips', k: 'pages', label: 'Pages and sections',
-          opts: ['Home', 'About us', 'Services or programs', 'Contact', 'News or blog', 'Photo gallery',
-                 'Events or calendar', 'Staff or team', 'Give or donate', 'Online shop', 'Sermons or media',
-                 'Enrollment or admissions', 'Downloads and forms', 'FAQ', 'Members-only area'],
+        { t: 'chips', k: 'pages', label: 'Pages and sections', count: true,
+          groups: [
+            { label: 'The basics', opts: [
+              { v: 'Home' }, { v: 'About us' }, { v: 'Contact' }
+            ] },
+            { label: 'What you offer', opts: [
+              { v: 'Services or programs' }, { v: 'FAQ' }, { v: 'Downloads and forms' }
+            ] },
+            { label: 'Things you post', opts: [
+              { v: 'News or blog' }, { v: 'Photo gallery' }, { v: 'Events or calendar' },
+              { v: 'Staff or team' }, { v: 'Sermons or media', for: ['c'] }
+            ] },
+            { label: 'Where people act', opts: [
+              { v: 'Give or donate', for: ['c', 'n'] },
+              { v: 'Online shop', for: ['b', 't'] },
+              { v: 'Enrollment or admissions', for: ['s', 'c'] },
+              { v: 'Members-only area', for: ['c', 's', 'n'] }
+            ] }
+          ],
           other: 'Another page — what?' },
+        { t: 'collapse', k: 'features_open', label: 'Should it do anything beyond the pages above?',
+          hint: 'Forms, payments, bookings, a chatbot — open this if any of that matters.',
+          fields: [
         { t: 'chips', k: 'features', label: 'Things it should be able to do',
-          opts: ['Collect inquiries', 'Accept payments or giving', 'Take bookings', 'Take registrations',
-                 'Send automatic email replies', 'Chatbot on the page', 'Searchable directory',
-                 'Multiple languages', 'Newsletter sign-up', 'Live stream embeds', 'Staff logins',
-                 'Reports or analytics'] }
+          groups: [
+            { label: 'Taking things in', opts: [
+              { v: 'Collect inquiries' }, { v: 'Take bookings' },
+              { v: 'Take registrations' }, { v: 'Newsletter sign-up' },
+              { v: 'Accept payments or giving' }
+            ] },
+            { label: 'Doing work for you', opts: [
+              { v: 'Send automatic email replies' }, { v: 'Chatbot on the page' },
+              { v: 'Reports or analytics' }
+            ] },
+            { label: 'Extras', opts: [
+              { v: 'Searchable directory' }, { v: 'Multiple languages' },
+              { v: 'Live stream embeds', for: ['c'] }, { v: 'Staff logins' }
+            ] }
+          ] }
+          ] }
       ] },
 
     { id: 'feel',
       eyebrow: 'Impression',
       title: 'How should it come across?',
-      sub: "Two questions we always ask: what should people know about you, and how should they feel. Then the look follows from that.",
+      sub: "Two questions we always ask: what should people know about you, and how should they feel.",
       optional: true,
       fields: [
         { t: 'chips', k: 'know', label: 'What should people know about you?',
-          opts: ['That we’re established and trustworthy', 'That we genuinely care', 'That we’re professional and capable',
-                 'That we’re affordable and fair', 'That we’re rooted in this community', 'That we’re modern and current',
-                 'What we believe and stand for', 'That we’ve been doing this a long time', 'That real people are behind this'] },
+          opts: ['That we’re established and trustworthy', 'That we genuinely care',
+                 'That we’re professional and capable', 'That we’re affordable and fair',
+                 'That we’re rooted in this community', 'What we believe and stand for'] },
         { t: 'chips', k: 'feelings', label: 'And how should they feel?',
-          opts: ['Welcome', 'Reassured and confident', 'Inspired', 'At peace', 'Excited', 'Taken seriously',
-                 'Curious to learn more', 'Like they belong here', 'Like this is safe to trust'] },
-        { t: 'chips', k: 'style', label: 'Which of these sounds like you?',
-          opts: ['Clean and minimal', 'Warm and welcoming', 'Bold and modern', 'Traditional and formal',
-                 'Bright and playful', 'Quiet and understated', 'Not sure — show us options'] },
-        { t: 'chips', k: 'colors', label: 'Colour direction', swatches: true,
-          hint: "Skip this if you'd rather we matched your logo.",
-          opts: [
-            { v: 'Blues and white', sw: ['#1C75BC', '#29ABE2', '#FFFFFF'] },
-            { v: 'Greens and earth tones', sw: ['#2F7A4E', '#8FB996', '#E8E0CF'] },
-            { v: 'Warm neutrals and cream', sw: ['#C9A227', '#EFE6D5', '#8A7357'] },
-            { v: 'Bold reds and orange', sw: ['#C0392B', '#E8792B', '#F5E2D0'] },
-            { v: 'Purples and violet', sw: ['#5B2C8D', '#9B72CF', '#EDE4F7'] },
-            { v: 'Black, white and gold', sw: ['#141414', '#C8A951', '#FFFFFF'] },
-            { v: 'Just match our logo', sw: ['#E8E6E6', '#C9C7C7', '#A8A6A6'] },
-            { v: 'No preference', sw: ['#F4F4F4', '#E0E0E0', '#CFCFCF'] }
+          opts: ['Welcome', 'Reassured and confident', 'Inspired', 'At peace',
+                 'Taken seriously', 'Like they belong here'] },
+        { t: 'collapse', k: 'design_open', label: 'Want to give us colour and style direction?',
+          hint: 'Entirely optional — most people leave this to us.',
+          fields: [
+            { t: 'chips', k: 'style', label: 'Which of these sounds like you?',
+              opts: ['Clean and minimal', 'Warm and welcoming', 'Bold and modern',
+                     'Traditional and formal', 'Bright and playful', 'Quiet and understated'] },
+            { t: 'chips', k: 'colors', label: 'Colour direction', swatches: true,
+              hint: "Skip this if you'd rather we matched your logo.",
+              opts: [
+                { v: 'Blues and white', sw: ['#1C75BC', '#29ABE2', '#FFFFFF'] },
+                { v: 'Greens and earth tones', sw: ['#2F7A4E', '#8FB996', '#E8E0CF'] },
+                { v: 'Warm neutrals and cream', sw: ['#C9A227', '#EFE6D5', '#8A7357'] },
+                { v: 'Bold reds and orange', sw: ['#C0392B', '#E8792B', '#F5E2D0'] },
+                { v: 'Purples and violet', sw: ['#5B2C8D', '#9B72CF', '#EDE4F7'] },
+                { v: 'Black, white and gold', sw: ['#141414', '#C8A951', '#FFFFFF'] },
+                { v: 'Just match our logo', sw: ['#E8E6E6', '#C9C7C7', '#A8A6A6'] }
+              ] }
           ] },
         { t: 'area', k: 'refs', label: 'Sites you like', rows: 2,
           hint: "Optional, and honestly one of the most useful things you can give us. Paste any links — they don't have to be in your industry.",
@@ -286,6 +410,21 @@
       ] }
   ];
 
+  /* Flatten collapse containers so read/validate/compile see every field. */
+  STEPS.forEach(function (s) {
+    s._flat = [];
+    s.fields.forEach(function (f) {
+      s._flat.push(f);
+      if (f.t === 'collapse') f.fields.forEach(function (c) { s._flat.push(c); });
+    });
+  });
+
+  /* Every option of a chips/radio field, grouped or flat, as objects. */
+  function optionsOf(f) {
+    if (f.groups) return flatOpts(f.groups);
+    return (f.opts || []).map(function (o) { return typeof o === 'string' ? { v: o } : o; });
+  }
+
   /* Project types that make website scope questions irrelevant. */
   function isAppOnly(d) {
     var s = d.solutions || [];
@@ -303,16 +442,18 @@
 
     probs.forEach(function (v) {
       var m = PROBLEMS.filter(function (p) { return p.v === v; })[0];
-      if (m) m.need.forEach(function (n) { need[n] = true; });
+      if (m && m.need) m.need.forEach(function (n) { need[n] = true; });
     });
     sols.forEach(function (v) {
       var m = SOLUTIONS.filter(function (s) { return s.v === v; })[0];
-      if (m) m.gives.forEach(function (g) { gives[g] = true; });
+      if (m && m.gives) m.gives.forEach(function (g) { gives[g] = true; });
     });
 
     var unsure = !!gives.unsure;
     var gaps = Object.keys(need).filter(function (n) { return !gives[n] && CAP[n]; });
     var client = [], internal = [];
+
+    if (d.worst) internal.push('TOP PRIORITY (client’s own pick) — ' + d.worst);
 
     if (gaps.length && !unsure) {
       client.push('Your answers point at a few things your plan may not cover yet: ' +
@@ -359,7 +500,8 @@
     var low = d.budget_build === 'Under ₱20,000' || d.budget_build === '₱20,000 – 50,000';
     if (big && low) {
       internal.push('BUDGET GAP — ' + probs.length + ' problems raised against a ' + d.budget_build +
-        ' build budget. Phase it, or trim scope on the call before quoting.');
+        ' build budget. Phase it' + (d.worst ? ' starting from the top priority above' : '') +
+        ', or trim scope on the call before quoting.');
     }
     if (d.budget_build === 'Not sure — please advise') {
       internal.push('NO ANCHOR — no budget expectation set. Present tiered options.');
@@ -413,32 +555,46 @@
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
+  function chipHTML(f, o) {
+    var v = o.v;
+    var cid = 'bf' + (++uid);
+    var sw = '';
+    if (f.swatches && o.sw) {
+      sw = '<span class="brief-sw" aria-hidden="true">' + o.sw.map(function (c) {
+        return '<i style="background:' + esc(c) + '"></i>';
+      }).join('') + '</span>';
+    }
+    return '<input type="checkbox" id="' + cid + '" name="' + esc(f.k) + '" value="' + esc(v) + '"' +
+      (o.for ? ' data-for="' + esc(o.for.join(',')) + '"' : '') + '>' +
+      '<label class="brief-chip" for="' + cid + '">' + sw + '<span>' + esc(v) + '</span></label>';
+  }
+
   function fieldHTML(f) {
     var id = 'bf' + (++uid);
     var h = '<div class="brief-field" data-fk="' + esc(f.k) + '"' +
       (f.when ? ' data-cond="1"' : '') + '>';
 
     if (f.label) {
-      h += '<label class="brief-field-label"' + (f.t === 'chips' || f.t === 'radio' ? '' : ' for="' + id + '"') + '>' +
-        esc(f.label) + (f.req ? ' <span class="brief-req">*</span>' : '') + '</label>';
+      var plain = f.t === 'chips' || f.t === 'radio' || f.t === 'rank' || f.t === 'collapse';
+      h += '<label class="brief-field-label"' + (plain ? '' : ' for="' + id + '"') + '>' +
+        esc(f.label) + (f.req ? ' <span class="brief-req">*</span>' : '') +
+        (f.count ? ' <span class="brief-count" data-count-for="' + esc(f.k) + '"></span>' : '') + '</label>';
     }
     if (f.hint) h += '<span class="brief-field-hint">' + esc(f.hint) + '</span>';
 
     if (f.t === 'chips') {
-      h += '<div class="brief-chips" role="group" aria-label="' + esc(f.label || '') + '">';
-      f.opts.forEach(function (o) {
-        var v = typeof o === 'string' ? o : o.v;
-        var cid = 'bf' + (++uid);
-        var sw = '';
-        if (f.swatches && o.sw) {
-          sw = '<span class="brief-sw" aria-hidden="true">' + o.sw.map(function (c) {
-            return '<i style="background:' + esc(c) + '"></i>';
-          }).join('') + '</span>';
-        }
-        h += '<input type="checkbox" id="' + cid + '" name="' + esc(f.k) + '" value="' + esc(v) + '">' +
-          '<label class="brief-chip" for="' + cid + '">' + sw + '<span>' + esc(v) + '</span></label>';
-      });
-      h += '</div>';
+      if (f.groups) {
+        f.groups.forEach(function (g) {
+          h += '<div class="brief-cluster"><div class="brief-cluster-label">' + esc(g.label) + '</div>' +
+            '<div class="brief-chips" role="group" aria-label="' + esc(g.label) + '">' +
+            g.opts.map(function (o) { return chipHTML(f, o); }).join('') + '</div></div>';
+        });
+      } else {
+        h += '<div class="brief-chips" role="group" aria-label="' + esc(f.label || '') + '">' +
+          optionsOf(f).map(function (o) { return chipHTML(f, o); }).join('') + '</div>';
+      }
+      /* Escape hatch, revealed only when the org filter actually hides something. */
+      h += '<button type="button" class="brief-showall" data-showall="' + esc(f.k) + '" hidden></button>';
       if (f.other) {
         h += '<input type="text" class="form-input" name="' + esc(f.k) + '_other" placeholder="' +
           esc(f.other) + '" style="margin-top:12px;">';
@@ -446,15 +602,20 @@
     } else if (f.t === 'radio') {
       h += '<div class="' + (f.cols === 2 ? 'brief-opts-2' : 'brief-opts') + '" role="radiogroup" aria-label="' +
         esc(f.label || '') + '">';
-      f.opts.forEach(function (o) {
-        var v = typeof o === 'string' ? o : o.v;
-        var d = typeof o === 'string' ? '' : o.d;
+      optionsOf(f).forEach(function (o) {
         var rid = 'bf' + (++uid);
-        h += '<input type="radio" id="' + rid + '" name="' + esc(f.k) + '" value="' + esc(v) + '">' +
-          '<label class="brief-opt" for="' + rid + '"><span class="brief-opt-t">' + esc(v) + '</span>' +
-          (d ? '<span class="brief-opt-d">' + esc(d) + '</span>' : '') + '</label>';
+        h += '<input type="radio" id="' + rid + '" name="' + esc(f.k) + '" value="' + esc(o.v) + '">' +
+          '<label class="brief-opt" for="' + rid + '"><span class="brief-opt-t">' + esc(o.v) + '</span>' +
+          (o.d ? '<span class="brief-opt-d">' + esc(o.d) + '</span>' : '') + '</label>';
       });
       h += '</div>';
+    } else if (f.t === 'rank') {
+      h += '<div class="brief-opts" role="radiogroup" data-rank-host="' + esc(f.k) + '"></div>';
+    } else if (f.t === 'collapse') {
+      h += '<button type="button" class="brief-disclose" data-disclose="' + esc(f.k) + '" aria-expanded="false">' +
+        '<span class="brief-disclose-icon" aria-hidden="true">+</span><span>' + esc(f.label) + '</span></button>' +
+        '<div class="brief-disclose-body" data-disclose-body="' + esc(f.k) + '" hidden>' +
+        f.fields.map(fieldHTML).join('') + '</div>';
     } else if (f.t === 'area') {
       h += '<textarea id="' + id + '" name="' + esc(f.k) + '" class="form-input" rows="' + (f.rows || 3) +
         '" placeholder="' + esc(f.ph || '') + '" style="resize:vertical;line-height:1.6;"></textarea>';
@@ -514,14 +675,15 @@
   function read() {
     var d = {};
     STEPS.forEach(function (s) {
-      s.fields.forEach(function (f) {
+      s._flat.forEach(function (f) {
+        if (f.t === 'collapse') return;
         if (f.t === 'chips') {
           var vals = [];
           form.querySelectorAll('input[name="' + f.k + '"]:checked').forEach(function (n) { vals.push(n.value); });
           var ot = form.querySelector('[name="' + f.k + '_other"]');
           if (ot && ot.value.trim()) vals.push(ot.value.trim());
           if (vals.length) d[f.k] = vals;
-        } else if (f.t === 'radio') {
+        } else if (f.t === 'radio' || f.t === 'rank') {
           var r = form.querySelector('input[name="' + f.k + '"]:checked');
           if (r) d[f.k] = r.value;
         } else {
@@ -542,6 +704,8 @@
     } catch (e) { /* private mode — the form still works, just not resumable */ }
   }
 
+  var pendingRank = null;
+
   function restore() {
     var saved;
     try { saved = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) { return 0; }
@@ -549,6 +713,7 @@
     var d = saved.d;
     Object.keys(d).forEach(function (k) {
       var v = d[k];
+      if (k === 'worst') { pendingRank = v; return; }
       if (Array.isArray(v)) {
         var known = [];
         form.querySelectorAll('input[name="' + k + '"]').forEach(function (n) {
@@ -573,13 +738,107 @@
   }
 
   /* ------------------------------------------------------------------ *
+   * Option filtering by org type                                        *
+   * ------------------------------------------------------------------ */
+  var showAll = {};   /* field key -> true once the visitor asks for everything */
+
+  function orgCode(d) {
+    return d.orgtype ? (ORG_CODE[d.orgtype] || '*') : '*';
+  }
+
+  function applyOptionFilter() {
+    var d = read(), code = orgCode(d);
+    STEPS.forEach(function (s) {
+      s._flat.forEach(function (f) {
+        if (f.t !== 'chips') return;
+        var wrap = s._el.querySelector('[data-fk="' + f.k + '"]');
+        if (!wrap) return;
+        var hidden = 0;
+        wrap.querySelectorAll('input[name="' + f.k + '"]').forEach(function (n) {
+          var tags = n.getAttribute('data-for');
+          /* No tag, no org chosen, "something else", already ticked, or the
+             visitor asked to see everything -> always visible. */
+          var keep = !tags || code === '*' || showAll[f.k] || n.checked ||
+                     tags.split(',').indexOf(code) > -1;
+          var label = wrap.querySelector('label[for="' + n.id + '"]');
+          if (label) label.hidden = !keep;
+          n.disabled = !keep;
+          if (!keep) hidden++;
+        });
+
+        /* Collapse a cluster whose every option is filtered out. */
+        wrap.querySelectorAll('.brief-cluster').forEach(function (cl) {
+          var any = false;
+          cl.querySelectorAll('.brief-chip').forEach(function (l) { if (!l.hidden) any = true; });
+          cl.hidden = !any;
+        });
+
+        var btn = wrap.querySelector('[data-showall="' + f.k + '"]');
+        if (btn) {
+          if (hidden > 0 && !showAll[f.k]) {
+            btn.hidden = false;
+            btn.textContent = 'Show ' + hidden + ' more option' + (hidden === 1 ? '' : 's') +
+              ' we hid for ' + (d.orgtype ? d.orgtype.toLowerCase() : 'you');
+          } else {
+            btn.hidden = true;
+          }
+        }
+      });
+    });
+  }
+
+  function updateCounts() {
+    form.querySelectorAll('[data-count-for]').forEach(function (el) {
+      var k = el.getAttribute('data-count-for');
+      var n = form.querySelectorAll('input[name="' + k + '"]:checked').length;
+      el.textContent = n ? n + ' selected' : '';
+    });
+  }
+
+  /* ------------------------------------------------------------------ *
+   * "Which hurts most?" — built from the boxes the client just ticked   *
+   * ------------------------------------------------------------------ */
+  function refreshRank() {
+    STEPS.forEach(function (s) {
+      s._flat.forEach(function (f) {
+        if (f.t !== 'rank') return;
+        var wrap = s._el.querySelector('[data-fk="' + f.k + '"]');
+        var slot = wrap && wrap.querySelector('[data-rank-host="' + f.k + '"]');
+        if (!slot) return;
+
+        var chosen = [];
+        form.querySelectorAll('input[name="' + f.from + '"]:checked').forEach(function (n) { chosen.push(n.value); });
+        var ot = form.querySelector('[name="' + f.from + '_other"]');
+        if (ot && ot.value.trim()) chosen.push(ot.value.trim());
+
+        var current = pendingRank ||
+          (form.querySelector('input[name="' + f.k + '"]:checked') || {}).value || null;
+
+        /* Only worth asking once there is something to choose between. */
+        if (chosen.length < 2) { wrap.hidden = true; slot.innerHTML = ''; return; }
+        wrap.hidden = false;
+
+        var h = '';
+        chosen.forEach(function (v) {
+          var rid = 'bf' + (++uid);
+          h += '<input type="radio" id="' + rid + '" name="' + esc(f.k) + '" value="' + esc(v) + '"' +
+            (v === current ? ' checked' : '') + '>' +
+            '<label class="brief-opt" for="' + rid + '"><span class="brief-opt-t">' + esc(v) + '</span></label>';
+        });
+        slot.innerHTML = h;
+        if (current && chosen.indexOf(current) > -1) pendingRank = null;
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------ *
    * Navigation                                                          *
    * ------------------------------------------------------------------ */
-  var cur = 0;             // -1 = intro, 0..n-1 = steps, n = review
+  var cur = 0;             // 0..n-1 = steps, n = review
   var TOTAL = STEPS.length;
   var submitted = false;
 
-  function live(steps) {
+  function live() {
     var d = read();
     return STEPS.filter(function (s) { return !s.when || s.when(d); });
   }
@@ -587,7 +846,7 @@
   function applyConditionalFields() {
     var d = read();
     STEPS.forEach(function (s) {
-      s.fields.forEach(function (f) {
+      s._flat.forEach(function (f) {
         if (!f.when) return;
         var wrap = s._el.querySelector('[data-fk="' + f.k + '"][data-cond]');
         if (!wrap) return;
@@ -609,11 +868,20 @@
     });
   }
 
+  /* Order matters: gating enables a whole step, then the filter re-disables
+     the options that do not apply to this org type. */
+  function refreshAll() {
+    applyConditionalFields();
+    applyStepGating();
+    refreshRank();
+    applyOptionFilter();
+    updateCounts();
+  }
+
   function show(i, focus) {
     hideErr();
     cur = i;
-    applyConditionalFields();
-    applyStepGating();
+    refreshAll();
 
     STEPS.forEach(function (s) { s._el.hidden = true; });
     review.hidden = true;
@@ -678,8 +946,8 @@
 
   function validate(s) {
     var d = read();
-    for (var i = 0; i < s.fields.length; i++) {
-      var f = s.fields[i];
+    for (var i = 0; i < s._flat.length; i++) {
+      var f = s._flat[i];
       if (!f.req) continue;
       if (f.when && !f.when(d)) continue;
       var v = d[f.k];
@@ -718,20 +986,49 @@
     elNext.click();
   });
 
+  /* Disclosure + "show all options" live inside the form. */
+  form.addEventListener('click', function (e) {
+    var dis = e.target.closest('[data-disclose]');
+    if (dis) {
+      var k = dis.getAttribute('data-disclose');
+      var body = form.querySelector('[data-disclose-body="' + k + '"]');
+      var open = dis.getAttribute('aria-expanded') === 'true';
+      dis.setAttribute('aria-expanded', open ? 'false' : 'true');
+      body.hidden = open;
+      dis.querySelector('.brief-disclose-icon').textContent = open ? '+' : '–';
+      return;
+    }
+    var sa = e.target.closest('[data-showall]');
+    if (sa) {
+      showAll[sa.getAttribute('data-showall')] = true;
+      applyOptionFilter();
+      elLive.textContent = 'All options shown.';
+    }
+  });
+
   form.addEventListener('change', function (e) {
     hideErr();
-    if (e.target.name === 'timeline' || e.target.name === 'solutions') {
-      applyConditionalFields();
-      applyStepGating();
+    /* Changing the org type re-filters everything; ticking a problem rebuilds
+       the priority question; either way the counters refresh. */
+    if (e.target.name === 'orgtype' || e.target.name === 'timeline' || e.target.name === 'solutions') {
+      refreshAll();
       var vis = live(), s = STEPS[cur];
       if (s) {
         var pos = vis.indexOf(s) + 1;
         if (pos > 0) elStepNo.textContent = 'Step ' + pos + ' of ' + vis.length;
       }
+    } else if (e.target.name === 'problems') {
+      refreshRank();
+      updateCounts();
+    } else {
+      updateCounts();
     }
     save();
   });
-  form.addEventListener('input', debounce(save, 500));
+  form.addEventListener('input', debounce(function () {
+    refreshRank();
+    save();
+  }, 500));
 
   function debounce(fn, ms) {
     var t; return function () { clearTimeout(t); t = setTimeout(fn, ms); };
@@ -754,7 +1051,8 @@
     h += '<div class="brief-review">';
     vis.forEach(function (s) {
       var rows = '';
-      s.fields.forEach(function (f) {
+      s._flat.forEach(function (f) {
+        if (f.t === 'collapse') return;
         if (f.when && !f.when(d)) return;
         var v = d[f.k];
         if (!v || (Array.isArray(v) && !v.length)) return;
@@ -786,7 +1084,8 @@
     out.push('');
     vis.forEach(function (s) {
       var lines = [];
-      s.fields.forEach(function (f) {
+      s._flat.forEach(function (f) {
+        if (f.t === 'collapse') return;
         if (f.when && !f.when(d)) return;
         var v = d[f.k];
         if (!v || (Array.isArray(v) && !v.length)) return;

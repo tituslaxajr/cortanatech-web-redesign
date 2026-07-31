@@ -54,19 +54,39 @@
 
     .ask-lead { font-family: var(--font-body); font-size: clamp(15px, 1.7vw, 18px); color: rgba(255,255,255,0.66); margin-bottom: 14px; }
     .ask-headline { font-family: var(--font-display); font-size: clamp(38px, 5.6vw, 68px); font-weight: 900; color: #fff; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 40px; }
+    .ask-you { font-style: normal; color: var(--color-blue-sky, #29ABE2); position: relative; white-space: nowrap; }
+    .ask-you::after { content: ''; position: absolute; left: 0; right: 0; bottom: -0.06em; height: 0.14em; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M3 9 Q 60 2 117 7' fill='none' stroke='%2329ABE2' stroke-width='5' stroke-linecap='round' opacity='0.85'/%3E%3C/svg%3E") no-repeat center / 100% 100%; }
     .ask-q { font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 24px; }
 
     .pick-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 760px; margin: 0 auto 36px; }
     .pick-card { display: flex; flex-direction: column; align-items: center; gap: 14px; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.16); border-radius: 20px; padding: 26px 14px 22px; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s; color: #fff; }
     .pick-card:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.4); transform: translateY(-4px); }
     .pick-card[aria-pressed="true"] { background: rgba(255,255,255,0.18); border-color: #fff; }
-    .pick-photo { width: 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.3); color: #fff; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
-    .pick-card:hover .pick-photo { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.55); transform: scale(1.05); }
-    .pick-card[aria-pressed="true"] .pick-photo { background: #fff; color: var(--color-primary-dark); border-color: #fff; }
+    .pick-photo { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.35); box-shadow: 0 8px 22px rgba(0,0,0,0.28); transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+    .pick-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pick-card:hover .pick-photo { border-color: rgba(255,255,255,0.75); transform: scale(1.05); }
+    .pick-card[aria-pressed="true"] .pick-photo { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.35), 0 8px 22px rgba(0,0,0,0.28); }
     .pick-name { font-family: var(--font-display); font-size: 17px; font-weight: 800; }
     .pick-tag { font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.62); line-height: 1.45; }
-    .pick-skip { font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.55); border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 2px; transition: color 0.2s; }
+    .pick-skip { display: inline-block; font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.55); border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 2px; transition: color 0.2s; }
     .pick-skip:hover { color: rgba(255,255,255,0.85); }
+    .ask-proof { font-family: var(--font-body); font-size: 12.5px; letter-spacing: 0.02em; color: rgba(255,255,255,0.45); margin-top: 28px; }
+
+    /* Staged reveal — the hero speaks in sentences, not all at once.
+       Cards use fill-mode backwards so the finished animation releases
+       transform back to the hover transition. */
+    #picker-ask .ask-lead { animation-delay: 0s; }
+    #picker-ask .ask-headline { animation-delay: 0.45s; }
+    #picker-ask .ask-q { animation-delay: 0.95s; }
+    #picker-ask .pick-card { animation: fadeUp 0.6s var(--ease-settle) backwards; }
+    #picker-ask .pick-card:nth-child(1) { animation-delay: 1.15s; }
+    #picker-ask .pick-card:nth-child(2) { animation-delay: 1.3s; }
+    #picker-ask .pick-card:nth-child(3) { animation-delay: 1.45s; }
+    #picker-ask .pick-card:nth-child(4) { animation-delay: 1.6s; }
+    #picker-ask .pick-skip, #picker-ask .ask-proof { animation-delay: 1.9s; }
+    @media (prefers-reduced-motion: reduce) {
+      #picker-ask .fade-up, #picker-ask .pick-card { animation: none; }
+    }
 
     /* Confirmed hero (role chosen). The inline head snippet sets data-role
        pre-paint, so returning visitors never see the question flash. */
@@ -219,31 +239,32 @@
       <!-- The question (default state) -->
       <div id="picker-ask">
         <p class="ask-lead fade-up">Most agencies start by talking about themselves.</p>
-        <h1 class="ask-headline fade-up">We&rsquo;d rather start with you.</h1>
+        <h1 class="ask-headline fade-up">We&rsquo;d rather start with <em class="ask-you">you</em>.</h1>
         <p class="ask-q fade-up">What kind of organization do you run?</p>
-        <div class="pick-row fade-up">
+        <div class="pick-row">
           <a href="services.html" class="pick-card" data-role-pick="church" role="button" aria-pressed="false">
-            <span class="pick-photo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="36" height="36"><path d="M12 2v3"/><path d="M10.5 3.5h3"/><path d="M4 21V11l8-6 8 6v10"/><path d="M4 21h16"/><path d="M9.5 21v-6.5a2.5 2.5 0 0 1 5 0V21"/></svg></span>
+            <span class="pick-photo"><img src="assets/photos/audience/portrait-pastor.jpg" alt="A smiling Filipino pastor in a barong inside his church" width="320" height="320" decoding="async"></span>
             <span class="pick-name">A church</span>
             <span class="pick-tag">Reach your community beyond Sunday.</span>
           </a>
           <a href="services.html" class="pick-card" data-role-pick="school" role="button" aria-pressed="false">
-            <span class="pick-photo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="36" height="36"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.5 3 6 3s6-1.5 6-3v-5"/></svg></span>
+            <span class="pick-photo"><img src="assets/photos/audience/portrait-teacher.jpg" alt="A smiling Filipina teacher in her classroom" width="320" height="320" decoding="async"></span>
             <span class="pick-name">A school</span>
             <span class="pick-tag">Modernize without overwhelming staff.</span>
           </a>
           <a href="services.html" class="pick-card" data-role-pick="nonprofit" role="button" aria-pressed="false">
-            <span class="pick-photo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="36" height="36"><path d="M12 21.35 10.55 20.03C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54Z"/></svg></span>
+            <span class="pick-photo"><img src="assets/photos/audience/portrait-volunteer.jpg" alt="A smiling young Filipino volunteer at a community relief drive" width="320" height="320" decoding="async"></span>
             <span class="pick-name">A nonprofit</span>
             <span class="pick-tag">Turn goodwill into lasting support.</span>
           </a>
           <a href="services.html" class="pick-card" data-role-pick="smallbiz" role="button" aria-pressed="false">
-            <span class="pick-photo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="36" height="36"><path d="M4 10v10h16V10"/><path d="M2 10l2-6h16l2 6"/><path d="M2 10c0 1.3 1.3 2.4 3 2.4s3-1.1 3-2.4c0 1.3 1.3 2.4 3 2.4s3-1.1 3-2.4c0 1.3 1.3 2.4 3 2.4s3-1.1 3-2.4"/><path d="M9.5 20v-6h5v6"/></svg></span>
+            <span class="pick-photo"><img src="assets/photos/audience/portrait-owner.jpg" alt="A smiling Filipina shop owner in her store" width="320" height="320" decoding="async"></span>
             <span class="pick-name">A small business</span>
             <span class="pick-tag">Get found and trusted online.</span>
           </a>
         </div>
-        <a href="#pains" id="picker-skip" class="pick-skip">Just show me the site ↓</a>
+        <a href="#pains" id="picker-skip" class="pick-skip fade-up">Just show me the site ↓</a>
+        <p class="ask-proof fade-up">Serving churches, schools, nonprofits &amp; small businesses across the Philippines.</p>
       </div>
 
       <!-- Confirmed state (role chosen; unhidden by CSS when html[data-role]) -->

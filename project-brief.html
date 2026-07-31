@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Brief — CortanaTech Solutions</title>
+  <meta name="description" content="Answer a few quick questions about your church, school, nonprofit, or small business and we'll come back with a recommendation. Mostly taps — about three minutes, no account needed.">
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cortanatechsolutions.com/project-brief.html">
+  <meta property="og:title" content="Project Brief — CortanaTech Solutions">
+  <meta property="og:description" content="Answer a few quick questions and we'll come back with a recommendation. Mostly taps — about three minutes, no account needed.">
+  <meta property="og:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Project Brief — CortanaTech Solutions">
+  <meta name="twitter:description" content="Answer a few quick questions and we'll come back with a recommendation. Mostly taps — about three minutes, no account needed.">
+  <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
+  <script>try{var r=localStorage.getItem('ct-role');if(r)document.documentElement.setAttribute('data-role',r)}catch(e){}</script>
+  <link rel="stylesheet" href="shared.css?v=meeting3">
+  <style>
+    body { font-family: var(--font-body); }
+
+    /* ---- Wizard shell ---- */
+    .brief-wrap { max-width: 760px; margin: 0 auto; }
+    .brief-card {
+      background: #fff; border: 1.5px solid var(--color-border-subtle);
+      border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      padding: 40px; position: relative;
+    }
+    @media (max-width: 640px) { .brief-card { padding: 26px 20px; border-radius: 18px; } }
+
+    /* ---- Progress ---- */
+    .brief-prog-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 16px; margin-bottom: 12px;
+    }
+    .brief-prog-step {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #6B7280;
+    }
+    .brief-prog-time { font-size: 12px; color: var(--color-text-muted); }
+    .brief-prog-track {
+      height: 6px; background: var(--color-surface-subtle);
+      border-radius: 100px; overflow: hidden; margin-bottom: 32px;
+    }
+    .brief-prog-bar {
+      height: 100%; width: 0; border-radius: 100px;
+      background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-blue-sky) 100%);
+      transition: width 320ms var(--ease-ripple);
+    }
+    @media (prefers-reduced-motion: reduce) { .brief-prog-bar { transition: none; } }
+
+    /* ---- Step ---- */
+    .brief-step[hidden] { display: none; }
+    .brief-step-eyebrow {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-text-accent); margin-bottom: 10px;
+    }
+    .brief-step-title {
+      font-family: var(--font-display); font-size: clamp(23px, 3.4vw, 31px);
+      font-weight: var(--font-black); color: var(--color-primary-dark);
+      line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 12px;
+    }
+    .brief-step-sub {
+      font-size: 15px; color: var(--color-text-secondary);
+      line-height: 1.65; margin-bottom: 30px;
+    }
+    .brief-optional {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; color: #6B7280;
+      background: var(--color-surface-subtle); border-radius: 100px;
+      padding: 4px 11px; margin-left: 10px; vertical-align: middle;
+    }
+
+    /* ---- Field blocks ---- */
+    .brief-field { margin-bottom: 30px; }
+    .brief-field:last-child { margin-bottom: 0; }
+    .brief-field-label {
+      display: block; font-size: 14.5px; font-weight: 700;
+      color: var(--color-text-primary); margin-bottom: 6px;
+    }
+    .brief-field-hint {
+      display: block; font-size: 13.5px; color: var(--color-text-muted);
+      line-height: 1.55; margin-bottom: 14px;
+    }
+    .brief-req { color: var(--color-primary); font-weight: 700; }
+    .brief-half-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .brief-half-row { grid-template-columns: 1fr; } }
+
+    /* ---- Chips (multi-select checkboxes) ---- */
+    .brief-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .brief-chips input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .brief-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 500; color: var(--color-text-primary);
+      background: #fff; border: 1.5px solid var(--color-border-default);
+      border-radius: 100px; padding: 11px 17px; cursor: pointer;
+      min-height: 44px; transition: border-color 0.15s, background 0.15s, color 0.15s;
+      line-height: 1.35;
+    }
+    .brief-chip:hover { border-color: var(--color-primary); }
+    .brief-chip::before {
+      content: ''; width: 16px; height: 16px; border-radius: 5px;
+      border: 1.5px solid var(--color-border-default); flex-shrink: 0;
+      background-repeat: no-repeat; background-position: center;
+      transition: border-color 0.15s, background-color 0.15s;
+    }
+    .brief-chips input:checked + .brief-chip {
+      border-color: var(--color-primary); background: var(--color-primary-subtle);
+      color: var(--color-primary-dark); font-weight: 600;
+    }
+    .brief-chips input:checked + .brief-chip::before {
+      background-color: var(--color-primary); border-color: var(--color-primary);
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9"><path d="M1 4.5L4 7.5L10 1.5" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    }
+    .brief-chips input:focus-visible + .brief-chip {
+      outline: 3px solid var(--color-blue-sky); outline-offset: 2px;
+    }
+
+    /* ---- Option cards (single-select radios) ---- */
+    .brief-opts { display: flex; flex-direction: column; gap: 10px; }
+    .brief-opts-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 560px) { .brief-opts-2 { grid-template-columns: 1fr; } }
+    .brief-opts input, .brief-opts-2 input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .brief-opt {
+      display: block; background: #fff; border: 1.5px solid var(--color-border-default);
+      border-radius: 14px; padding: 15px 18px; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+    }
+    .brief-opt:hover { border-color: var(--color-primary); }
+    .brief-opt-t { display: block; font-size: 14.5px; font-weight: 600; color: var(--color-text-primary); line-height: 1.4; }
+    .brief-opt-d { display: block; font-size: 13px; color: var(--color-text-muted); line-height: 1.5; margin-top: 4px; }
+    input:checked + .brief-opt {
+      border-color: var(--color-primary); background: var(--color-primary-subtle);
+      box-shadow: inset 0 0 0 1px var(--color-primary);
+    }
+    input:checked + .brief-opt .brief-opt-t { color: var(--color-primary-dark); font-weight: 700; }
+    input:focus-visible + .brief-opt { outline: 3px solid var(--color-blue-sky); outline-offset: 2px; }
+
+    /* ---- Swatch chips (colour direction) ---- */
+    .brief-sw { display: inline-flex; gap: 3px; flex-shrink: 0; }
+    .brief-sw i { width: 13px; height: 13px; border-radius: 4px; display: block; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08); }
+
+    /* ---- Nav buttons ---- */
+    .brief-nav {
+      display: flex; align-items: center; gap: 14px;
+      margin-top: 38px; padding-top: 26px;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .brief-btn-next {
+      background: var(--color-primary-dark); color: #fff; border: none;
+      padding: 15px 32px; border-radius: 100px; font-family: var(--font-body);
+      font-size: 15.5px; font-weight: 700; cursor: pointer; min-height: 48px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .brief-btn-next:hover { background: var(--color-primary); transform: translateY(-1px); box-shadow: var(--shadow-button); }
+    .brief-btn-back, .brief-btn-skip {
+      background: transparent; border: none; padding: 12px 6px;
+      font-family: var(--font-body); font-size: 14.5px; font-weight: 600;
+      color: var(--color-text-secondary); cursor: pointer; min-height: 44px;
+      transition: color 0.15s;
+    }
+    .brief-btn-back:hover, .brief-btn-skip:hover { color: var(--color-primary); }
+    .brief-nav-spacer { flex: 1; }
+    @media (max-width: 560px) {
+      .brief-nav { flex-wrap: wrap; }
+      .brief-btn-next { width: 100%; order: -1; }
+      .brief-nav-spacer { display: none; }
+      .brief-btn-skip { margin-left: auto; }
+    }
+
+    /* ---- Errors ---- */
+    .brief-err {
+      display: none; align-items: flex-start; gap: 9px;
+      background: #FEF2F2; border-left: 3px solid #DC2626;
+      border-radius: 8px; padding: 12px 15px; margin-bottom: 22px;
+      font-size: 13.5px; color: #991B1B; line-height: 1.55;
+    }
+    .brief-err.on { display: flex; }
+    .form-input.bad { border-color: #DC2626; }
+
+    /* ---- Review ---- */
+    .brief-review { display: flex; flex-direction: column; gap: 2px; }
+    .brief-rev-row {
+      display: grid; grid-template-columns: 220px 1fr; gap: 18px;
+      padding: 13px 0; border-bottom: 1px solid var(--color-border-subtle);
+      font-size: 14px; line-height: 1.6;
+    }
+    @media (max-width: 620px) { .brief-rev-row { grid-template-columns: 1fr; gap: 3px; } }
+    .brief-rev-k { color: #6B7280; font-weight: 600; font-size: 13px; }
+    .brief-rev-v { color: var(--color-text-primary); }
+    .brief-rev-sec {
+      font-family: var(--font-display); font-size: 14px; font-weight: 800;
+      color: var(--color-primary-dark); text-transform: uppercase;
+      letter-spacing: 0.07em; margin: 26px 0 4px;
+    }
+    .brief-rev-sec:first-child { margin-top: 0; }
+    .brief-rev-edit {
+      background: none; border: none; padding: 0; font-family: var(--font-body);
+      font-size: 13px; font-weight: 600; color: var(--color-primary);
+      cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+    }
+
+    /* ---- Insight callout ---- */
+    .brief-insight {
+      background: var(--color-primary-subtle); border-left: 3px solid var(--color-primary);
+      border-radius: 12px; padding: 20px 22px; margin-bottom: 30px;
+    }
+    .brief-insight h3 {
+      font-family: var(--font-display); font-size: 15px; font-weight: 800;
+      color: var(--color-primary-dark); margin-bottom: 10px;
+    }
+    .brief-insight ul { margin: 0; padding-left: 20px; }
+    .brief-insight li { font-size: 14px; color: var(--color-text-secondary); line-height: 1.65; margin-bottom: 5px; }
+
+    /* ---- Saved / success ---- */
+    .brief-saved {
+      display: none; align-items: center; gap: 8px; font-size: 12.5px;
+      color: var(--color-text-muted); margin-top: 18px; justify-content: center;
+    }
+    .brief-saved.on { display: flex; }
+    .brief-done { text-align: center; padding: 20px 0; }
+    .brief-done-ring {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: var(--color-primary-subtle); color: var(--color-primary);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;
+    }
+    .brief-done-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 28px; }
+
+    /* ---- Reassurance strip under the card ---- */
+    .brief-assure {
+      display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: center;
+      margin-top: 26px; font-size: 13px; color: var(--color-text-muted);
+    }
+    .brief-assure span { display: inline-flex; align-items: center; gap: 7px; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav style="position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #E8E6E6; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; height: 80px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
+    <a href="index.html" style="flex-shrink: 0;"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
+    <div class="desktop-nav" style="display: flex; align-items: center; gap: 36px;">
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="work.html" class="nav-link">Our Work</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-btn">Get Started</a>
+    </div>
+    <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </nav>
+  <div id="mobile-nav" class="mobile-nav">
+    <a href="services.html" onclick="closeMenu()">Services</a>
+    <a href="work.html" onclick="closeMenu()">Our Work</a>
+    <a href="blog.html" onclick="closeMenu()">Blog</a>
+    <a href="about.html" onclick="closeMenu()">About</a>
+    <a href="contact.html" onclick="closeMenu()">Get Started</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" style="padding: 64px 0 72px;">
+    <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs><pattern id="brief-dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.5" fill="rgba(255,255,255,0.07)"></circle></pattern></defs>
+      <rect width="100%" height="100%" fill="url(#brief-dots)"></rect>
+    </svg>
+    <svg style="position: absolute; right: -60px; top: -80px; width: 380px; height: 380px; pointer-events: none;" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="190" cy="190" r="170" stroke="rgba(255,255,255,0.055)" stroke-width="1.5"></circle>
+      <circle cx="190" cy="190" r="115" stroke="rgba(255,255,255,0.04)" stroke-width="1"></circle>
+    </svg>
+    <div class="container" style="position: relative; z-index: 2; text-align: center;">
+      <div class="eyebrow-light">Project Brief</div>
+      <h1 style="font-family: var(--font-display); font-size: clamp(32px, 4.6vw, 52px); font-weight: 900; color: #fff; line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 18px;">Let's figure out what you actually need</h1>
+      <p style="font-family: var(--font-body); font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.68; max-width: 540px; margin: 0 auto;">Mostly taps, not essays. About three minutes. No account or sign-in needed — and you can stop and come back, we'll keep your answers.</p>
+    </div>
+  </section>
+
+  <!-- WIZARD -->
+  <section class="section section-warm" style="padding: 56px 0 80px;">
+    <div class="container">
+      <div class="brief-wrap">
+
+        <noscript>
+          <div style="background:#fff;border:1.5px solid #E8E6E6;border-radius:18px;padding:28px;margin-bottom:24px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--color-primary-dark);margin-bottom:10px;">This brief needs JavaScript</h2>
+            <p style="font-size:15px;color:var(--color-text-secondary);line-height:1.65;margin-bottom:18px;">The step-by-step brief needs JavaScript to run. You can send us a message instead and we'll ask these questions by email — it works just as well.</p>
+            <a href="contact.html" class="btn-primary">Send us a message instead →</a>
+          </div>
+        </noscript>
+
+        <div class="brief-card">
+          <div id="brief-live" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;"></div>
+
+          <div id="brief-progress">
+            <div class="brief-prog-head">
+              <span class="brief-prog-step" id="brief-prog-step">Step 1</span>
+              <span class="brief-prog-time" id="brief-prog-time">about 3 minutes</span>
+            </div>
+            <div class="brief-prog-track"><div class="brief-prog-bar" id="brief-prog-bar"></div></div>
+          </div>
+
+          <div class="brief-err" id="brief-err">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="17" height="17" style="flex-shrink:0;margin-top:1px;" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span id="brief-err-text"></span>
+          </div>
+
+          <form id="brief-form" novalidate>
+            <div id="brief-steps"></div>
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          </form>
+
+          <div class="brief-nav" id="brief-nav">
+            <button type="button" class="brief-btn-next" id="brief-next">Start →</button>
+            <button type="button" class="brief-btn-back" id="brief-back" hidden>← Back</button>
+            <span class="brief-nav-spacer"></span>
+            <button type="button" class="brief-btn-skip" id="brief-skip" hidden>Skip this</button>
+          </div>
+
+          <div class="brief-saved" id="brief-saved">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Saved on this device — you can close the page and come back</span>
+          </div>
+        </div>
+
+        <div class="brief-assure">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="15" height="15" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            No sign-in required
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Reply within one business day
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="15" height="15" aria-hidden="true"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            Free, no obligation
+          </span>
+        </div>
+
+        <p style="text-align:center;font-size:13.5px;color:var(--color-text-muted);margin-top:22px;line-height:1.6;">
+          Would rather just talk? <a href="contact.html" style="color:var(--color-primary);font-weight:600;text-decoration:underline;text-underline-offset:2px;">Send us a message</a> and we'll take it from there.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background: #fff; border-top: 1px solid #E8E6E6; padding: 40px 0 28px;">
+    <div class="container footer-inner" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+      <a href="index.html"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
+      <div style="display: flex; gap: 28px; flex-wrap: wrap;">
+        <a href="services.html" class="footer-link">Services</a>
+        <a href="work.html" class="footer-link">Our Work</a>
+        <a href="blog.html" class="footer-link">Blog</a>
+        <a href="about.html" class="footer-link">About</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <span style="font-family: var(--font-body); font-size: 13px; color: #6B7280;">© 2026 Cortanatech Solutions, Inc.</span>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
+    function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
+  </script>
+  <script src="role.js?v=meeting3"></script>
+  <script src="brief.js?v=1"></script>
+</body>
+</html>

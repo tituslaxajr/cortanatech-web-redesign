@@ -1,0 +1,50 @@
+/* Cortanatech — Typography tokens. Urbanist (display) + DM Sans (body). */
+:root{
+  --font-display:'Urbanist',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'DM Mono',monospace;
+
+  --text-xs:0.75rem;   /* 12 */
+  --text-sm:0.875rem;  /* 14 */
+  --text-base:1rem;    /* 16 */
+  --text-md:1.125rem;  /* 18 */
+  --text-lg:1.25rem;   /* 20 */
+  --text-xl:1.5rem;    /* 24 */
+  --text-2xl:2rem;     /* 32 */
+  --text-3xl:2.5rem;   /* 40 */
+  --text-4xl:3rem;     /* 48 */
+  --text-5xl:3.75rem;  /* 60 */
+  --text-6xl:4.5rem;   /* 72 */
+
+  --font-regular:400;
+  --font-medium:500;
+  --font-semibold:600;
+  --font-bold:700;
+  --font-extrabold:800;
+  --font-black:900;
+
+  --leading-none:1;
+  --leading-hero:1.08;
+  --leading-tight:1.2;
+  --leading-snug:1.35;
+  --leading-normal:1.5;
+  --leading-relaxed:1.625;
+  --leading-loose:1.75;
+
+  --tracking-display:-0.02em;
+  --tracking-tight:-0.025em;
+  --tracking-snug:-0.015em;
+  --tracking-normal:0;
+  --tracking-wide:0.05em;
+  --tracking-wider:0.08em;
+  --tracking-widest:0.12em;
+
+  /* Semantic roles */
+  --type-hero-size:clamp(38px,5.6vw,68px);
+  --type-page-title-size:clamp(36px,5vw,60px);
+  --type-section-title-size:clamp(28px,4vw,44px);
+  --type-card-title-size:18px;
+  --type-body-size:16px;
+  --type-eyebrow-size:13px;
+  --type-label-size:11px;
+}

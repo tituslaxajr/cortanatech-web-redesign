@@ -1,0 +1,40 @@
+/* Cortanatech — Spacing, radii, layout */
+:root{
+  --space-0:0;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-7:28px;
+  --space-8:32px;
+  --space-9:36px;
+  --space-10:40px;
+  --space-12:48px;
+  --space-14:56px;
+  --space-16:64px;
+  --space-20:80px;
+  --space-24:96px;
+
+  --radius-sm:4px;
+  --radius-md:8px;
+  --radius-input:10px;
+  --radius-lg:12px;
+  --radius-xl:16px;
+  --radius-card:20px;
+  --radius-2xl:24px;
+  --radius-full:9999px;
+
+  --container-default:1200px;
+  --container-gutter:56px;
+  --container-gutter-mobile:24px;
+  --nav-height:80px;
+  --logo-height:58px;
+  --section-padding-y:96px;
+  --grid-gap-split:80px;
+  --grid-gap-cards:24px;
+  --icon-box:52px;
+  --icon-box-sm:44px;
+  --icon-box-xs:36px;
+}

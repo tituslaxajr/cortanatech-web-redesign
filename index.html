@@ -33,544 +33,330 @@
     "knowsAbout": ["Website design and development", "Professional email setup", "Chatbot development", "Custom web applications"]
   }
   </script>
-  <script>try{var r=localStorage.getItem('ct-role');if(r)document.documentElement.setAttribute('data-role',r)}catch(e){}</script>
-  <link rel="stylesheet" href="shared.css?v=nav6">
+  <link rel="preload" as="image" href="assets/photos/campaign/04-app-hero-landscape.jpg">
+  <link rel="stylesheet" href="shared.css?v=ds2">
+  <link rel="stylesheet" href="ds/components.css?v=ds2">
   <style>
-    body { font-family: var(--font-body); }
-    .home-nav { position: absolute; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; height: 80px; }
-    @media (max-width: 900px) { .home-nav { padding: 0 24px; } }
-
-    /* ============ THE FIRST MEETING ============ */
-
-    /* JS gating: interactive shells hidden until meeting.js runs;
-       static fallbacks hidden once it does. */
-    html:not(.js-meeting) .js-only { display: none !important; }
-    .js-meeting .no-js-note { display: none !important; }
-
-    /* --- Hero / opening prompt --- */
-    .hero-meeting { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 42%, #19235a 100%); }
-    .hero-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 20% 110%, rgba(41,171,226,0.22) 0%, transparent 60%), radial-gradient(ellipse 55% 55% at 105% -5%, rgba(43,57,144,0.55) 0%, transparent 55%); pointer-events: none; }
-    .hero-inner { position: relative; z-index: 2; text-align: center; max-width: 900px; padding: 128px 40px 72px; width: 100%; margin: 0 auto; }
-
-    .ask-lead { font-family: var(--font-body); font-size: clamp(15px, 1.7vw, 18px); color: rgba(255,255,255,0.66); margin-bottom: 14px; }
-    .ask-headline { font-family: var(--font-display); font-size: clamp(38px, 5.6vw, 68px); font-weight: 900; color: #fff; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 40px; }
-    .ask-you { font-style: normal; color: var(--color-blue-sky, #29ABE2); position: relative; white-space: nowrap; }
-    .ask-you::after { content: ''; position: absolute; left: 0; right: 0; bottom: -0.06em; height: 0.14em; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M3 9 Q 60 2 117 7' fill='none' stroke='%2329ABE2' stroke-width='5' stroke-linecap='round' opacity='0.85'/%3E%3C/svg%3E") no-repeat center / 100% 100%; }
-    .ask-q { font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 24px; }
-
-    .pick-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 760px; margin: 0 auto 36px; }
-    .pick-card { display: flex; flex-direction: column; align-items: center; gap: 14px; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.16); border-radius: 20px; padding: 26px 14px 22px; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s; color: #fff; }
-    .pick-card:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.4); transform: translateY(-4px); }
-    .pick-card[aria-pressed="true"] { background: rgba(255,255,255,0.18); border-color: #fff; }
-    .pick-photo { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.35); box-shadow: 0 8px 22px rgba(0,0,0,0.28); transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
-    .pick-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .pick-card:hover .pick-photo { border-color: rgba(255,255,255,0.75); transform: scale(1.05); }
-    .pick-card[aria-pressed="true"] .pick-photo { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.35), 0 8px 22px rgba(0,0,0,0.28); }
-    .pick-name { font-family: var(--font-display); font-size: 17px; font-weight: 800; }
-    .pick-tag { font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.62); line-height: 1.45; }
-    .pick-skip { display: inline-block; font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.55); border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 2px; transition: color 0.2s; }
-    .pick-skip:hover { color: rgba(255,255,255,0.85); }
-    .ask-proof { font-family: var(--font-body); font-size: 12.5px; letter-spacing: 0.02em; color: rgba(255,255,255,0.45); margin-top: 28px; }
-
-    /* Staged reveal — the hero speaks in sentences, not all at once.
-       Cards use fill-mode backwards so the finished animation releases
-       transform back to the hover transition. */
-    #picker-ask .ask-lead { animation-delay: 0s; }
-    #picker-ask .ask-headline { animation-delay: 0.45s; }
-    #picker-ask .ask-q { animation-delay: 0.95s; }
-    #picker-ask .pick-card { animation: fadeUp 0.6s var(--ease-settle) backwards; }
-    #picker-ask .pick-card:nth-child(1) { animation-delay: 1.15s; }
-    #picker-ask .pick-card:nth-child(2) { animation-delay: 1.3s; }
-    #picker-ask .pick-card:nth-child(3) { animation-delay: 1.45s; }
-    #picker-ask .pick-card:nth-child(4) { animation-delay: 1.6s; }
-    #picker-ask .pick-skip, #picker-ask .ask-proof { animation-delay: 1.9s; }
-    @media (prefers-reduced-motion: reduce) {
-      #picker-ask .fade-up, #picker-ask .pick-card { animation: none; }
-    }
-
-    /* Confirmed hero (role chosen). The inline head snippet sets data-role
-       pre-paint, so returning visitors never see the question flash. */
-    html[data-role] #picker-ask { display: none !important; }
-    html[data-role] #picker-confirmed { display: block !important; }
-    .confirmed-note { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.72); background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.18); border-radius: 100px; padding: 8px 18px; margin-bottom: 30px; }
-    .confirmed-note a { color: #fff; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.4); }
-    .hero-headline { font-family: var(--font-display); font-size: clamp(36px, 5.2vw, 64px); font-weight: 900; color: #fff; line-height: 1.09; letter-spacing: -0.02em; margin-bottom: 22px; }
-    .hero-sub { font-family: var(--font-body); font-size: clamp(15px, 1.8vw, 18px); color: rgba(255,255,255,0.74); line-height: 1.7; max-width: 620px; margin: 0 auto 40px; }
-    .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-
-    @keyframes wordIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-    .word-in { display: inline-block; opacity: 0; }
-    @media (prefers-reduced-motion: no-preference) { .word-in { animation: wordIn 0.5s var(--ease-settle) forwards; } }
-    @media (prefers-reduced-motion: reduce) { .word-in { opacity: 1; } }
-
-    /* --- Pain cards --- */
-    .pain-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 40px; }
-    .pain-card { display: flex; align-items: flex-start; gap: 16px; text-align: left; background: #fff; border: 1.5px solid var(--color-border-subtle); border-radius: var(--radius-xl); padding: 22px 24px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; font-family: var(--font-body); position: relative; }
-    .pain-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-card-hover); border-color: var(--color-blue-100); }
-    .pain-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--color-border-default); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: transparent; transition: background 0.2s, border-color 0.2s, color 0.2s; margin-top: 2px; }
-    .pain-card[aria-pressed="true"] { border-color: var(--color-primary); background: var(--color-primary-subtle); }
-    .pain-card[aria-pressed="true"] .pain-check { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
-    .pain-body { display: block; }
-    .pain-body strong { display: block; font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--color-text-primary); line-height: 1.35; margin-bottom: 6px; }
-    .pain-detail { display: block; font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.6; }
-    .pain-tag { position: absolute; top: 14px; right: 16px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-primary); opacity: 0; transition: opacity 0.2s; }
-    .pain-card[aria-pressed="true"] .pain-tag { opacity: 1; }
-    .pain-count { margin-top: 24px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--color-primary-dark); min-height: 22px; }
-
-    /* --- Calculator --- */
-    .calc-card { background: #fff; border: 1.5px solid var(--color-border-subtle); border-radius: 24px; padding: 40px; box-shadow: var(--shadow-card); }
-    .calc-group { margin-bottom: 30px; }
-    .calc-label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 14px; }
-    .calc-out { font-family: var(--font-display); font-weight: 800; color: var(--color-primary); white-space: nowrap; }
-    input[type="range"].calc-range { width: 100%; height: 6px; border-radius: 100px; background: var(--color-primary-subtle); appearance: none; -webkit-appearance: none; cursor: pointer; }
-    input[type="range"].calc-range::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary); border: 4px solid #fff; box-shadow: var(--shadow-button); cursor: grab; }
-    input[type="range"].calc-range::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--color-primary); border: 4px solid #fff; box-shadow: var(--shadow-button); cursor: grab; }
-    .calc-total-wrap { border-top: 1.5px dashed var(--color-border-default); padding-top: 26px; text-align: center; }
-    .calc-total-label { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 8px; }
-    .calc-total { font-family: var(--font-display); font-size: clamp(38px, 4.5vw, 54px); font-weight: 900; color: var(--color-primary-dark); line-height: 1; letter-spacing: -0.02em; }
-    .calc-total-suffix { font-family: var(--font-body); font-size: 14px; color: var(--color-text-muted); margin-top: 6px; }
-    .calc-reframe { margin-top: 22px; font-family: var(--font-body); font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.65; background: var(--color-primary-subtle); border-radius: 12px; padding: 16px 18px; }
-
-    /* --- Chat demo --- */
-    .chat-section { position: relative; overflow: hidden; background: linear-gradient(135deg, #29ABE2 0%, #2E3192 100%); }
-    /* Chat widget visuals live in shared.css (reused on services.html) */
-
-    /* --- Proof: before/after compare --- */
-    .compare { position: relative; border-radius: var(--radius-2xl); overflow: hidden; box-shadow: var(--shadow-xl); aspect-ratio: 16/10; background: #DDD8D0; }
-    .compare-before { position: absolute; inset: 0; background: #E9E4DC; padding: 8%; overflow: hidden; }
-    .compare-after { position: absolute; inset: 0; }
-    .compare-after img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-    .js-meeting .compare-after { clip-path: inset(0 0 0 50%); }
-    .compare-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: #fff; box-shadow: 0 0 12px rgba(0,0,0,0.35); pointer-events: none; }
-    .compare-divider::after { content: '⟷'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 38px; height: 38px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--color-primary-dark); box-shadow: var(--shadow-md); }
-    .compare-range { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; appearance: none; -webkit-appearance: none; margin: 0; }
-    .compare-label { position: absolute; bottom: 14px; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 6px 12px; border-radius: 100px; pointer-events: none; }
-    .compare-label-before { left: 14px; background: rgba(30,31,30,0.72); color: #fff; }
-    .compare-label-after { right: 14px; background: rgba(255,255,255,0.92); color: var(--color-primary-dark); }
-    /* The "before" pane: an honest generic mock of where clients start */
-    .mock-site { background: #FDFDF9; border: 1px solid #C9C2B6; height: 100%; font-family: 'Times New Roman', serif; padding: 10px 12px; color: #555; overflow: hidden; }
-    .mock-bar { height: 14px; background: #D5CFC4; margin-bottom: 10px; display: flex; align-items: center; gap: 4px; padding: 0 5px; }
-    .mock-bar i { width: 6px; height: 6px; border-radius: 50%; background: #A79F92; }
-    .mock-title { font-size: clamp(11px, 1.6vw, 16px); font-weight: 700; color: #2c2c66; text-decoration: underline; margin-bottom: 6px; }
-    .mock-text { font-size: clamp(8px, 1.1vw, 11px); line-height: 1.5; margin-bottom: 8px; }
-    .mock-img { background: repeating-linear-gradient(45deg, #E3DDD2, #E3DDD2 6px, #D8D1C4 6px, #D8D1C4 12px); height: 34%; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; font-size: clamp(8px, 1vw, 10px); color: #8a8171; }
-    .mock-marquee { font-size: clamp(8px, 1.1vw, 11px); color: #b03a3a; font-style: italic; }
-    .proof-tag { font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--color-primary); background: var(--color-primary-subtle); padding: 6px 12px; border-radius: 100px; display: inline-block; }
-    .proof-quote { font-family: var(--font-display); font-size: clamp(16px, 1.9vw, 20px); font-weight: 700; color: var(--color-primary-dark); line-height: 1.55; letter-spacing: -0.01em; margin: 24px 0 10px; }
-    .stats-strip { display: flex; justify-content: center; gap: 72px; margin-top: 72px; flex-wrap: wrap; }
-    .stat-num { font-family: var(--font-display); font-size: 44px; font-weight: 900; color: var(--color-primary-dark); line-height: 1; }
-    .stat-label { font-family: var(--font-body); font-size: 13px; color: var(--color-text-secondary); margin-top: 8px; letter-spacing: 0.04em; }
-
-    /* --- Timeline --- */
-    .tl-list { max-width: 760px; margin: 48px auto 0; display: flex; flex-direction: column; gap: 0; position: relative; }
-    .tl-list::before { content: ''; position: absolute; left: 21px; top: 24px; bottom: 24px; width: 2px; background: var(--color-blue-100); }
-    .tl-item { position: relative; padding-left: 64px; }
-    .tl-step { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; background: transparent; border: none; cursor: pointer; padding: 16px 8px 16px 0; font-family: var(--font-body); }
-    .tl-dot { position: absolute; left: 8px; width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 2.5px solid var(--color-primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 12px; font-weight: 800; color: var(--color-primary); z-index: 1; }
-    .tl-when { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-accent); display: block; margin-bottom: 3px; }
-    .tl-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--color-text-primary); }
-    .tl-chev { margin-left: auto; color: var(--color-text-muted); transition: transform 0.2s; flex-shrink: 0; }
-    .tl-step[aria-expanded="true"] .tl-chev { transform: rotate(180deg); }
-    .tl-detail { display: none; font-family: var(--font-body); font-size: 14.5px; color: var(--color-text-secondary); line-height: 1.7; padding: 0 8px 22px 0; max-width: 600px; }
-    .tl-step[aria-expanded="true"] + .tl-detail { display: block; }
-    /* No-JS: all details visible */
-    html:not(.js-meeting) .tl-detail { display: block; }
-    html:not(.js-meeting) .tl-chev { display: none; }
-
-    /* --- Contact finale --- */
-    .finale { position: relative; overflow: hidden; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 42%, #19235a 100%); padding: 96px 0; }
-    .cta-summary { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 22px 24px; margin-bottom: 30px; }
-    .cta-summary-label { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 12px; }
-    .cta-summary-item { font-family: var(--font-body); font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.6; display: flex; gap: 10px; align-items: baseline; }
-    .cta-summary-item + .cta-summary-item { margin-top: 8px; }
-    .cta-summary-item span { color: #4ADE80; font-weight: 700; }
-    .cta-submit { width: 100%; padding: 15px 24px; background: var(--color-primary); color: #fff; border: none; border-radius: var(--radius-full); font-family: var(--font-body); font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.2s; }
-    .cta-submit:hover { background: var(--color-blue-sky); transform: translateY(-1px); }
-
-    /* --- Responsive --- */
+    body { font-family: var(--font-body); background: #fff; color: var(--color-text-primary); }
+    .ct-sub, .ct-eyebrow, .ct-card__body, .ct-card__title { margin-bottom: 0; }
+    p.ct-sub { margin-top: 16px; }
+    /* NAV — dark glass over the cinematic scenes */
+    .home-nav { position: sticky; top: 0; z-index: 100; background: rgba(6,26,56,0.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .home-nav .bar { height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .home-nav .links { display: flex; gap: 32px; align-items: center; }
+    .home-nav .links a { color: rgba(255,255,255,0.82); font-size: 15px; font-weight: 500; transition: color .2s; }
+    .home-nav .links a:hover { color: #fff; }
+    .home-nav .mobile-menu-btn { color: #fff; }
+    /* SCENES — full-bleed photography with brand shading */
+    .scene { position: relative; overflow: hidden; background: var(--color-midnight); color: #fff; }
+    .scene .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .scene .shade { position: absolute; inset: 0; pointer-events: none; }
+    .scene .inner { position: relative; z-index: 1; }
+    .kenburns { animation: ctKen 24s ease-out both; }
+    @keyframes ctKen { from { transform: scale(1.08); } to { transform: scale(1); } }
+    .scene .bg.swap { transition: opacity .45s var(--ease-ripple); }
+    .glass { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    .hero-h1 { font-family: var(--font-display); font-weight: 900; font-size: 68px; line-height: 1.04; letter-spacing: -0.025em; color: #fff; margin: 0; text-wrap: balance; }
+    .stat-num { white-space: nowrap; font-family: var(--font-display); font-weight: 900; font-size: 32px; line-height: 1; color: #fff; }
+    .stat-label { font-size: 13px; color: rgba(255,255,255,0.78); margin-top: 6px; }
+    .aud-picks { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; margin-top: 36px; max-width: 880px; }
+    .aud-pick { width: 100%; min-height: 56px; padding: 14px 20px; border-radius: 9999px; cursor: pointer; font-family: var(--font-display); font-weight: 800; font-size: 17px; transition: all .2s; background: rgba(255,255,255,0.08); color: #fff; border: 1.5px solid rgba(255,255,255,0.28); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .aud-pick:hover { background: rgba(255,255,255,0.16); }
+    .aud-pick[aria-pressed="true"] { background: #fff; color: var(--color-midnight); border-color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .aud-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; max-width: 1040px; }
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .check-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 16px; line-height: 1.55; }
+    .check-list svg { flex-shrink: 0; margin-top: 2px; }
+    .browser { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 60px rgba(16,33,58,0.16); border: 1px solid var(--color-line); }
+    .browser .bar { height: 30px; display: flex; align-items: center; gap: 6px; padding: 0 12px; background: var(--color-cloud); border-bottom: 1px solid var(--color-line); }
+    .browser .bar i { width: 9px; height: 9px; border-radius: 9999px; background: #D1D0CE; display: block; }
+    .browser .shot { aspect-ratio: 16 / 10; overflow: hidden; }
+    .browser .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    .bleed-split { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: stretch; }
+    .bleed-img { position: relative; min-height: 640px; overflow: hidden; }
+    .bleed-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
+    .steps { list-style: none; margin-top: 36px; }
+    .steps li { display: grid; grid-template-columns: 56px 1fr; gap: 8px; padding: 20px 0; border-top: 1px solid var(--color-line); }
+    .steps li:last-child { border-bottom: 1px solid var(--color-line); }
+    .faq details { background: #fff; border: 1.5px solid var(--color-line); border-radius: 16px; padding: 0 24px; }
+    .faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--color-text-primary); cursor: pointer; list-style: none; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq .plus { font-size: 26px; color: var(--color-electric); transition: transform .2s; }
+    .faq details[open] .plus { transform: rotate(45deg); }
+    .faq details p { padding-bottom: 20px; font-size: 15px; line-height: 1.7; color: var(--color-text-secondary); }
+    @media (prefers-reduced-motion: reduce) { .kenburns { animation: none; } .scene .bg.swap { transition: none; } }
     @media (max-width: 900px) {
-      .pick-row { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-      .pain-grid { grid-template-columns: 1fr; }
-      .hero-inner { padding: 110px 24px 56px; }
-      .calc-card { padding: 28px 22px; }
-      .stats-strip { gap: 36px; }
-    }
-    @media (max-width: 380px) {
-      .pick-row { grid-template-columns: 1fr; }
+      .home-nav .links { display: none; }
+      .home-nav .bar > .ct-btn { display: none; }
+      .home-nav .mobile-menu-btn { display: flex; }
+      .mobile-nav { top: 76px; }
+      .hero-h1 { font-size: 42px; }
+      .scene-tall { min-height: 0 !important; }
+      .shade-side { background: linear-gradient(180deg, rgba(6,26,56,0.55) 0%, rgba(6,26,56,0.9) 45%, #061A38 100%) !important; }
+      .stack-sm { flex-direction: column !important; align-items: flex-start !important; }
+      .aud-picks { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .aud-grid { grid-template-columns: 1fr; }
+      .bleed-split { grid-template-columns: 1fr; }
+      .bleed-img { min-height: 320px; }
+      .steps-wrap { padding: 64px 24px !important; }
+      .stats { gap: 24px !important; }
     }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav class="home-nav">
-    <a href="index.html" style="flex-shrink: 0;"><img src="assets/logos/logo-white.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
-    <div class="desktop-nav" style="display: flex; align-items: center; gap: 36px;">
-      <a href="services.html" class="nav-link-white">Services</a>
-      <a href="work.html" class="nav-link-white">Our Work</a>
-      <a href="blog.html" class="nav-link-white">Blog</a>
-      <a href="about.html" class="nav-link-white">About</a>
-      <a href="project-brief.html" class="nav-link-white">Project Brief</a>
-      <a href="contact.html" class="nav-btn-glass">Get Started</a>
+  <header class="home-nav">
+    <div class="ct-container bar">
+      <a href="index.html" aria-label="Cortanatech Solutions home"><img src="assets/logos/logo-white.png" alt="Cortanatech Solutions" style="height: 40px; width: auto;"></a>
+      <nav class="links" aria-label="Main">
+        <a href="services.html">Services</a>
+        <a href="work.html">Our Work</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+      </nav>
+      <a href="project-brief.html" class="ct-btn ct-btn--primary">Book a free call</a>
+      <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
     </div>
-    <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-  </nav>
-  <div id="mobile-nav" class="mobile-nav" style="background: #fff;">
-    <a href="services.html" onclick="closeMenu()">Services</a>
-    <a href="work.html" onclick="closeMenu()">Our Work</a>
-    <a href="blog.html" onclick="closeMenu()">Blog</a>
-    <a href="about.html" onclick="closeMenu()">About</a>
-    <a href="project-brief.html" onclick="closeMenu()">Project Brief</a>
-    <a href="contact.html" onclick="closeMenu()">Get Started</a>
-  </div>
-
-  <!-- OPENING PROMPT -->
-  <header class="hero-meeting" data-meeting-home>
-    <div class="hero-glow" aria-hidden="true"></div>
-    <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs><pattern id="home-dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.5" fill="rgba(255,255,255,0.07)"></circle></pattern></defs>
-      <rect width="100%" height="100%" fill="url(#home-dots)"></rect>
-    </svg>
-
-    <div class="hero-inner">
-
-      <!-- The question (default state) -->
-      <div id="picker-ask">
-        <p class="ask-lead fade-up">Most agencies start by talking about themselves.</p>
-        <h1 class="ask-headline fade-up">We&rsquo;d rather start with <em class="ask-you">you</em>.</h1>
-        <p class="ask-q fade-up">What kind of organization do you run?</p>
-        <div class="pick-row">
-          <a href="services.html" class="pick-card" data-role-pick="church" role="button" aria-pressed="false">
-            <span class="pick-photo"><img src="assets/photos/audience/portrait-pastor.jpg" alt="A smiling Filipino pastor in a barong inside his church" width="320" height="320" decoding="async"></span>
-            <span class="pick-name">A church</span>
-            <span class="pick-tag">Reach your community beyond Sunday.</span>
-          </a>
-          <a href="services.html" class="pick-card" data-role-pick="school" role="button" aria-pressed="false">
-            <span class="pick-photo"><img src="assets/photos/audience/portrait-teacher.jpg" alt="A smiling Filipina teacher in her classroom" width="320" height="320" decoding="async"></span>
-            <span class="pick-name">A school</span>
-            <span class="pick-tag">Modernize without overwhelming staff.</span>
-          </a>
-          <a href="services.html" class="pick-card" data-role-pick="nonprofit" role="button" aria-pressed="false">
-            <span class="pick-photo"><img src="assets/photos/audience/portrait-volunteer.jpg" alt="A smiling young Filipino volunteer at a community relief drive" width="320" height="320" decoding="async"></span>
-            <span class="pick-name">A nonprofit</span>
-            <span class="pick-tag">Turn goodwill into lasting support.</span>
-          </a>
-          <a href="services.html" class="pick-card" data-role-pick="smallbiz" role="button" aria-pressed="false">
-            <span class="pick-photo"><img src="assets/photos/audience/portrait-owner.jpg" alt="A smiling Filipina shop owner in her store" width="320" height="320" decoding="async"></span>
-            <span class="pick-name">A small business</span>
-            <span class="pick-tag">Get found and trusted online.</span>
-          </a>
-        </div>
-        <a href="#pains" id="picker-skip" class="pick-skip fade-up">Just show me the site ↓</a>
-        <p class="ask-proof fade-up">Serving churches, schools, nonprofits &amp; small businesses across the Philippines.</p>
-      </div>
-
-      <!-- Confirmed state (role chosen; unhidden by CSS when html[data-role]) -->
-      <div id="picker-confirmed" hidden>
-        <div class="confirmed-note">
-          <span>You told us you run a <strong data-role-slot="noun">organization</strong>.</span>
-          <a href="#" id="picker-change">Change</a>
-        </div>
-        <h1 class="hero-headline" id="hero-headline" data-role-slot="headline">Your mission deserves better tools.</h1>
-        <p class="hero-sub" data-role-slot="subline">Practical, affordable digital systems — websites, email, chatbots, and web apps — so your organization can focus on what matters most.</p>
-        <div class="hero-ctas">
-          <a href="#contact" class="btn-white">Start the conversation ↓</a>
-          <a href="#pains" class="nav-btn-glass" style="padding: 14px 30px; font-size: 15px;">See how we&rsquo;d help ↓</a>
-        </div>
-      </div>
-
+    <div id="mobile-nav" class="mobile-nav">
+      <a href="services.html" onclick="closeMenu()">Services</a>
+      <a href="work.html" onclick="closeMenu()">Our Work</a>
+      <a href="blog.html" onclick="closeMenu()">Blog</a>
+      <a href="about.html" onclick="closeMenu()">About</a>
+      <a href="project-brief.html" onclick="closeMenu()">Book a free call</a>
     </div>
   </header>
 
-  <!-- PAIN POINTS -->
-  <section id="pains" class="section section-warm">
-    <div class="container">
-      <div class="reveal section-head-center" style="margin-bottom: 8px;">
-        <div class="eyebrow">The first thing we&rsquo;d ask you</div>
-        <h2 class="section-title">What&rsquo;s getting in the way?</h2>
-        <p class="section-sub" data-role-slot="painsIntro">Every organization we work with arrives carrying a version of these. Tap any that sound like yours — we’ll fold them into your message at the bottom of the page.</p>
+  <main>
+  <!-- SCENE 1 · HERO -->
+  <section class="scene scene-tall ct-on-dark" style="min-height: 820px; display: flex; flex-direction: column; justify-content: flex-end;">
+    <img class="bg kenburns" src="assets/photos/campaign/04-app-hero-landscape.jpg" alt="" style="object-position: 68% center;" fetchpriority="high">
+    <div class="shade shade-side" style="background: linear-gradient(90deg, #061A38 0%, rgba(6,26,56,0.94) 30%, rgba(6,26,56,0.55) 58%, rgba(6,26,56,0.12) 100%);"></div>
+    <div class="shade" style="background: linear-gradient(180deg, rgba(6,26,56,0) 55%, #061A38 100%);"></div>
+    <div class="inner ct-container" style="width: 100%; padding-top: 140px; padding-bottom: 56px;">
+      <div style="max-width: 620px;">
+        <p class="ct-eyebrow" style="color: #B9DCFF;">For churches · schools · nonprofits · small businesses</p>
+        <h1 class="hero-h1">Your mission deserves tools that <span style="color: var(--color-cyan);">just work</span>.</h1>
+        <p style="font-size: 19px; line-height: 1.65; color: rgba(255,255,255,0.82); margin-top: 24px; max-width: 540px;">Websites, professional email, chatbots and simple web apps — built for teams without an IT department. Plain language, fixed prices, and we stay after launch.</p>
+        <div class="stack-sm" style="margin-top: 36px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+          <a href="project-brief.html" class="ct-btn ct-btn--lg ct-btn--primary">Book a free 30-min call →</a>
+          <span style="font-size: 14px; color: rgba(255,255,255,0.78);">Reply within 1 business day</span>
+        </div>
       </div>
-
-      <!-- JS-rendered interactive cards -->
-      <div id="pain-cards" class="pain-grid js-only" role="group" aria-label="Select the challenges that apply to you"></div>
-      <p id="pain-count" class="pain-count js-only" style="text-align: center;">Tap any card that sounds like your week.</p>
-
-      <!-- No-JS static fallback -->
-      <div class="pain-grid no-js-note">
-        <div class="pain-card" style="cursor: default;"><span class="pain-body"><strong>Our website is outdated — or we don’t really have one</strong><span class="pain-detail">It doesn’t reflect who you are now, and you quietly hope people don’t look at it.</span></span></div>
-        <div class="pain-card" style="cursor: default;"><span class="pain-body"><strong>Everything lives in spreadsheets</strong><span class="pain-detail">Records, contacts, events — scattered across files only one person understands.</span></span></div>
-        <div class="pain-card" style="cursor: default;"><span class="pain-body"><strong>We answer the same questions over and over</strong><span class="pain-detail">Hours every week spent repeating information that could answer itself.</span></span></div>
-        <div class="pain-card" style="cursor: default;"><span class="pain-body"><strong>We still write from a personal email address</strong><span class="pain-detail">First impressions are made before you even say hello.</span></span></div>
-        <div class="pain-card" style="cursor: default;"><span class="pain-body"><strong>Nobody has time to own the tech</strong><span class="pain-detail">Everyone’s stretched already. Every new tool feels like more work, not less.</span></span></div>
+      <div class="glass stack-sm" style="margin-top: 72px; border-radius: 20px; padding: 22px 28px; display: flex; gap: 40px; align-items: center; justify-content: space-between;">
+        <div class="stats" style="display: flex; gap: 40px;">
+          <div><div class="stat-num">3+</div><div class="stat-label">years serving</div></div>
+          <div><div class="stat-num">10+</div><div class="stat-label">projects delivered</div></div>
+          <div><div class="stat-num">2 wks</div><div class="stat-label">typical launch</div></div>
+        </div>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.78); max-width: 420px;">Fixed quote before we start — the price you see is the price you pay.</p>
       </div>
     </div>
   </section>
 
-  <!-- CALCULATOR -->
-  <section id="cost" class="section section-white">
-    <div class="container">
-      <div class="split-grid" style="align-items: center;">
-        <div class="reveal">
-          <div class="eyebrow">The hidden line item</div>
-          <h2 class="section-title">What is &ldquo;we&rsquo;ll just do it manually&rdquo; costing you?</h2>
-          <p class="section-sub" data-role-slot="calc.intro">Manual admin never shows up as a line item — it hides inside everyone’s week. Put rough numbers on yours.</p>
-          <p class="section-sub" style="font-size: 14px; color: var(--color-text-muted);">Drag the sliders — no emails, no sign-up, just an honest estimate.</p>
+  <!-- SCENE 2 · WHO WE HELP (stage changes with the pick) -->
+  <section id="who" class="scene ct-on-dark" style="min-height: 760px;">
+    <img id="aud-bg" class="bg swap" src="assets/photos/audience/church-livestream.jpg" alt="A camera livestreaming a church service" style="object-position: center 40%;">
+    <div class="shade shade-side" style="background: linear-gradient(90deg, rgba(6,26,56,0.96) 0%, rgba(6,26,56,0.86) 42%, rgba(6,26,56,0.45) 100%);"></div>
+    <div class="shade" style="background: linear-gradient(180deg, #061A38 0%, rgba(6,26,56,0) 22%, rgba(6,26,56,0) 78%, #061A38 100%);"></div>
+    <div class="inner ct-container" style="padding-top: 96px; padding-bottom: 96px;">
+      <p class="ct-eyebrow" style="color: #B9DCFF;">Start with you</p>
+      <h2 class="ct-title" style="max-width: 640px;">Who are we helping today?</h2>
+      <div class="aud-picks" role="group" aria-label="Choose your organization type">
+        <button type="button" class="aud-pick" data-aud="church" aria-pressed="true">Church</button>
+        <button type="button" class="aud-pick" data-aud="school" aria-pressed="false">School</button>
+        <button type="button" class="aud-pick" data-aud="nonprofit" aria-pressed="false">Nonprofit</button>
+        <button type="button" class="aud-pick" data-aud="smallbiz" aria-pressed="false">Small business</button>
+      </div>
+      <div class="aud-grid" aria-live="polite">
+        <div class="glass" style="border-radius: 24px; padding: 36px;">
+          <h3 id="aud-title" style="font-family: var(--font-display); font-weight: 900; font-size: 30px; line-height: 1.2; letter-spacing: -0.015em; color: #fff; margin-bottom: 20px;">Reach your community beyond Sunday</h3>
+          <ul id="aud-pains" class="check-list" style="color: rgba(255,255,255,0.86);"></ul>
         </div>
-        <div class="reveal">
-          <div class="calc-card js-only">
-            <div class="calc-group">
-              <label class="calc-label" for="calc-hours"><span data-role-slot="calc.hoursLabel">Hours your team spends each week on manual admin</span><span class="calc-out" id="calc-hours-out">8 hours / week</span></label>
-              <input type="range" id="calc-hours" class="calc-range" min="1" max="40" step="1" value="8">
-            </div>
-            <div class="calc-group">
-              <label class="calc-label" for="calc-rate"><span data-role-slot="calc.rateLabel">What an hour of that time is worth (₱)</span><span class="calc-out" id="calc-rate-out">₱300 / hour</span></label>
-              <input type="range" id="calc-rate" class="calc-range" min="100" max="2000" step="50" value="300">
-            </div>
-            <div class="calc-total-wrap">
-              <div class="calc-total-label">Estimated yearly cost of manual work</div>
-              <div class="calc-total" id="calc-total" aria-live="polite">₱124,800</div>
-              <div class="calc-total-suffix">per year, quietly</div>
-            </div>
-            <p class="calc-reframe" data-role-slot="calc.reframe">That’s before counting a single missed visitor, member, or supporter. Most systems we build cost a fraction of one year of that — and keep working every year after.</p>
-          </div>
-          <p class="no-js-note section-sub">Most organizations we meet are losing the equivalent of ₱100,000+ a year to manual admin work. Ask us for an honest estimate for yours — most systems we build cost a fraction of one year of that.</p>
+        <div style="background: #fff; border-radius: 24px; padding: 36px; color: var(--color-text-primary); box-shadow: 0 30px 70px rgba(0,10,30,0.35);">
+          <p class="ct-label" style="color: var(--color-electric);">What we’d build first</p>
+          <ul id="aud-fixes" class="check-list" style="font-weight: 600;"></ul>
+          <a id="aud-cta" href="https://church.cortanatechsolutions.com/" class="ct-btn ct-btn--block ct-btn--primary" style="margin-top: 28px;">Get a free church assessment →</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- SERVICES -->
-  <section id="services" class="section section-warm">
-    <div class="container">
-      <div class="reveal section-head-center">
-        <div class="eyebrow">How we&rsquo;d help</div>
-        <h2 class="section-title">Four ways in. One partner.</h2>
-        <p class="section-sub">Start with what hurts most — each service stands alone, and they work better together.</p>
-      </div>
-      <div class="services-grid reveal-stagger" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
-        <a href="services.html" class="service-card reveal">
-          <div class="icon-box" style="margin-bottom: 20px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-          </div>
-          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Website Design &amp; Development</h3>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;" data-role-slot="services.web.blurb">A clear, credible website that represents your mission — built affordably, maintained by us.</p>
-        </a>
-        <a href="services.html" class="service-card reveal">
-          <div class="icon-box" style="margin-bottom: 20px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-          </div>
-          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Professional Email Setup</h3>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;" data-role-slot="services.email.blurb">Branded addresses on Microsoft 365 or Google Workspace, usually set up within 48 hours.</p>
-        </a>
-        <a href="services.html" class="service-card reveal">
-          <div class="icon-box" style="margin-bottom: 20px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-          </div>
-          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Chatbot Development</h3>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;" data-role-slot="services.chatbot.blurb">A friendly assistant on your site that answers common questions around the clock.</p>
-        </a>
-        <a href="services.html" class="service-card reveal">
-          <div class="icon-box" style="margin-bottom: 20px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-          </div>
-          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #1E1F1E; margin-bottom: 10px; line-height: 1.3;">Custom Web Applications</h3>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65;" data-role-slot="services.app.blurb">Registration systems, databases, and portals built around your exact workflow.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CHATBOT DEMO -->
-  <section id="chatbot" class="section chat-section">
-    <div class="container">
-      <div class="split-grid" style="align-items: center;">
-        <div class="reveal">
-          <div class="eyebrow-light">Don&rsquo;t take our word for it</div>
-          <h2 class="section-title section-title-light">Try the kind of chatbot we build. Right here.</h2>
-          <p style="font-family: var(--font-body); font-size: 16px; color: rgba(255,255,255,0.8); line-height: 1.7; margin-top: 16px; max-width: 520px;" data-role-slot="chat.intro">This is a working demo of the kind of assistant we build — try it. Yours would be trained on your organization’s real information.</p>
-          <p style="font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.55); line-height: 1.6; margin-top: 18px;">Every question it answers is one your team doesn&rsquo;t have to — at 2 PM or 2 AM.</p>
-        </div>
-        <div class="reveal">
-          <div id="chat-demo" class="chat-panel js-only" aria-label="Chatbot demo"></div>
-          <p class="no-js-note" style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.7; background: rgba(255,255,255,0.08); border-radius: 16px; padding: 24px;">Our chatbots answer your community&rsquo;s questions instantly, 24/7 — trained on your real information, in your voice. Ask us for a live demo.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROOF -->
-  <section id="proof" class="section section-white">
-    <div class="container">
-      <div class="reveal section-head-center">
-        <div class="eyebrow">Proof, not promises</div>
-        <h2 class="section-title">We&rsquo;ve done this for organizations like yours.</h2>
-      </div>
-      <div class="split-grid" style="align-items: center;">
-        <div class="reveal">
-          <h3 style="font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 30px); font-weight: 900; color: var(--color-text-primary); letter-spacing: -0.015em; line-height: 1.2; margin-bottom: 14px;" data-role-slot="proof.name">Baptist Bible Seminary &amp; Institute, Inc.</h3>
-          <p style="font-family: var(--font-body); font-size: 15px; color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 18px;" data-role-slot="proof.blurb">A full digital presence — website and professional email — built from the ground up for a Philippine seminary.</p>
-          <div id="proof-tags" style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px;">
-            <span class="proof-tag">Website Design</span>
-            <span class="proof-tag">Professional Email</span>
-          </div>
-          <blockquote class="proof-quote" data-role-slot="proof.quote">“We are thankful for the privilege of partnering with Cortanatech Solutions… The professionalism of their services is commendable.”</blockquote>
-          <p style="font-family: var(--font-body); font-size: 13px; color: var(--color-text-secondary); margin-bottom: 26px;" data-role-slot="proof.attribution">Evangel Balmes, IT Administrator, BBSI</p>
-          <a href="https://bbsi.edu.ph" target="_blank" rel="noopener noreferrer" id="proof-link" class="btn-primary">See it live →</a>
-        </div>
-        <div class="reveal">
-          <div class="compare">
-            <div class="compare-before" aria-hidden="true">
-              <div class="mock-site">
-                <div class="mock-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-                <div class="mock-title">Welcome To Our Official Website!!</div>
-                <div class="mock-text">This site is under construction. Please check back soon for updates. For inquiries please text the number posted on our gate.</div>
-                <div class="mock-img">image_final_v2 (2).jpg</div>
-                <div class="mock-marquee">*** Last updated: 4 years ago ***</div>
-              </div>
-            </div>
-            <div class="compare-after" id="compare-after">
-              <img id="proof-img" src="assets/photos/bbsi-homepage.jpg" alt="Screenshot of the Baptist Bible Seminary and Institute homepage" loading="lazy" decoding="async">
-            </div>
-            <div class="compare-divider js-only" id="compare-divider" aria-hidden="true"></div>
-            <input type="range" id="compare-range" class="compare-range js-only" min="0" max="100" value="50" aria-label="Compare: where most clients start (left) versus what we built (right)">
-            <span class="compare-label compare-label-before js-only">Where most clients start</span>
-            <span class="compare-label compare-label-after js-only">What we built</span>
-          </div>
-          <p style="font-family: var(--font-body); font-size: 12.5px; color: var(--color-text-muted); margin-top: 12px; text-align: center;" class="js-only">Drag the handle. The left side is a stand-in for where most of our clients begin — the right side is real.</p>
-        </div>
-      </div>
-      <div class="stats-strip reveal">
-        <div style="text-align: center;"><div class="stat-num"><span data-count="3">3</span>+</div><div class="stat-label">Years Serving</div></div>
-        <div style="text-align: center;"><div class="stat-num"><span data-count="10">10</span>+</div><div class="stat-label">Projects Delivered</div></div>
-        <div style="text-align: center;"><div class="stat-num"><span data-count="4">4</span></div><div class="stat-label">Core Services</div></div>
-        <div style="text-align: center;"><div class="stat-num">1</div><div class="stat-label">Business Day Reply, Always</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TIMELINE -->
-  <section id="process" class="section section-warm">
-    <div class="container">
-      <div class="reveal section-head-center" style="margin-bottom: 0;">
-        <div class="eyebrow">&ldquo;But we don&rsquo;t have time for a tech project&rdquo;</div>
-        <h2 class="section-title">Your first two weeks with us</h2>
-        <p class="section-sub">The whole point is that it isn&rsquo;t more work for you. Here&rsquo;s exactly what happens — about two hours of your time, total.</p>
-      </div>
-      <div class="tl-list reveal">
-        <div class="tl-item">
-          <button type="button" class="tl-step" aria-expanded="true">
-            <span class="tl-dot" aria-hidden="true">1</span>
-            <span><span class="tl-when">Day 1</span><span class="tl-title">We talk — 30 minutes, plain language</span></span>
-            <svg class="tl-chev" viewBox="0 0 12 8" width="14" height="10" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
-          </button>
-          <div class="tl-detail">A short call about your <span data-role-slot="noun">organization</span> — what&rsquo;s working, what&rsquo;s not, what you wish existed. No jargon, no commitment, no pressure. You&rsquo;ll leave with useful advice either way.</div>
-        </div>
-        <div class="tl-item">
-          <button type="button" class="tl-step" aria-expanded="false">
-            <span class="tl-dot" aria-hidden="true">2</span>
-            <span><span class="tl-when">Day 2–3</span><span class="tl-title">You get a plan and a fixed quote</span></span>
-            <svg class="tl-chev" viewBox="0 0 12 8" width="14" height="10" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
-          </button>
-          <div class="tl-detail">A written plan in plain language: what we&rsquo;ll build, what it costs, when it lands, and the short list of things we need from you. The price you see is the price you pay.</div>
-        </div>
-        <div class="tl-item">
-          <button type="button" class="tl-step" aria-expanded="false">
-            <span class="tl-dot" aria-hidden="true">3</span>
-            <span><span class="tl-when">Week 1</span><span class="tl-title">We build. You review from a link.</span></span>
-            <svg class="tl-chev" viewBox="0 0 12 8" width="14" height="10" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
-          </button>
-          <div class="tl-detail">You get a private link to watch progress and comment in everyday words — &ldquo;can this photo be bigger?&rdquo; is exactly the kind of feedback we want. No meetings required.</div>
-        </div>
-        <div class="tl-item">
-          <button type="button" class="tl-step" aria-expanded="false">
-            <span class="tl-dot" aria-hidden="true">4</span>
-            <span><span class="tl-when">Week 2</span><span class="tl-title">Launch — we handle everything technical</span></span>
-            <svg class="tl-chev" viewBox="0 0 12 8" width="14" height="10" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
-          </button>
-          <div class="tl-detail">Domains, hosting, email records, security — handled. Your team gets a short, friendly walkthrough of the parts you&rsquo;ll actually touch, and nothing else.</div>
-        </div>
-        <div class="tl-item">
-          <button type="button" class="tl-step" aria-expanded="false">
-            <span class="tl-dot" aria-hidden="true">5</span>
-            <span><span class="tl-when">After launch</span><span class="tl-title">We stay. You never chase us.</span></span>
-            <svg class="tl-chev" viewBox="0 0 12 8" width="14" height="10" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
-          </button>
-          <div class="tl-detail">Something breaks, something needs updating, you have a question at 9 PM — message us. Partner, not vendor: we answer within one business day, usually much faster.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT FINALE -->
-  <section id="contact" class="finale">
-    <div class="container" style="position: relative; z-index: 2;">
-      <div class="split-grid reveal" style="align-items: start;">
+  <section id="services" class="ct-section ct-section--white">
+    <div class="ct-container">
+      <div class="stack-sm" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;">
         <div>
-          <div class="eyebrow-light">The last step is the easiest</div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: #fff; letter-spacing: -0.015em; line-height: 1.12; margin-bottom: 20px;" data-role-slot="cta.heading">Your message is already half-written.</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.68); line-height: 1.72; margin-bottom: 30px;" data-role-slot="cta.sub">Everything you told us on this page is below — edit anything, add anything, and send. A real person replies within one business day.</p>
-          <div id="cta-summary" class="cta-summary js-only" hidden></div>
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div class="icon-box icon-box-xs icon-box-dark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-            </div>
-            <span style="font-family: var(--font-body); font-size: 14px; color: rgba(255,255,255,0.72);">customers@cortanatechsolutions.com</span>
-          </div>
+          <p class="ct-eyebrow">Services</p>
+          <h2 class="ct-title">Four ways in. One partner.</h2>
         </div>
-        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11); border-radius: 20px; padding: 36px;">
-          <form id="contact-form" action="https://formspree.io/f/xkolqjkj" method="POST" style="display: flex; flex-direction: column; gap: 16px;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-              <div>
-                <label class="form-label-dark" for="cf-name">Name</label>
-                <input type="text" id="cf-name" name="name" placeholder="Your name" required class="form-input-dark">
-              </div>
-              <div>
-                <label class="form-label-dark" for="cf-email">Email</label>
-                <input type="email" id="cf-email" name="email" placeholder="your@email.com" required class="form-input-dark">
-              </div>
-            </div>
-            <div>
-              <label class="form-label-dark" for="cf-org">Organization</label>
-              <input type="text" id="cf-org" name="org" placeholder="Your organization's name" required class="form-input-dark">
-            </div>
-            <div>
-              <label class="form-label-dark" for="cf-message">Your message <span style="text-transform: none; letter-spacing: 0; opacity: 0.75;">(we drafted it from your answers — edit freely)</span></label>
-              <textarea id="cf-message" name="message" placeholder="Tell us about your project..." rows="7" required class="form-input-dark" style="resize: vertical; line-height: 1.6;"></textarea>
-            </div>
-            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <button type="submit" class="cta-submit" data-role-slot="cta.button">Send it →</button>
-            <p id="contact-msg" style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.85); text-align: center; line-height: 1.5; min-height: 20px;"></p>
-          </form>
-        </div>
+        <p class="ct-sub" style="margin: 0; max-width: 380px;">Start with one. Add the rest when you’re ready — everything we build works together.</p>
+      </div>
+      <div class="ct-grid" style="--cols: 4; margin-top: 48px;">
+        <a href="services.html" class="ct-card" style="display: flex; flex-direction: column;">
+          <div class="ct-icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+          <h3 class="ct-card__title" style="margin-top: 20px;"><span class="ct-index" style="display: block; margin-bottom: 6px;">01</span>Websites</h3>
+          <p class="ct-card__body" style="margin-top: 10px;">Clear, mobile-friendly and easy to find on Google. Domain, hosting and setup handled.</p>
+        </a>
+        <a href="services.html" class="ct-card" style="display: flex; flex-direction: column;">
+          <div class="ct-icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
+          <h3 class="ct-card__title" style="margin-top: 20px;"><span class="ct-index" style="display: block; margin-bottom: 6px;">02</span>Professional email</h3>
+          <p class="ct-card__body" style="margin-top: 10px;">you@yourorg.com on Microsoft 365 or Google Workspace — usually ready within 48 hours.</p>
+        </a>
+        <a href="services.html" class="ct-card" style="display: flex; flex-direction: column;">
+          <div class="ct-icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+          <h3 class="ct-card__title" style="margin-top: 20px;"><span class="ct-index" style="display: block; margin-bottom: 6px;">03</span>Chatbots</h3>
+          <p class="ct-card__body" style="margin-top: 10px;">A 24/7 assistant trained on your information, so your team stops answering the same questions.</p>
+        </a>
+        <a href="services.html" class="ct-card" style="display: flex; flex-direction: column;">
+          <div class="ct-icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
+          <h3 class="ct-card__title" style="margin-top: 20px;"><span class="ct-index" style="display: block; margin-bottom: 6px;">04</span>Custom web apps</h3>
+          <p class="ct-card__body" style="margin-top: 10px;">Registration, records and portals that replace the spreadsheets nobody wants to touch.</p>
+        </a>
       </div>
     </div>
   </section>
+
+  <!-- RECENT WORK -->
+  <section id="work" class="ct-section ct-section--cloud">
+    <div class="ct-container">
+      <div class="stack-sm" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;">
+        <div>
+          <p class="ct-eyebrow">Recent work</p>
+          <h2 class="ct-title">See what we’ve built for others.</h2>
+        </div>
+        <a href="work.html" class="ct-link ct-link--underline">See all our work →</a>
+      </div>
+      <div class="ct-grid" style="--cols: 3; margin-top: 48px; gap: 28px;">
+        <figure>
+          <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/bbsi-homepage.jpg" alt="Homepage of the Baptist Bible Seminary and Institute website" loading="lazy" decoding="async"></div></div>
+          <figcaption style="padding: 18px 4px 0;"><span class="ct-index" style="font-size: 13px;">SCHOOL · WEBSITE</span><div class="ct-card__title" style="margin-top: 6px;">Baptist Bible Seminary &amp; Institute</div></figcaption>
+        </figure>
+        <figure>
+          <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/megopic-homepage.jpg" alt="Homepage of the Medical Goes Public conference website" loading="lazy" decoding="async"></div></div>
+          <figcaption style="padding: 18px 4px 0;"><span class="ct-index" style="font-size: 13px;">NONPROFIT · EVENT WEBSITE</span><div class="ct-card__title" style="margin-top: 6px;">Medical Goes Public Conference</div></figcaption>
+        </figure>
+        <figure>
+          <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/stewardtrack-homepage.jpg" alt="Homepage of StewardTrack, a church management platform" loading="lazy" decoding="async"></div></div>
+          <figcaption style="padding: 18px 4px 0;"><span class="ct-index" style="font-size: 13px;">CHURCH · WEB APP</span><div class="ct-card__title" style="margin-top: 6px;">StewardTrack</div></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 3 · TESTIMONIAL -->
+  <section class="scene ct-on-dark" style="min-height: 520px; display: flex; align-items: center;">
+    <img class="bg" src="assets/photos/campaign/02-connected-workflow-landscape.jpg" alt="" style="object-position: 70% center;" loading="lazy" decoding="async">
+    <div class="shade shade-side" style="background: linear-gradient(90deg, #061A38 0%, rgba(6,26,56,0.9) 45%, rgba(6,26,56,0.35) 100%);"></div>
+    <div class="inner ct-container" style="width: 100%; padding-top: 88px; padding-bottom: 88px;">
+      <figure style="max-width: 640px;">
+        <div aria-hidden="true" style="font-family: var(--font-display); font-weight: 900; font-size: 96px; line-height: 0.6; color: var(--color-cyan);">“</div>
+        <blockquote style="margin-top: 16px; font-family: var(--font-display); font-weight: 700; font-size: 30px; line-height: 1.35; letter-spacing: -0.01em; color: #fff;">We are thankful for the privilege of partnering with Cortanatech Solutions… The professionalism of their services is commendable.</blockquote>
+        <figcaption style="margin-top: 24px; font-size: 15px; color: rgba(255,255,255,0.78);"><strong style="color: #fff;">Evangel Balmes</strong> · IT Administrator, Baptist Bible Seminary &amp; Institute</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" style="background: #fff;">
+    <div class="bleed-split">
+      <div class="bleed-img"><img src="assets/photos/campaign/03-dashboard-planning-landscape.jpg" alt="A Cortanatech team member walking a client through a simple website and member dashboard on a laptop" loading="lazy" decoding="async"></div>
+      <div class="steps-wrap" style="padding: 96px 56px; max-width: 640px;">
+        <p class="ct-eyebrow">How it works</p>
+        <h2 class="ct-title">About two hours of your time, total.</h2>
+        <ol class="steps">
+          <li><span class="ct-index" style="font-size: 20px;">01</span><div><h3 class="ct-card__title" style="margin-bottom: 4px;">Free 30-min call</h3><p class="ct-card__body">We listen first. No pitch, no jargon.</p></div></li>
+          <li><span class="ct-index" style="font-size: 20px;">02</span><div><h3 class="ct-card__title" style="margin-bottom: 4px;">Plan &amp; fixed quote</h3><p class="ct-card__body">In writing, within 2–3 days. The price you see is the price you pay.</p></div></li>
+          <li><span class="ct-index" style="font-size: 20px;">03</span><div><h3 class="ct-card__title" style="margin-bottom: 4px;">Build &amp; launch</h3><p class="ct-card__body">You review as we go. Live in about two weeks.</p></div></li>
+          <li><span class="ct-index" style="font-size: 20px;">04</span><div><h3 class="ct-card__title" style="margin-bottom: 4px;">We stay</h3><p class="ct-card__body">Ongoing support. You never chase us.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="ct-section ct-section--cloud faq">
+    <div class="ct-container" style="max-width: 880px;">
+      <h2 class="ct-title ct-center">Common questions</h2>
+      <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 12px;">
+        <details><summary>We’re not technical. Is that a problem?<span class="plus" aria-hidden="true">+</span></summary><p>Not at all — that’s who we work with most. Tell us what’s getting in the way in your own words. We handle the rest and train your team at launch.</p></details>
+        <details><summary>How much will it cost?<span class="plus" aria-hidden="true">+</span></summary><p>After the free call, you get a written plan and fixed quote within 2–3 days. No hidden fees.</p></details>
+        <details><summary>What happens after launch?<span class="plus" aria-hidden="true">+</span></summary><p>We stay. A real person replies within one business day, long after your site goes live.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 4 · FINAL CTA -->
+  <section class="scene scene-tall ct-on-dark" style="min-height: 620px; display: flex; align-items: center;">
+    <img class="bg" src="assets/photos/campaign/01-phone-app-interaction-landscape.jpg" alt="" style="object-position: 72% center;" loading="lazy" decoding="async">
+    <div class="shade shade-side" style="background: linear-gradient(90deg, #061A38 0%, rgba(6,26,56,0.92) 38%, rgba(6,26,56,0.4) 75%, rgba(6,26,56,0.2) 100%);"></div>
+    <div class="shade" style="background: linear-gradient(180deg, rgba(6,26,56,0) 60%, #041226 100%);"></div>
+    <div class="inner ct-container" style="width: 100%; padding-top: 96px; padding-bottom: 96px;">
+      <div style="max-width: 560px;">
+        <h2 class="ct-title" style="font-size: clamp(36px, 5vw, 52px); line-height: 1.08;">Tell us what’s getting in the way.</h2>
+        <p class="ct-sub" style="color: rgba(255,255,255,0.82);">A free 30-minute call. No pressure, no jargon — just a conversation.</p>
+        <div style="margin-top: 32px;"><a href="project-brief.html" class="ct-btn ct-btn--lg ct-btn--primary">Book a free call →</a></div>
+        <p style="margin-top: 20px; font-size: 14px; color: rgba(255,255,255,0.78);">or email <a href="mailto:customers@cortanatechsolutions.com" style="color: #fff; font-weight: 600;">customers@cortanatechsolutions.com</a></p>
+      </div>
+    </div>
+  </section>
+  </main>
 
   <!-- FOOTER -->
-  <footer style="background: #fff; border-top: 1px solid #E8E6E6; padding: 40px 0 28px;">
-    <div class="container footer-inner" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-      <a href="index.html"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
-      <div style="display: flex; gap: 28px; flex-wrap: wrap;">
-        <a href="services.html" class="footer-link">Services</a>
-        <a href="work.html" class="footer-link">Our Work</a>
-        <a href="blog.html" class="footer-link">Blog</a>
-        <a href="about.html" class="footer-link">About</a>
-        <a href="contact.html" class="footer-link">Contact</a>
-      </div>
-      <span style="font-family: var(--font-body); font-size: 13px; color: #6B7280;">© 2026 Cortanatech Solutions, Inc.</span>
+  <footer style="background: var(--color-midnight-deep); padding: 32px 0;">
+    <div class="ct-container stack-sm" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 13px; color: rgba(255,255,255,0.62);">
+      <img src="assets/logos/logo-white.png" alt="Cortanatech Solutions" style="height: 34px; width: auto;">
+      <nav aria-label="Footer" style="display: flex; gap: 24px; flex-wrap: wrap;">
+        <a href="services.html" style="color: rgba(255,255,255,0.78);">Services</a>
+        <a href="work.html" style="color: rgba(255,255,255,0.78);">Our Work</a>
+        <a href="blog.html" style="color: rgba(255,255,255,0.78);">Blog</a>
+        <a href="about.html" style="color: rgba(255,255,255,0.78);">About</a>
+        <a href="contact.html" style="color: rgba(255,255,255,0.78);">Contact</a>
+      </nav>
+      <span>© 2026 Cortanatech Solutions, Inc. · Serving the Philippines</span>
     </div>
   </footer>
 
   <script>
     function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
     function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
+    (function () {
+      var check = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#086CFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      var info = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B9DCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+      var A = {
+        church: { img: 'assets/photos/audience/church-livestream.jpg', alt: 'A camera livestreaming a church service', pos: 'center 40%', title: 'Reach your community beyond Sunday', cta: 'Get a free church assessment →', href: 'https://church.cortanatechsolutions.com/',
+          pains: ['Member records scattered across platforms', 'Events and forms that need the same data typed twice', 'Announcements spread across too many channels'],
+          fixes: ['A welcoming church website', 'Membership & records management', 'Online event registration'] },
+        school: { img: 'assets/photos/audience/school-online-enrollment.jpg', alt: 'Filipino students in uniform taking a group photo', pos: 'center 35%', title: 'Modernize without overwhelming staff', cta: 'Book a free call for your school →', href: 'project-brief.html',
+          pains: ['The office answers the same enrollment questions every day', 'Records live in scattered spreadsheets', 'Staff send official messages from personal email'],
+          fixes: ['An enrollment-ready website', 'Official school email', 'A simple records portal'] },
+        nonprofit: { img: 'assets/photos/audience/nonprofit-volunteer-coordination.jpg', alt: 'Volunteers in matching shirts at an outreach event', pos: 'center 40%', title: 'Turn goodwill into lasting support', cta: 'Book a free call for your organization →', href: 'project-brief.html',
+          pains: ['Supporters can’t clearly see your impact', 'Volunteer sign-ups get lost in messages', 'Nobody has time to own the tech'],
+          fixes: ['A story-driven website', 'Volunteer & event sign-ups', 'Professional email'] },
+        smallbiz: { img: 'assets/photos/audience/small-business-found-online.jpg', alt: 'A small neighborhood store lit up at night', pos: 'center 62%', title: 'Get found and trusted online', cta: 'Book a free call for your business →', href: 'project-brief.html',
+          pains: ['Customers can’t find you on Google', 'You answer the same inquiries after hours', 'Quotes go out from a personal Gmail'],
+          fixes: ['A website that brings in inquiries', 'A chatbot for after-hours questions', 'Business email'] }
+      };
+      function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+      var bg = document.getElementById('aud-bg');
+      function show(k) {
+        var d = A[k]; if (!d) return;
+        document.querySelectorAll('.aud-pick').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.aud === k ? 'true' : 'false'); });
+        document.getElementById('aud-title').textContent = d.title;
+        document.getElementById('aud-pains').innerHTML = d.pains.map(function (p) { return '<li>' + info + '<span>' + esc(p) + '</span></li>'; }).join('');
+        document.getElementById('aud-fixes').innerHTML = d.fixes.map(function (f) { return '<li style="align-items:center">' + check + '<span>' + esc(f) + '</span></li>'; }).join('');
+        var cta = document.getElementById('aud-cta'); cta.textContent = d.cta; cta.href = d.href;
+        bg.style.opacity = '0';
+        setTimeout(function () { bg.src = d.img; bg.alt = d.alt; bg.style.objectPosition = d.pos; bg.style.opacity = '1'; }, 200);
+        try { localStorage.setItem('ct-role', k); } catch (e) {}
+      }
+      document.querySelectorAll('.aud-pick').forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.aud); }); });
+      var saved = null; try { saved = localStorage.getItem('ct-role'); } catch (e) {}
+      show(A[saved] ? saved : 'church');
+      Object.keys(A).forEach(function (k) { var i = new Image(); i.src = A[k].img; });
+    })();
   </script>
-  <script src="meeting-data.js?v=meeting3"></script>
-  <script src="role.js?v=meeting3"></script>
-  <script src="chat-demo.js?v=meeting3"></script>
-  <script src="enhance.js?v=meeting3"></script>
-  <script src="meeting.js?v=meeting3"></script>
 </body>
 </html>

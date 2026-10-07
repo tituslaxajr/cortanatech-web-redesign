@@ -1,0 +1,94 @@
+/* Cortanatech Solutions — Color tokens (source: repo _ds/tokens/colors.css + shared.css) */
+:root{
+  /* Brand blue scale */
+  --color-blue-50:#EBF4FB;
+  --color-blue-100:#C5DFF2;
+  --color-blue-200:#9ECBEA;
+  --color-blue-300:#5FA8D8;
+  --color-blue-400:#2E85C2;
+  --color-blue-500:#1C75BC; /* Primary blue — TECH wordmark */
+  --color-blue-600:#1863A3;
+  --color-blue-700:#14518A;
+  --color-blue-800:#2B3990; /* Navy — primary dark */
+  --color-blue-900:#1E2A70;
+  --color-blue-sky:#29ABE2; /* Sky — accent on dark, focus ring */
+
+  /* 2026-10 brand refresh (blended from church.cortanatechsolutions.com) */
+  --color-midnight:#061A38;      /* deepest ground: hero end, footer family */
+  --color-midnight-soft:#0B2851; /* hero middle stop */
+  --color-midnight-deep:#041226; /* footer */
+  --color-electric:#086CFF;      /* primary CTA start, index numbers (4.6:1 on white) */
+  --color-electric-deep:#0B7AC8; /* primary CTA end — keeps white text ≥4.5:1 */
+  --color-cyan:#12B8FF;          /* highlight word on dark, glow — never under white text */
+  --color-cloud:#F7FAFF;         /* cool alt section ground (replaces warm #F1EDED) */
+  --color-mist:#DCEBFF;          /* eyebrow on dark #B9DCFF family, soft fills */
+  --color-ink:#10213A;           /* body text on light */
+  --color-line:#E4EBF5;          /* cool hairline for cards/steps */
+
+  /* Warm neutrals */
+  --color-neutral-0:#FFFFFF;
+  --color-neutral-50:#F1EDED; /* warm off-white section bg */
+  --color-neutral-100:#E8E6E6;
+  --color-neutral-200:#D1D0CE;
+  --color-neutral-300:#B5B3B0;
+  --color-neutral-400:#8C909A;
+  --color-neutral-500:#6B6F7A;
+  --color-neutral-600:#454C59;
+  --color-neutral-700:#2D3142;
+  --color-neutral-800:#1E1F1E;
+  --color-neutral-900:#0F1011;
+
+  /* Status */
+  --color-success:#1A7F4B;
+  --color-success-live:#22C55E; /* chat online dot */
+  --color-success-on-dark:#4ADE80;
+  --color-warning:#C8821A;
+  --color-error:#C0392B;
+  --color-error-form:#DC2626;
+  --color-info:var(--color-blue-500);
+
+  /* Semantic aliases */
+  --color-primary:var(--color-blue-500);
+  --color-primary-dark:var(--color-blue-800);
+  --color-primary-light:var(--color-blue-400);
+  --color-primary-subtle:var(--color-blue-50);
+  --color-text-primary:var(--color-ink);
+  --color-text-secondary:var(--color-neutral-600);
+  --color-text-muted:var(--color-neutral-400);
+  --color-text-label:#6B7280;
+  --color-text-inverse:var(--color-neutral-0);
+  --color-text-accent:var(--color-blue-500);
+  /* Text on dark/gradient grounds — only these three (all ≥ AA on #1f3882) */
+  --text-on-dark-1:#FFFFFF;               /* headings, links, active */
+  --text-on-dark-2:rgba(255,255,255,0.78);/* body, subs */
+  --text-on-dark-3:rgba(255,255,255,0.62);/* captions, labels, meta — min 12px */
+  --color-text-on-dark-2:var(--text-on-dark-2);
+  --color-text-on-dark-3:var(--text-on-dark-3);
+  --color-surface-default:var(--color-neutral-0);
+  --color-surface-subtle:var(--color-cloud);
+  --color-surface-midnight:var(--color-midnight);
+  --color-surface-navy:var(--color-blue-800);
+  --color-surface-blue:var(--color-blue-500);
+  --color-surface-glass:rgba(255,255,255,0.09);
+  --color-border-default:var(--color-neutral-200);
+  --color-border-subtle:var(--color-line);
+  --color-border-focus:var(--color-blue-500);
+  --color-border-on-dark:rgba(255,255,255,0.16);
+
+  /* Gradients */
+  --gradient-hero:radial-gradient(circle at 82% 8%,rgba(18,184,255,0.22),rgba(18,184,255,0) 30%),linear-gradient(148deg,#1f3882 0%,#0b2851 48%,#061a38 100%); /* @kind color — 2026-10 deep midnight */
+  --gradient-hero-legacy:linear-gradient(148deg,#1d6db0 0%,#1f3882 42%,#19235a 100%); /* @kind color — pre-2026-10 */
+  --gradient-cta:linear-gradient(100deg,#086cff 0%,#0b7ac8 100%); /* @kind color — primary button */
+  --gradient-cta-hover:linear-gradient(100deg,#0a5fe0 0%,#2B3990 100%); /* @kind color */
+  --gradient-brand:linear-gradient(135deg,#29ABE2 0%,#2E3192 100%); /* @kind color */
+  --gradient-brand-overlay:linear-gradient(135deg,rgba(41,171,226,0.82) 0%,rgba(46,49,146,0.82) 100%); /* @kind color */
+  --gradient-photo-scrim:linear-gradient(to top,rgba(43,57,144,0.85) 0%,transparent 55%); /* @kind color */
+
+  /* Social-post palette (sampled from 2026 social creatives — approximate) */
+  --color-social-ink:#0B1A4A;       /* deep navy photo grade */
+  --color-social-electric:#1E4FD8;  /* highlighted words on light posts */
+  --color-social-cyan:#0AA2F0;      /* highlighted words on dark posts */
+  --gradient-social-cta:linear-gradient(90deg,#1F5BF0 0%,#0BA5F5 100%); /* @kind color */
+  --gradient-social-dark:linear-gradient(90deg,rgba(6,22,84,0.96) 0%,rgba(10,32,110,0.75) 45%,rgba(10,32,110,0) 75%); /* @kind color */
+  --gradient-social-light:linear-gradient(90deg,rgba(244,246,251,1) 0%,rgba(244,246,251,0.92) 50%,rgba(244,246,251,0) 72%); /* @kind color */
+}

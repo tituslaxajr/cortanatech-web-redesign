@@ -52,11 +52,11 @@
     .hero-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 20% 110%, rgba(41,171,226,0.22) 0%, transparent 60%), radial-gradient(ellipse 55% 55% at 105% -5%, rgba(43,57,144,0.55) 0%, transparent 55%); pointer-events: none; }
     .hero-inner { position: relative; z-index: 2; text-align: center; max-width: 900px; padding: 128px 40px 72px; width: 100%; margin: 0 auto; }
 
-    .ask-lead { font-family: var(--font-body); font-size: clamp(15px, 1.7vw, 18px); color: rgba(255,255,255,0.66); margin-bottom: 14px; }
+    .ask-lead { font-family: var(--font-body); font-size: clamp(15px, 1.7vw, 18px); color: var(--text-on-dark-2); margin-bottom: 14px; }
     .ask-headline { font-family: var(--font-display); font-size: clamp(38px, 5.6vw, 68px); font-weight: 900; color: #fff; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 40px; }
     .ask-you { font-style: normal; color: var(--color-blue-sky, #29ABE2); position: relative; white-space: nowrap; }
     .ask-you::after { content: ''; position: absolute; left: 0; right: 0; bottom: -0.06em; height: 0.14em; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M3 9 Q 60 2 117 7' fill='none' stroke='%2329ABE2' stroke-width='5' stroke-linecap='round' opacity='0.85'/%3E%3C/svg%3E") no-repeat center / 100% 100%; }
-    .ask-q { font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 24px; }
+    .ask-q { font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--text-on-dark-3); margin-bottom: 24px; }
 
     .pick-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 760px; margin: 0 auto 36px; }
     .pick-card { display: flex; flex-direction: column; align-items: center; gap: 14px; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.16); border-radius: 20px; padding: 26px 14px 22px; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s; color: #fff; }
@@ -68,9 +68,9 @@
     .pick-card[aria-pressed="true"] .pick-photo { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.35), 0 8px 22px rgba(0,0,0,0.28); }
     .pick-name { font-family: var(--font-display); font-size: 17px; font-weight: 800; }
     .pick-tag { font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.62); line-height: 1.45; }
-    .pick-skip { display: inline-block; font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.55); border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 2px; transition: color 0.2s; }
+    .pick-skip { display: inline-block; font-family: var(--font-body); font-size: 13.5px; color: var(--text-on-dark-3); border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 2px; transition: color 0.2s; }
     .pick-skip:hover { color: rgba(255,255,255,0.85); }
-    .ask-proof { font-family: var(--font-body); font-size: 12.5px; letter-spacing: 0.02em; color: rgba(255,255,255,0.45); margin-top: 28px; }
+    .ask-proof { font-family: var(--font-body); font-size: 12.5px; letter-spacing: 0.02em; color: var(--text-on-dark-3); margin-top: 28px; }
 
     /* Staged reveal — the hero speaks in sentences, not all at once.
        Cards use fill-mode backwards so the finished animation releases
@@ -180,7 +180,7 @@
     /* --- Contact finale --- */
     .finale { position: relative; overflow: hidden; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 42%, #19235a 100%); padding: 96px 0; }
     .cta-summary { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 22px 24px; margin-bottom: 30px; }
-    .cta-summary-label { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 12px; }
+    .cta-summary-label { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-on-dark-3); margin-bottom: 12px; }
     .cta-summary-item { font-family: var(--font-body); font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.6; display: flex; gap: 10px; align-items: baseline; }
     .cta-summary-item + .cta-summary-item { margin-top: 8px; }
     .cta-summary-item span { color: #4ADE80; font-weight: 700; }
@@ -390,7 +390,7 @@
           <div class="eyebrow-light">Don&rsquo;t take our word for it</div>
           <h2 class="section-title section-title-light">Try the kind of chatbot we build. Right here.</h2>
           <p style="font-family: var(--font-body); font-size: 16px; color: rgba(255,255,255,0.8); line-height: 1.7; margin-top: 16px; max-width: 520px;" data-role-slot="chat.intro">This is a working demo of the kind of assistant we build — try it. Yours would be trained on your organization’s real information.</p>
-          <p style="font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.55); line-height: 1.6; margin-top: 18px;">Every question it answers is one your team doesn&rsquo;t have to — at 2 PM or 2 AM.</p>
+          <p style="font-family: var(--font-body); font-size: 13.5px; color: var(--text-on-dark-3); line-height: 1.6; margin-top: 18px;">Every question it answers is one your team doesn&rsquo;t have to — at 2 PM or 2 AM.</p>
         </div>
         <div class="reveal">
           <div id="chat-demo" class="chat-panel js-only" aria-label="Chatbot demo"></div>

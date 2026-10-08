@@ -14,8 +14,8 @@ p.ct-sub { margin-top: 16px; }
 .home-nav .links a:hover, .home-nav .links a[aria-current="page"] { color: #fff; }
 .home-nav .links a[aria-current="page"] { font-weight: 700; box-shadow: inset 0 -2px 0 var(--color-cyan); padding-bottom: 4px; }
 .home-nav .mobile-menu-btn { color: #fff; }
-.nav-logo { height: 40px; width: auto; }
-.foot-logo { height: 34px; width: auto; }
+.nav-logo { height: 32px; width: auto; }
+.foot-logo { height: 27px; width: auto; }
 .mobile-nav a[aria-current="page"] { color: var(--color-primary); font-weight: 700; }
 
 /* SCENES — full-bleed photography with brand shading */
@@ -82,7 +82,7 @@ p.ct-sub { margin-top: 16px; }
   .home-nav .mobile-menu-btn { display: flex; }
   .mobile-nav { top: 72px; }
   .home-nav .bar { height: 72px; }
-  .nav-logo { height: 32px; }
+  .nav-logo { height: 26px; }
   .hero-h1 { font-size: 42px; }
   .scene-tall { min-height: 0 !important; }
   .shade-side { background: linear-gradient(180deg, rgba(6,26,56,0.55) 0%, rgba(6,26,56,0.9) 45%, #061A38 100%) !important; }

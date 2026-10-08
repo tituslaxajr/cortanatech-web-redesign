@@ -1,0 +1,96 @@
+/* Cortanatech — site chrome shared by every page (2026-10 redesign).
+   Nav, cinematic scenes, page heroes, closing CTA, footer and the small
+   patterns the homepage introduced. Loaded after shared.css + ds/components.css. */
+
+body { font-family: var(--font-body); background: #fff; color: var(--color-text-primary); }
+.ct-sub, .ct-eyebrow, .ct-card__body, .ct-card__title { margin-bottom: 0; }
+p.ct-sub { margin-top: 16px; }
+
+/* NAV — dark glass */
+.home-nav { position: sticky; top: 0; z-index: 100; background: rgba(6,26,56,0.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.10); }
+.home-nav .bar { height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.home-nav .links { display: flex; gap: 32px; align-items: center; }
+.home-nav .links a { color: rgba(255,255,255,0.82); font-size: 15px; font-weight: 500; transition: color .2s; }
+.home-nav .links a:hover, .home-nav .links a[aria-current="page"] { color: #fff; }
+.home-nav .links a[aria-current="page"] { font-weight: 700; box-shadow: inset 0 -2px 0 var(--color-cyan); padding-bottom: 4px; }
+.home-nav .mobile-menu-btn { color: #fff; }
+.mobile-nav a[aria-current="page"] { color: var(--color-primary); font-weight: 700; }
+
+/* SCENES — full-bleed photography with brand shading */
+.scene { position: relative; overflow: hidden; background: var(--color-midnight); color: #fff; }
+.scene .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.scene .shade { position: absolute; inset: 0; pointer-events: none; }
+.scene .inner { position: relative; z-index: 1; }
+.kenburns { animation: ctKen 24s ease-out both; }
+@keyframes ctKen { from { transform: scale(1.08); } to { transform: scale(1); } }
+.glass { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.hero-h1 { font-family: var(--font-display); font-weight: 900; font-size: 68px; line-height: 1.04; letter-spacing: -0.025em; color: #fff; margin: 0; text-wrap: balance; }
+.hl { color: var(--color-cyan); }
+
+/* Inner-page hero: a shorter scene (photo) or plain midnight band */
+.page-scene { min-height: 520px; display: flex; flex-direction: column; justify-content: flex-end; }
+.page-scene .inner { width: 100%; padding-top: 120px; padding-bottom: 72px; }
+.page-band { background: var(--gradient-hero); color: #fff; }
+.page-band .inner { padding-top: 88px; padding-bottom: 72px; }
+.page-h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(38px, 5.4vw, 60px); line-height: 1.06; letter-spacing: -0.025em; color: #fff; margin: 0; text-wrap: balance; max-width: 760px; }
+.page-lede { font-size: 19px; line-height: 1.65; color: rgba(255,255,255,0.82); margin-top: 22px; max-width: 580px; text-wrap: pretty; }
+.eyebrow-dark { color: #B9DCFF !important; }
+
+/* Lists, frames, steps */
+.check-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.check-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 16px; line-height: 1.55; }
+.check-list svg { flex-shrink: 0; margin-top: 2px; }
+.browser { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 60px rgba(16,33,58,0.16); border: 1px solid var(--color-line); }
+.browser .bar { height: 30px; display: flex; align-items: center; gap: 6px; padding: 0 12px; background: var(--color-cloud); border-bottom: 1px solid var(--color-line); }
+.browser .bar i { width: 9px; height: 9px; border-radius: 9999px; background: #D1D0CE; display: block; }
+.browser .shot { aspect-ratio: 16 / 10; overflow: hidden; }
+.browser .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.bleed-split { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: stretch; }
+.bleed-img { position: relative; min-height: 640px; overflow: hidden; }
+.bleed-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
+.steps { list-style: none; margin-top: 36px; }
+.steps li { display: grid; grid-template-columns: 56px 1fr; gap: 8px; padding: 20px 0; border-top: 1px solid var(--color-line); }
+.steps li:last-child { border-bottom: 1px solid var(--color-line); }
+.body-copy { font-size: 16px; line-height: 1.75; color: var(--color-text-secondary); }
+.body-copy + .body-copy { margin-top: 14px; }
+
+/* FAQ */
+.faq details { background: #fff; border: 1.5px solid var(--color-line); border-radius: 16px; padding: 0 24px; }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--color-text-primary); cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq .plus { font-size: 26px; color: var(--color-electric); transition: transform .2s; }
+.faq details[open] .plus { transform: rotate(45deg); }
+.faq details p { padding-bottom: 20px; font-size: 15px; line-height: 1.7; color: var(--color-text-secondary); }
+
+/* Closing CTA scene */
+.cta-scene { min-height: 560px; display: flex; align-items: center; }
+.cta-scene .inner { width: 100%; padding-top: 96px; padding-bottom: 96px; }
+
+/* FOOTER */
+.site-footer { background: var(--color-midnight-deep); padding: 32px 0; }
+.site-footer .ct-container { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 13px; color: rgba(255,255,255,0.62); }
+.site-footer nav { display: flex; gap: 24px; flex-wrap: wrap; }
+.site-footer nav a { color: rgba(255,255,255,0.78); }
+.site-footer nav a:hover, .site-footer nav a[aria-current="page"] { color: #fff; }
+
+@media (prefers-reduced-motion: reduce) { .kenburns { animation: none; } }
+@media (max-width: 900px) {
+  .home-nav .links { display: none; }
+  .home-nav .bar > .ct-btn { display: none; }
+  .home-nav .mobile-menu-btn { display: flex; }
+  .mobile-nav { top: 76px; }
+  .hero-h1 { font-size: 42px; }
+  .scene-tall { min-height: 0 !important; }
+  .shade-side { background: linear-gradient(180deg, rgba(6,26,56,0.55) 0%, rgba(6,26,56,0.9) 45%, #061A38 100%) !important; }
+  .stack-sm { flex-direction: column !important; align-items: flex-start !important; }
+  .bleed-split { grid-template-columns: 1fr; }
+  .bleed-img { min-height: 320px; }
+  .steps-wrap { padding: 64px 24px !important; }
+  .page-scene { min-height: 0; }
+  .page-scene .inner { padding-top: 96px; padding-bottom: 56px; }
+  .page-band .inner { padding-top: 64px; padding-bottom: 56px; }
+  .page-lede { font-size: 17px; }
+  .cta-scene { min-height: 0; }
+  .cta-scene .inner { padding-top: 72px; padding-bottom: 72px; }
+  .site-footer .ct-container { flex-direction: column; align-items: flex-start; }
+}

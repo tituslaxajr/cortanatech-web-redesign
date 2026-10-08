@@ -18,177 +18,125 @@
   <meta name="twitter:title" content="Contact — CortanaTech Solutions">
   <meta name="twitter:description" content="Get in touch with CortanaTech Solutions. Tell us about your church, school, nonprofit, or small business project and we'll respond within one business day.">
   <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
-  <script>try{var r=localStorage.getItem('ct-role');if(r)document.documentElement.setAttribute('data-role',r)}catch(e){}</script>
-  <link rel="stylesheet" href="shared.css?v=nav6">
+  <link rel="stylesheet" href="shared.css?v=ds3">
+  <link rel="stylesheet" href="ds/components.css?v=ds2">
+  <link rel="stylesheet" href="site.css?v=1">
   <style>
-    body { font-family: var(--font-body); }
-    .contact-submit { background: var(--color-primary-dark); transition: background 0.2s; }
-    .contact-submit:hover { background: var(--color-primary); }
-    select.form-input { appearance: none; background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="%23454C59" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>'); background-repeat: no-repeat; background-position: right 16px center; }
+    .contact { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
+    .facts { margin-top: 32px; display: flex; flex-direction: column; gap: 22px; }
+    .facts > div { display: flex; gap: 16px; align-items: center; }
+    .facts .ct-label { margin-bottom: 2px; }
+    .facts a, .facts span { font-weight: 600; color: var(--color-text-primary); }
+    .callout { display: flex; gap: 16px; align-items: center; margin-top: 40px; padding: 22px 24px; border-radius: 20px; background: var(--gradient-hero); color: #fff; transition: transform .2s, box-shadow .2s; }
+    .callout:hover { transform: translateY(-2px); box-shadow: var(--shadow-card-hover); }
+    .callout b { display: block; font-family: var(--font-display); font-size: 18px; }
+    .callout small { display: block; font-size: 14px; color: rgba(255,255,255,0.78); margin-top: 4px; line-height: 1.5; }
+    .form-card { background: #fff; border-radius: 24px; padding: 40px; border: 1px solid var(--color-line); box-shadow: 0 24px 60px rgba(16,33,58,0.10); }
+    .form-card form { display: flex; flex-direction: column; gap: 20px; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    select.ct-input { appearance: none; background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="%23454C59" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>'); background-repeat: no-repeat; background-position: right 16px center; }
+    @media (max-width: 900px) { .contact { grid-template-columns: 1fr; gap: 40px; } .form-card { padding: 28px 22px; } .row2 { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav style="position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #E8E6E6; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; height: 80px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
-    <a href="index.html" style="flex-shrink: 0;"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
-    <div class="desktop-nav" style="display: flex; align-items: center; gap: 36px;">
-      <a href="services.html" class="nav-link">Services</a>
-      <a href="work.html" class="nav-link">Our Work</a>
-      <a href="blog.html" class="nav-link">Blog</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="project-brief.html" class="nav-link">Project Brief</a>
-      <a href="contact.html" class="nav-btn-active">Get Started</a>
+  <header class="home-nav">
+    <div class="ct-container bar">
+      <a href="index.html" aria-label="Cortanatech Solutions home"><img src="assets/logos/logo-white.png" alt="Cortanatech Solutions" style="height: 40px; width: auto;"></a>
+      <nav class="links" aria-label="Main">
+        <a href="services.html">Services</a>
+        <a href="work.html">Our Work</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+      </nav>
+      <a href="project-brief.html" class="ct-btn ct-btn--primary">Book a free call</a>
+      <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
     </div>
-    <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-  </nav>
-  <div id="mobile-nav" class="mobile-nav">
-    <a href="services.html" onclick="closeMenu()">Services</a>
-    <a href="work.html" onclick="closeMenu()">Our Work</a>
-    <a href="blog.html" onclick="closeMenu()">Blog</a>
-    <a href="about.html" onclick="closeMenu()">About</a>
-    <a href="project-brief.html" onclick="closeMenu()">Project Brief</a>
-    <a href="contact.html" onclick="closeMenu()">Get Started</a>
-  </div>
+    <div id="mobile-nav" class="mobile-nav">
+      <a href="services.html" onclick="closeMenu()">Services</a>
+      <a href="work.html" onclick="closeMenu()">Our Work</a>
+      <a href="blog.html" onclick="closeMenu()">Blog</a>
+      <a href="about.html" onclick="closeMenu()">About</a>
+      <a href="project-brief.html" onclick="closeMenu()">Book a free call</a>
+    </div>
+  </header>
 
+  <main>
   <!-- PAGE HERO -->
-  <section class="page-hero">
-    <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs><pattern id="contact-dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.5" fill="rgba(255,255,255,0.07)"></circle></pattern></defs>
-      <rect width="100%" height="100%" fill="url(#contact-dots)"></rect>
-    </svg>
-    <svg style="position: absolute; right: -60px; top: -80px; width: 380px; height: 380px; pointer-events: none;" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="190" cy="190" r="170" stroke="rgba(255,255,255,0.055)" stroke-width="1.5"></circle>
-      <circle cx="190" cy="190" r="115" stroke="rgba(255,255,255,0.04)" stroke-width="1"></circle>
-    </svg>
-    <div class="container" style="position: relative; z-index: 2; text-align: center;">
-      <div class="eyebrow-light">Let's Talk</div>
-      <h1 style="font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 18px;">Start a Conversation</h1>
-      <p style="font-family: var(--font-body); font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.68; max-width: 500px; margin: 0 auto;">Tell us about your organization and what you need. We'll follow up within one business day.</p>
+  <section class="page-band ct-on-dark">
+    <div class="inner ct-container">
+      <p class="ct-eyebrow eyebrow-dark">Contact</p>
+      <h1 class="page-h1">Send us a <span class="hl">message</span>.</h1>
+      <p class="page-lede">Tell us about your organization and what you need. A real person replies within one business day.</p>
     </div>
   </section>
 
-  <!-- CONTACT FORM + INFO -->
-  <section class="section section-warm">
-    <div class="container">
-      <div class="split-grid" style="grid-template-columns: 1fr 1.4fr; align-items: start;">
-
-        <!-- Left: info -->
-        <div>
-          <h2 class="section-title" style="font-size: clamp(24px, 3vw, 36px); margin-bottom: 20px;">We'd love to hear from you</h2>
-          <p class="section-sub" style="margin-top: 0; margin-bottom: 48px;">Whether you're just exploring, have a specific project in mind, or need help figuring out where to start — send us a message and we'll get back to you promptly.</p>
-
-          <div style="display: flex; flex-direction: column; gap: 28px;">
-            <div style="display: flex; gap: 16px; align-items: flex-start;">
-              <div class="icon-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-              </div>
-              <div>
-                <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #6B7280; text-transform: uppercase; margin-bottom: 4px;">Email</div>
-                <div style="font-family: var(--font-body); font-size: 15px; color: #1E1F1E; font-weight: 500;">customers@cortanatechsolutions.com</div>
-              </div>
-            </div>
-            <div style="display: flex; gap: 16px; align-items: flex-start;">
-              <div class="icon-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              </div>
-              <div>
-                <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #6B7280; text-transform: uppercase; margin-bottom: 4px;">Response Time</div>
-                <div style="font-family: var(--font-body); font-size: 15px; color: #1E1F1E; font-weight: 500;">Within one business day</div>
-              </div>
-            </div>
-            <div style="display: flex; gap: 16px; align-items: flex-start;">
-              <div class="icon-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              </div>
-              <div>
-                <div style="font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #6B7280; text-transform: uppercase; margin-bottom: 4px;">We Serve</div>
-                <div style="font-family: var(--font-body); font-size: 15px; color: #1E1F1E; font-weight: 500;">Churches, Schools, Nonprofits &amp; Small Businesses</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Testimonial mini -->
-          <div style="margin-top: 52px; background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.05);">
-            <div style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: #2B3990; line-height: 1.5; margin-bottom: 16px;">"The professionalism of their services is commendable."</div>
-            <div style="font-family: var(--font-body); font-size: 13px; color: #454C59;">— Evangel Balmes, Baptist Bible Seminary &amp; Institute, Inc.</div>
-          </div>
+  <section class="ct-section ct-section--cloud">
+    <div class="ct-container contact">
+      <div>
+        <h2 class="ct-title" style="font-size: clamp(26px, 3vw, 34px);">Just exploring? That’s fine.</h2>
+        <p class="body-copy" style="margin-top: 14px;">Whether you have a project in mind or aren’t sure where to start, send a note and we’ll take it from there.</p>
+        <div class="facts">
+          <div><div class="ct-icon-box ct-icon-box--sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div><div><span class="ct-label">Email</span><a href="mailto:customers@cortanatechsolutions.com">customers@cortanatechsolutions.com</a></div></div>
+          <div><div class="ct-icon-box ct-icon-box--sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div><div><span class="ct-label">Response time</span><span>Within one business day</span></div></div>
         </div>
-
-        <!-- Right: form -->
-        <div>
-        <a href="project-brief.html" style="display: flex; align-items: center; gap: 18px; background: linear-gradient(148deg, #1d6db0 0%, #1f3882 60%, #19235a 100%); border-radius: 20px; padding: 26px 28px; margin-bottom: 24px; box-shadow: 0 8px 28px rgba(31,56,130,0.18); transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 34px rgba(31,56,130,0.26)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 28px rgba(31,56,130,0.18)'">
-          <div class="icon-box icon-box-dark" style="border-radius: 14px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-          </div>
-          <div style="flex: 1;">
-            <div style="font-family: var(--font-display); font-size: 17px; font-weight: 800; color: #fff; line-height: 1.3; margin-bottom: 5px;">Skip the back-and-forth</div>
-            <div style="font-family: var(--font-body); font-size: 13.5px; color: rgba(255,255,255,0.74); line-height: 1.55;">Answer our project brief instead — mostly taps, about three minutes, and we'll come back with an actual recommendation.</div>
-          </div>
-          <span style="font-size: 20px; color: rgba(255,255,255,0.8); flex-shrink: 0;">→</span>
+        <a href="project-brief.html" class="callout">
+          <div><b>Rather book a call?</b><small>A few quick taps about your needs, and we’ll reply within one business day to set up a free 30-minute call.</small></div>
+          <span aria-hidden="true" style="font-size: 22px;">→</span>
         </a>
-        <div style="background: #fff; border: 1.5px solid #E8E6E6; border-radius: 24px; padding: 44px; box-shadow: 0 8px 32px rgba(0,0,0,0.06);">
-          <form id="contact-form" action="https://formspree.io/f/xkolqjkj" method="POST" onsubmit="submitContact(event)" style="display: flex; flex-direction: column; gap: 20px;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <div>
-                <label class="form-label">First Name</label>
-                <input type="text" name="name" placeholder="Your name" required class="form-input">
-              </div>
-              <div>
-                <label class="form-label">Email</label>
-                <input type="email" name="email" placeholder="your@email.com" required class="form-input">
-              </div>
-            </div>
-            <div>
-              <label class="form-label">Organization</label>
-              <input type="text" name="org" placeholder="Your church, school, or small business" required class="form-input">
-            </div>
-            <div>
-              <label class="form-label">What Are You Looking For?</label>
-              <select name="service" class="form-input">
-                <option value="">Select a service...</option>
-                <option>Website Design &amp; Development</option>
-                <option>Professional Email Setup</option>
-                <option>Chatbot Development</option>
-                <option>Custom Web Application</option>
-                <option>Not sure yet — let's talk</option>
-              </select>
-            </div>
-            <div>
-              <label class="form-label">Tell Us About Your Project</label>
-              <textarea name="message" placeholder="Describe what you need, what you're trying to accomplish, and any deadlines..." rows="5" required class="form-input" style="resize: vertical; line-height: 1.6;"></textarea>
-            </div>
-            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <button type="submit" class="contact-submit" style="width: 100%; padding: 15px 24px; color: #fff; border: none; border-radius: 100px; font-family: var(--font-body); font-size: 16px; font-weight: 700; cursor: pointer;">Send Message →</button>
-            <p id="contact-msg" style="font-family: var(--font-body); font-size: 13px; color: #2B3990; text-align: center; line-height: 1.5; min-height: 20px;"></p>
-          </form>
-        </div>
-        </div>
+      </div>
 
+      <div class="form-card">
+        <form id="contact-form" action="https://formspree.io/f/xkolqjkj" method="POST" onsubmit="submitContact(event)">
+          <div class="row2">
+            <div><label class="ct-label" for="c-name">First name</label><input id="c-name" type="text" name="name" placeholder="Your name" required autocomplete="given-name" class="ct-input"></div>
+            <div><label class="ct-label" for="c-email">Email</label><input id="c-email" type="email" name="email" placeholder="your@email.com" required autocomplete="email" class="ct-input"></div>
+          </div>
+          <div><label class="ct-label" for="c-org">Organization</label><input id="c-org" type="text" name="org" placeholder="Your church, school, nonprofit or business" required autocomplete="organization" class="ct-input"></div>
+          <div>
+            <label class="ct-label" for="c-service">What are you looking for?</label>
+            <select id="c-service" name="service" class="ct-input">
+              <option value="">Select a service…</option>
+              <option>Website Design &amp; Development</option>
+              <option>Professional Email Setup</option>
+              <option>Chatbot Development</option>
+              <option>Custom Web Application</option>
+              <option>Not sure yet — let's talk</option>
+            </select>
+          </div>
+          <div><label class="ct-label" for="c-msg">Tell us about your project</label><textarea id="c-msg" name="message" placeholder="What you need, what you’re trying to accomplish, and any deadlines…" rows="5" required class="ct-input"></textarea></div>
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" class="ct-btn ct-btn--lg ct-btn--primary ct-btn--block">Send message →</button>
+          <p id="contact-msg" role="status" style="font-size: 14px; text-align: center; min-height: 20px;"></p>
+        </form>
       </div>
     </div>
   </section>
+  </main>
 
   <!-- FOOTER -->
-  <footer style="background: #fff; border-top: 1px solid #E8E6E6; padding: 40px 0 28px;">
-    <div class="container footer-inner" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-      <a href="index.html"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
-      <div style="display: flex; gap: 28px; flex-wrap: wrap;">
-        <a href="services.html" class="footer-link">Services</a>
-        <a href="work.html" class="footer-link">Our Work</a>
-        <a href="blog.html" class="footer-link">Blog</a>
-        <a href="about.html" class="footer-link">About</a>
-        <a href="contact.html" class="footer-link-active">Contact</a>
-      </div>
-      <span style="font-family: var(--font-body); font-size: 13px; color: #6B7280;">© 2026 Cortanatech Solutions, Inc.</span>
+  <footer class="site-footer">
+    <div class="ct-container">
+      <a href="index.html"><img src="assets/logos/logo-white.png" alt="Cortanatech Solutions" style="height: 34px; width: auto;"></a>
+      <nav aria-label="Footer">
+        <a href="services.html">Services</a>
+        <a href="work.html">Our Work</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" aria-current="page">Contact</a>
+      </nav>
+      <span>© 2026 Cortanatech Solutions, Inc. · Serving the Philippines</span>
     </div>
   </footer>
 
   <script>
     function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
     function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
+  </script>
+  <script>
     function submitContact(e) {
       e.preventDefault();
       var form = e.target;
@@ -212,8 +160,5 @@
       });
     }
   </script>
-  <script src="meeting-data.js?v=meeting3"></script>
-  <script src="role.js?v=meeting3"></script>
-  <script src="enhance.js?v=meeting3"></script>
 </body>
 </html>

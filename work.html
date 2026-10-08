@@ -34,10 +34,33 @@
     .case-facts dd { font-size: 15px; line-height: 1.65; color: var(--color-text-secondary); }
     .case-link { margin-top: 24px; display: inline-flex; }
     .case figure { position: sticky; top: 116px; }
+    /* Project showcase: scrollable screenshot, phone view, page thumbnails */
+    .sc-stage { position: relative; padding: 0 28px 36px 0; }
+    .sc-url { margin-left: 10px; flex: 1; max-width: 60%; height: 18px; line-height: 18px; padding: 0 10px; border-radius: 9999px; background: #fff; font-size: 11px; color: var(--color-text-label); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sc-screen { position: relative; cursor: ns-resize; outline-offset: 3px; }
+    .browser .sc-screen img { height: auto; min-height: 100%; object-fit: initial; transform: translateY(0); transition: transform .9s ease-in-out; will-change: transform; }
+    .sc-screen:hover img, .sc-screen:focus-visible img, .sc-screen.is-playing img { transform: translateY(var(--shift, 0)); transition-duration: var(--dur, 6s); }
+    .sc-phone { position: absolute; right: 0; bottom: 0; width: 24%; min-width: 92px; padding: 6px; background: #10213A; border-radius: 22px; box-shadow: 0 18px 40px rgba(16,33,58,0.28); }
+    .sc-phone img { display: block; width: 100%; border-radius: 16px; aspect-ratio: 390 / 664; object-fit: cover; object-position: top; }
+    .sc-thumbs { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 8px; }
+    .sc-thumb { padding: 0; border: 1.5px solid var(--color-line); border-radius: 10px; background: #fff; overflow: hidden; cursor: pointer; text-align: left; font: inherit; transition: border-color .2s, box-shadow .2s, transform .2s; }
+    .sc-thumb:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16,33,58,0.12); }
+    .sc-thumb[aria-pressed="true"] { border-color: var(--color-electric); box-shadow: 0 0 0 2px var(--color-electric); }
+    .sc-thumb img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+    .sc-thumb span { display: block; padding: 6px 10px; font-size: 12px; font-weight: 700; letter-spacing: .04em; color: var(--color-text-secondary); }
+    .sc-hint { margin-top: 12px; font-size: 13px; color: var(--color-text-label); }
+    .sc-hint[hidden] { display: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .sc-screen { overflow-y: auto; cursor: auto; }
+      .browser .sc-screen img { transition: none; transform: none !important; }
+    }
     .case-note { margin-top: 14px; font-size: 13px; color: var(--color-text-label); }
     @media (max-width: 900px) {
       .case figure { position: static; order: -1; }
       .case-facts div { grid-template-columns: 1fr; gap: 4px; }
+      .sc-stage { padding: 0 16px 28px 0; }
+      .sc-thumbs { gap: 8px; }
+      .sc-url { display: none; }
     }
   </style>
 </head>
@@ -95,9 +118,13 @@
         </dl>
         <a class="ct-link ct-link--underline case-link" href="https://bbsi.edu.ph" target="_blank" rel="noopener noreferrer">Visit bbsi.edu.ph ↗</a>
       </div>
-      <figure>
-        <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/bbsi-homepage.jpg" alt="Homepage of the Baptist Bible Seminary and Institute website" loading="lazy" decoding="async"></div></div>
-        
+      <figure class="showcase">
+        <div class="sc-stage">
+          <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span class="sc-url">bbsi.edu.ph</span></div><div class="shot sc-screen" tabindex="0"><img src="assets/photos/work/bbsi-full.webp" alt="Full homepage of the Baptist Bible Seminary and Institute website" loading="lazy" decoding="async"></div></div>
+          <div class="sc-phone"><img src="assets/photos/work/bbsi-mobile.webp" alt="BBSI homepage on a phone" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="sc-thumbs" role="group" aria-label="Pages from this project"><button type="button" class="sc-thumb" aria-pressed="true" data-src="assets/photos/work/bbsi-full.webp" data-alt="Full homepage of the Baptist Bible Seminary and Institute website"><img src="assets/photos/work/bbsi-full.webp" alt="" loading="lazy" decoding="async"><span>Home</span></button><button type="button" class="sc-thumb" aria-pressed="false" data-src="assets/photos/work/bbsi-academics.webp" data-alt="Academic Programs page of the BBSI website"><img src="assets/photos/work/bbsi-academics.webp" alt="" loading="lazy" decoding="async"><span>Academics</span></button><button type="button" class="sc-thumb" aria-pressed="false" data-src="assets/photos/work/bbsi-admissions.webp" data-alt="Admissions page of the BBSI website"><img src="assets/photos/work/bbsi-admissions.webp" alt="" loading="lazy" decoding="async"><span>Admissions</span></button></div>
+        <p class="sc-hint">Hover or tap the screen to scroll the full page</p>
       </figure>
     </div>
   </section>
@@ -117,9 +144,13 @@
 
   <section id="megopic" class="case ct-section ct-section--cloud">
     <div class="ct-container ct-split">
-      <figure>
-        <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/megopic-homepage.jpg" alt="Homepage of the Medical Goes Public conference website" loading="lazy" decoding="async"></div></div>
-        
+      <figure class="showcase">
+        <div class="sc-stage">
+          <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span class="sc-url">taylors-conference.dhma-impactlab.com</span></div><div class="shot sc-screen" tabindex="0"><img src="assets/photos/work/megopic-full.webp" alt="Full homepage of the Medical Goes Public conference website" loading="lazy" decoding="async"></div></div>
+          <div class="sc-phone"><img src="assets/photos/work/megopic-mobile.webp" alt="Conference homepage on a phone" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="sc-thumbs" role="group" aria-label="Pages from this project"><button type="button" class="sc-thumb" aria-pressed="true" data-src="assets/photos/work/megopic-full.webp" data-alt="Full homepage of the Medical Goes Public conference website"><img src="assets/photos/work/megopic-full.webp" alt="" loading="lazy" decoding="async"><span>Home</span></button><button type="button" class="sc-thumb" aria-pressed="false" data-src="assets/photos/work/megopic-abstracts.webp" data-alt="Proceedings and abstracts page of the conference website"><img src="assets/photos/work/megopic-abstracts.webp" alt="" loading="lazy" decoding="async"><span>Abstracts</span></button><button type="button" class="sc-thumb" aria-pressed="false" data-src="assets/photos/work/megopic-timeline.webp" data-alt="Conference programme schedule page"><img src="assets/photos/work/megopic-timeline.webp" alt="" loading="lazy" decoding="async"><span>Programme</span></button></div>
+        <p class="sc-hint">Hover or tap the screen to scroll the full page</p>
       </figure>
       <div>
         <p class="case-tag">NONPROFIT · EVENT WEBSITE</p>
@@ -148,8 +179,11 @@
         </dl>
         
       </div>
-      <figure>
-        <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/kalinga-homepage.jpg" alt="Kalinga admin login screen for Kapatid Ministry’s child sponsorship platform" loading="lazy" decoding="async"></div></div>
+      <figure class="showcase">
+        <div class="sc-stage">
+          <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span class="sc-url">kalinga.kapatidministry.org</span></div><div class="shot sc-screen" tabindex="0"><img src="assets/photos/work/kalinga-login.webp" alt="Kalinga admin login screen for Kapatid Ministry’s child sponsorship platform" loading="lazy" decoding="async"></div></div>
+          <div class="sc-phone"><img src="assets/photos/work/kalinga-mobile.webp" alt="Kalinga login screen on a phone" loading="lazy" decoding="async"></div>
+        </div>
         <p class="case-note">An internal tool for Kapatid Ministry’s team — not publicly accessible.</p>
       </figure>
     </div>
@@ -157,9 +191,13 @@
 
   <section id="stewardtrack" class="case ct-section ct-section--cloud">
     <div class="ct-container ct-split">
-      <figure>
-        <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/stewardtrack-homepage.jpg" alt="Homepage of StewardTrack, a church management platform" loading="lazy" decoding="async"></div></div>
-        
+      <figure class="showcase">
+        <div class="sc-stage">
+          <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span class="sc-url">stewardtrack.com</span></div><div class="shot sc-screen" tabindex="0"><img src="assets/photos/work/stewardtrack-full.webp" alt="Full homepage of StewardTrack, a church management platform" loading="lazy" decoding="async"></div></div>
+          <div class="sc-phone"><img src="assets/photos/work/stewardtrack-mobile.webp" alt="StewardTrack homepage on a phone" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="sc-thumbs" role="group" aria-label="Pages from this project"><button type="button" class="sc-thumb" aria-pressed="true" data-src="assets/photos/work/stewardtrack-full.webp" data-alt="Full homepage of StewardTrack, a church management platform"><img src="assets/photos/work/stewardtrack-full.webp" alt="" loading="lazy" decoding="async"><span>Home</span></button><button type="button" class="sc-thumb" aria-pressed="false" data-src="assets/photos/work/stewardtrack-stewardship.webp" data-alt="StewardTrack stewardship feature page with a finance dashboard"><img src="assets/photos/work/stewardtrack-stewardship.webp" alt="" loading="lazy" decoding="async"><span>Stewardship</span></button><button type="button" class="sc-thumb" aria-pressed="false" data-src="assets/photos/work/stewardtrack-compare.webp" data-alt="StewardTrack plan comparison page"><img src="assets/photos/work/stewardtrack-compare.webp" alt="" loading="lazy" decoding="async"><span>Plans</span></button></div>
+        <p class="sc-hint">Hover or tap the screen to scroll the full page</p>
       </figure>
       <div>
         <p class="case-tag">CHURCH · OUR OWN PLATFORM</p>
@@ -209,6 +247,35 @@
   <script>
     function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
     function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
+    // Project showcase: scroll long screenshots on hover/tap, switch pages via thumbnails
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelectorAll('.showcase').forEach(function (fig) {
+        var screen = fig.querySelector('.sc-screen');
+        var img = screen.querySelector('img');
+        var hint = fig.querySelector('.sc-hint');
+        function measure() {
+          var travel = Math.max(0, img.offsetHeight - screen.clientHeight);
+          screen.style.setProperty('--shift', -travel + 'px');
+          screen.style.setProperty('--dur', Math.max(1.5, travel / 220).toFixed(1) + 's');
+          if (hint) hint.hidden = travel < 40;
+          screen.setAttribute('aria-label', travel ? 'Page preview. Hover, focus or tap to scroll.' : 'Page preview');
+        }
+        img.addEventListener('load', measure);
+        window.addEventListener('resize', measure);
+        if (img.complete) measure();
+        if (!reduce) screen.addEventListener('click', function () { screen.classList.toggle('is-playing'); });
+        fig.querySelectorAll('.sc-thumb').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            fig.querySelectorAll('.sc-thumb').forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+            screen.classList.remove('is-playing');
+            screen.scrollTop = 0;
+            img.src = btn.dataset.src;
+            img.alt = btn.dataset.alt;
+          });
+        });
+      });
+    })();
   </script>
 </body>
 </html>

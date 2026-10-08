@@ -35,361 +35,277 @@
     }
   }
   </script>
-  <script>try{var r=localStorage.getItem('ct-role');if(r)document.documentElement.setAttribute('data-role',r)}catch(e){}</script>
-  <link rel="stylesheet" href="shared.css?v=nav6">
+  <link rel="stylesheet" href="shared.css?v=ds3">
+  <link rel="stylesheet" href="ds/components.css?v=ds2">
+  <link rel="stylesheet" href="site.css?v=1">
   <style>
-    body { font-family: var(--font-body); }
-    /* Role-matched article floats to the front of the grid with a badge */
-    html[data-role="nonprofit"] [data-post="nonprofit"],
-    html[data-role="school"] [data-post="school"],
-    html[data-role="smallbiz"] [data-post="smallbiz"],
-    html[data-role="church"] [data-post="church"] { order: -1; }
-    html[data-role="nonprofit"] [data-post="nonprofit"] .role-pick-badge,
-    html[data-role="school"] [data-post="school"] .role-pick-badge,
-    html[data-role="smallbiz"] [data-post="smallbiz"] .role-pick-badge,
-    html[data-role="church"] [data-post="church"] .role-pick-badge,
-    html[data-role="church"] .role-pick-badge[data-post="church"] { display: inline-block; }
+    .feat { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); border-radius: 24px; overflow: hidden; background: #fff; border: 1px solid var(--color-line); box-shadow: 0 24px 60px rgba(16,33,58,0.10); transition: box-shadow .2s, transform .2s; }
+    .feat:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-3px); }
+    .feat .ph { min-height: 380px; position: relative; }
+    .feat .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .feat .tx { padding: 48px; display: flex; flex-direction: column; justify-content: center; }
+    .feat h2 { font-family: var(--font-display); font-weight: 900; font-size: clamp(26px, 3vw, 34px); line-height: 1.15; letter-spacing: -0.015em; color: var(--color-primary-dark); margin-top: 14px; text-wrap: balance; }
+    .meta { font-size: 13px; color: var(--color-text-label); }
+    .meta b { color: var(--color-electric); font-weight: 700; letter-spacing: .02em; }
+    .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 56px; }
+    .filters button { font: 600 14px var(--font-body); padding: 10px 18px; border-radius: 9999px; cursor: pointer; background: #fff; color: var(--color-text-primary); border: 1.5px solid var(--color-line); transition: all .2s; }
+    .filters button:hover { border-color: var(--color-blue-100); }
+    .filters button[aria-pressed="true"] { background: var(--color-midnight); border-color: var(--color-midnight); color: #fff; }
+    .posts { margin-top: 28px; gap: 28px; }
+    .post { display: flex; flex-direction: column; background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid var(--color-line); transition: box-shadow .2s, transform .2s; }
+    .post:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-3px); }
+    .post[hidden] { display: none; }
+    .post .ph { aspect-ratio: 16 / 9; overflow: hidden; }
+    .post .ph img { width: 100%; height: 100%; object-fit: cover; }
+    .post .tx { padding: 24px 26px 28px; }
+    .post h3 { font-family: var(--font-display); font-weight: 800; font-size: 19px; line-height: 1.3; color: var(--color-text-primary); margin-top: 10px; }
+    .post p { font-size: 14px; line-height: 1.65; color: var(--color-text-secondary); margin-top: 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    @media (max-width: 900px) { .feat { grid-template-columns: 1fr; } .feat .ph { min-height: 220px; } .feat .tx { padding: 28px 24px; } }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav style="position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #E8E6E6; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; height: 80px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
-    <a href="index.html" style="flex-shrink: 0;"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
-    <div class="desktop-nav" style="display: flex; align-items: center; gap: 36px;">
-      <a href="services.html" class="nav-link">Services</a>
-      <a href="work.html" class="nav-link">Our Work</a>
-      <a href="blog.html" class="nav-link-active">Blog</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="project-brief.html" class="nav-link">Project Brief</a>
-      <a href="contact.html" class="nav-btn">Get Started</a>
+  <header class="home-nav">
+    <div class="ct-container bar">
+      <a href="index.html" aria-label="Cortanatech Solutions home"><img src="assets/logos/logo-white.png" alt="Cortanatech Solutions" style="height: 40px; width: auto;"></a>
+      <nav class="links" aria-label="Main">
+        <a href="services.html">Services</a>
+        <a href="work.html">Our Work</a>
+        <a href="blog.html" aria-current="page">Blog</a>
+        <a href="about.html">About</a>
+      </nav>
+      <a href="project-brief.html" class="ct-btn ct-btn--primary">Book a free call</a>
+      <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
     </div>
-    <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-  </nav>
-  <div id="mobile-nav" class="mobile-nav">
-    <a href="services.html" onclick="closeMenu()">Services</a>
-    <a href="work.html" onclick="closeMenu()">Our Work</a>
-    <a href="blog.html" onclick="closeMenu()">Blog</a>
-    <a href="about.html" onclick="closeMenu()">About</a>
-    <a href="project-brief.html" onclick="closeMenu()">Project Brief</a>
-    <a href="contact.html" onclick="closeMenu()">Get Started</a>
-  </div>
+    <div id="mobile-nav" class="mobile-nav">
+      <a href="services.html" onclick="closeMenu()">Services</a>
+      <a href="work.html" onclick="closeMenu()">Our Work</a>
+      <a href="blog.html" onclick="closeMenu()" aria-current="page">Blog</a>
+      <a href="about.html" onclick="closeMenu()">About</a>
+      <a href="project-brief.html" onclick="closeMenu()">Book a free call</a>
+    </div>
+  </header>
 
+  <main>
   <!-- PAGE HERO -->
-  <section class="page-hero">
-    <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs><pattern id="blog-dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.5" fill="rgba(255,255,255,0.07)"></circle></pattern></defs>
-      <rect width="100%" height="100%" fill="url(#blog-dots)"></rect>
-    </svg>
-    <svg style="position: absolute; right: -60px; top: -80px; width: 380px; height: 380px; pointer-events: none;" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="190" cy="190" r="170" stroke="rgba(255,255,255,0.055)" stroke-width="1.5"></circle>
-      <circle cx="190" cy="190" r="115" stroke="rgba(255,255,255,0.04)" stroke-width="1"></circle>
-    </svg>
-    <div class="container" style="position: relative; z-index: 2; text-align: center;">
-      <div class="eyebrow-light">Resources &amp; Insights</div>
-      <h1 style="font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 18px;">From the Blog</h1>
-      <p style="font-family: var(--font-body); font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.68; max-width: 500px; margin: 0 auto;">Practical thinking on digital tools, mission-driven organizations, and how technology can serve your community.</p>
+  <section class="page-band ct-on-dark">
+    <div class="inner ct-container">
+      <p class="ct-eyebrow eyebrow-dark">Blog</p>
+      <h1 class="page-h1">Practical guides for <span class="hl">mission-driven teams</span>.</h1>
+      <p class="page-lede">Plain-language advice on websites, email and simple tools for churches, schools, nonprofits and small businesses in the Philippines.</p>
     </div>
   </section>
 
-  <!-- FEATURED POST -->
-  <section style="background: #fff; padding: 80px 0;">
-    <div class="container">
-      <div class="eyebrow" style="margin-bottom: 32px;">Featured Post</div>
-      <div class="split-grid" data-post="nonprofit" style="grid-template-columns: 1.1fr 1fr; border: 1.5px solid #E8E6E6; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.05);">
-        <div style="aspect-ratio: 4/3; overflow: hidden; position: relative;">
-          <img src="assets/photos/audience/nonprofit-donation-receipts.jpg" alt="A young Asian woman in an office writing by hand at a desk with her phone beside her — the kind of manual record-keeping small nonprofits rely on to track donations and issue receipts" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" loading="lazy" decoding="async">
-          <div style="position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, #fff 100%);"></div>
+  <section class="ct-section ct-section--cloud">
+    <div class="ct-container">
+      <a href="blog-nonprofit-donation-receipts.html" class="feat">
+        <div class="ph"><img src="assets/photos/audience/nonprofit-donation-receipts.jpg" alt="A young Asian woman in an office writing by hand at a desk with her phone beside her — the kind of manual record-keeping small nonprofits rely on to track donations and issue receipts" decoding="async"></div>
+        <div class="tx">
+          <div class="meta"><b>LATEST · Nonprofits</b> · Jul 31, 2026</div>
+          <h2>How Nonprofits Can Send Donation Receipts and Show Donors Where the Money Went</h2>
+          <p class="body-copy" style="margin-top: 14px;">Donors give, then hear nothing back. Here's how a nonprofit in the Philippines can send donation receipts and report where the money went — and earn repeat giving.</p>
+          <span class="ct-link ct-link--underline" style="margin-top: 24px; align-self: flex-start;">Read the article →</span>
         </div>
-        <div style="padding: 48px 48px 48px 0;">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-            <span class="badge">Nonprofits</span><span class="role-pick-badge">For you</span>
-            <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 31, 2026</span>
+      </a>
+
+      <div class="filters" role="group" aria-label="Filter articles by organization type" hidden>
+        <button type="button" data-f="" aria-pressed="true">All</button>
+        <button type="button" data-f="church" aria-pressed="false">Churches</button>
+        <button type="button" data-f="school" aria-pressed="false">Schools</button>
+        <button type="button" data-f="nonprofit" aria-pressed="false">Nonprofits</button>
+        <button type="button" data-f="smallbiz" aria-pressed="false">Small business</button>
+      </div>
+      <div class="ct-grid posts" style="--cols: 3;">
+        <a href="blog-church-livestream.html" class="post" data-aud="church">
+          <div class="ph"><img src="assets/photos/audience/church-livestream.jpg" alt="A video camera's flip-out screen framing the altar and cross at the front of a church — the kind of setup volunteers use to livestream a Sunday worship service" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Church &amp; Ministry</b> · Jul 28, 2026</div>
+            <h3>Your Church Livestream Deserves More Than a Buried Facebook Post</h3>
+            <p>Streaming Sunday service only to Facebook means members hunt for the link and the replay sinks down the timeline. Here's how to livestream services people can actually find.</p>
           </div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(22px, 2.8vw, 32px); font-weight: 900; color: #2B3990; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px;">How Nonprofits Can Send Donation Receipts and Show Donors Where the Money Went</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.72; margin-bottom: 28px;">Donors give, then hear nothing back — and quietly stop giving. Here's how to send donation receipts and report where the money went, without accounting software.</p>
-          <a href="blog-nonprofit-donation-receipts.html" class="btn-primary">Read the article →</a>
-        </div>
+        </a>
+        <a href="blog-small-business-online-booking.html" class="post" data-aud="smallbiz">
+          <div class="ph"><img src="assets/photos/audience/small-business-online-booking.jpg" alt="A Filipina customer in a white blouse booking on her smartphone — the self-service way to reserve a slot at a small business without the Messenger back-and-forth" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Small Business</b> · Jul 24, 2026</div>
+            <h3>How Your Small Business Can Take Bookings Online and Stop Playing Messenger Tag</h3>
+            <p>Still booking clients through endless Messenger threads? Here's how your small business can take bookings online — fewer no-shows, less chaos, and no more replying at 11 p.m.</p>
+          </div>
+        </a>
+        <a href="blog-school-online-enrollment.html" class="post" data-aud="school">
+          <div class="ph"><img src="assets/photos/audience/school-online-enrollment.jpg" alt="A crowd of Southeast Asian high school students in white uniforms squeezing together for a group selfie at a school gathering — the kind of new-student intake a school handles each enrollment season" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Education</b> · Jul 22, 2026</div>
+            <h3>How Your School Can Take Enrollment Online and End the Long Lines</h3>
+            <p>Enrollment season means long lines, paper forms, and late-night encoding. Here's how your school can take enrollment online — simpler for parents and staff alike.</p>
+          </div>
+        </a>
+        <a href="blog-nonprofit-volunteer-signup.html" class="post" data-aud="nonprofit">
+          <div class="ph"><img src="assets/photos/audience/nonprofit-volunteer-coordination.jpg" alt="Three volunteers in matching yellow Volunteers shirts standing together, ready for an outreach — the kind of team a Philippine nonprofit needs to sign up and schedule without losing track of who is coming" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Nonprofits</b> · Jul 17, 2026</div>
+            <h3>How Nonprofits Can Organize Volunteers Without the Group-Chat Chaos</h3>
+            <p>Coordinating volunteers through Messenger and Viber leads to no-shows and burnout. Here's how to set up simple volunteer sign-up and scheduling that actually holds.</p>
+          </div>
+        </a>
+        <a href="blog-church-online-giving.html" class="post" data-aud="church">
+          <div class="ph"><img src="assets/photos/audience/church-online-giving.jpg" alt="One person holding up a phone that displays a QR code while another scans it with their own phone to send a cashless payment — the same scan-to-give flow Filipino churches can use to receive tithes and offerings through GCash or Maya" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Church &amp; Ministry</b> · Jul 14, 2026</div>
+            <h3>How Your Church Can Receive Tithes and Offerings Online</h3>
+            <p>Members want to give but rarely carry cash anymore. Here's how your church can receive tithes and offerings online through GCash, Maya, and bank — simply, and with trust.</p>
+          </div>
+        </a>
+        <a href="blog-small-business-email.html" class="post" data-aud="smallbiz">
+          <div class="ph"><img src="assets/photos/audience/small-business-professional-email.jpg" alt="Close-up of hands typing on a laptop at a wooden desk, drafting a business email — the kind of everyday quotation or invoice many small business owners in the Philippines still send from a personal Gmail account" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Small Business</b> · Jul 8, 2026</div>
+            <h3>Why Your Small Business Needs a Professional Email Address</h3>
+            <p>Still quoting clients from a personal Gmail account? Here's why a professional email address builds trust with Filipino customers — and how fast it is to set up.</p>
+          </div>
+        </a>
+        <a href="blog-school-website-design.html" class="post" data-aud="school">
+          <div class="ph"><img src="assets/photos/audience/school-campus-plaza.jpg" alt="A wide plaza between two school buildings on a Philippine campus, with students sitting together in the shade" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Education</b> · Jul 8, 2026</div>
+            <h3>Why Your School Needs a Real Website, Not Just Facebook</h3>
+            <p>Enrollment info buried in old Facebook posts leaves parents guessing. Here's why school website design in the Philippines matters, and where to start.</p>
+          </div>
+        </a>
+        <a href="blog-small-business-website.html" class="post" data-aud="smallbiz">
+          <div class="ph"><img src="assets/photos/audience/small-business-found-online.jpg" alt="A small Filipino sari-sari store lit up in the evening with customers gathered outside — the kind of local small business that needs to be found online in the Philippines" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Small Business</b> · Jul 6, 2026</div>
+            <h3>A Small Business Website That Gets You Found Online</h3>
+            <p>Customers search Google and Facebook before they buy. Here's how a simple small business website in the Philippines helps them find, trust, and choose you.</p>
+          </div>
+        </a>
+        <a href="blog-nonprofit-website-donor-trust.html" class="post" data-aud="nonprofit">
+          <div class="ph"><img src="assets/photos/audience/nonprofit-donor-trust.jpg" alt="Filipino children sitting together in a community served by a nonprofit — the kind of story good nonprofit website design uses to earn donor trust" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Nonprofits</b> · Jul 4, 2026</div>
+            <h3>Nonprofit Website Design That Earns Donor Trust</h3>
+            <p>Donors decide whether to trust you before they give — often from your website in seconds. Here's what trustworthy nonprofit website design looks like, and how a credible site turns visitors into supporters.</p>
+          </div>
+        </a>
+        <a href="blog-school-chatbot.html" class="post" data-aud="school">
+          <div class="ph"><img src="assets/photos/audience/school-students-inquiry.jpg" alt="Two Filipino students walking outdoors, one carrying a backpack" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Education</b> · Jul 3, 2026</div>
+            <h3>How Schools Can Stop Answering the Same Questions All Day</h3>
+            <p>The office phone rings all day with the same questions. Here's how a clear website and a simple chatbot can answer them accurately, around the clock, so staff can focus on families.</p>
+          </div>
+        </a>
+        <a href="blog-church-email.html" class="post" data-aud="church">
+          <div class="ph"><img src="assets/photos/audience/church-professional-email.jpg" alt="A church staff member typing an email at her desk" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Church &amp; Ministry</b> · Jul 3, 2026</div>
+            <h3>The Hidden Cost of Running Your Church From a Personal Gmail Account</h3>
+            <p>A personal Gmail account might work for now, but it's quietly costing your church trust. Here's why — and how to set up a professional email address instead.</p>
+          </div>
+        </a>
+        <a href="blog-church-website.html" class="post" data-aud="church">
+          <div class="ph"><img src="assets/photos/audience/church-congregation.jpg" alt="Filipino congregation praying together during a worship service" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Church &amp; Ministry</b> · Jul 1, 2026</div>
+            <h3>How a Website Transforms a Church Organization</h3>
+            <p>A well-designed website does more than look good — it becomes your congregation's front door. Here's how churches use their site to reach further.</p>
+          </div>
+        </a>
+        <a href="blog-nonprofit-digital-tools.html" class="post" data-aud="nonprofit">
+          <div class="ph"><img src="assets/photos/audience/nonprofit-volunteers.jpg" alt="Group of young Filipino volunteers smiling together outdoors" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Nonprofits</b> · Jun 30, 2026</div>
+            <h3>The Real Cost of Nonprofits Sticking with Spreadsheets</h3>
+            <p>Spreadsheets feel free — until they start costing your nonprofit time, accuracy, and trust. Here's what's really behind the hesitation to go digital.</p>
+          </div>
+        </a>
+        <a href="blog-school-digital-tools.html" class="post" data-aud="school">
+          <div class="ph"><img src="assets/photos/audience/school-classroom.jpg" alt="Filipino students seated at desks inside a classroom" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Education</b> · Jun 27, 2026</div>
+            <h3>Modernizing Your School Without Overwhelming Your Staff</h3>
+            <p>Schools don't fall behind because they don't care — they fall behind because every option feels like more work. Here's how to modernize without the overwhelm.</p>
+          </div>
+        </a>
+        <a href="blog-startup-single-page.html" class="post" data-aud="smallbiz">
+          <div class="ph"><img src="assets/photos/audience/startup-entrepreneur.jpg" alt="Asian entrepreneur working focused on a laptop at a cafe table" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Startups</b> · Jun 24, 2026</div>
+            <h3>Boost Your Startup with a Single-Page Website</h3>
+            <p>First impressions matter. Discover why a focused single-page site can outperform a complex multi-page website for early-stage startups.</p>
+          </div>
+        </a>
+        <a href="blog-small-business-digital-tools.html" class="post" data-aud="smallbiz">
+          <div class="ph"><img src="assets/photos/audience/small-business-vendor.jpg" alt="Filipina food vendor smiling while serving a customer" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Small Business</b> · Jun 20, 2026</div>
+            <h3>What's Really Holding Small Businesses Back From Going Digital</h3>
+            <p>It's not that owners don't see the value — they're too busy running the business to shop for, learn, and trust new tools. Here's what actually helps.</p>
+          </div>
+        </a>
+        <a href="blog-bbsi-partnership.html" class="post" data-aud="school">
+          <div class="ph"><img src="assets/photos/audience/church-pew-reading.jpg" alt="Young Filipino man reading quietly in a church pew" loading="lazy" decoding="async"></div>
+          <div class="tx">
+            <div class="meta"><b>Case Study</b> · Jun 18, 2026</div>
+            <h3>Our Partnership with Baptist Bible Seminary and Institute</h3>
+            <p>A behind-the-scenes look at how we partnered with Baptist Bible Seminary and Institute to deliver a complete digital solution — from website to professional email.</p>
+          </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- MORE POSTS -->
-  <section style="background: #F1EDED; padding: 80px 0;">
-    <div class="container">
-      <div class="blog-grid reveal-stagger" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
-        <a href="blog-church-livestream.html" class="blog-card reveal" data-post="church">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/church-livestream.jpg" alt="A video camera's flip-out screen framing the altar and cross at the front of a church — the kind of setup volunteers use to livestream a Sunday worship service" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Church &amp; Ministry</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 28, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">Your Church Livestream Deserves More Than a Buried Facebook Post</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Streaming Sunday service only to Facebook means members hunt for the link and the replay sinks down the timeline. Here's how to livestream services people can actually find.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-small-business-online-booking.html" class="blog-card reveal" data-post="smallbiz">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/small-business-online-booking.jpg" alt="A Filipina customer in a white blouse booking on her smartphone — the self-service way to reserve a slot at a small business without the Messenger back-and-forth" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Small Business</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 24, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">How Your Small Business Can Take Bookings Online and Stop Playing Messenger Tag</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Still booking clients through endless Messenger threads? Here's how your small business can take bookings online — fewer no-shows, less chaos, and no more replying at 11 p.m.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-school-online-enrollment.html" class="blog-card reveal" data-post="school">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/school-online-enrollment.jpg" alt="A crowd of Southeast Asian high school students in white uniforms squeezing together for a group selfie at a school gathering — the kind of new-student intake a school handles each enrollment season" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Education</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 22, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">How Your School Can Take Enrollment Online and End the Long Lines</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Enrollment season means long lines, paper forms, and late-night encoding. Here's how your school can take enrollment online — simpler for parents and staff alike.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-nonprofit-volunteer-signup.html" class="blog-card reveal" data-post="nonprofit">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/nonprofit-volunteer-coordination.jpg" alt="Three volunteers in matching yellow Volunteers shirts standing together, ready for an outreach — the kind of team a nonprofit needs to sign up and schedule without losing track" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Nonprofits</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 17, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">How Nonprofits Can Organize Volunteers Without the Group-Chat Chaos</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Coordinating volunteers through Messenger and Viber leads to no-shows and burnout. Here's how to set up simple volunteer sign-up and scheduling that actually holds.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-church-online-giving.html" class="blog-card reveal" data-post="church">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/church-online-giving.jpg" alt="One person holding up a phone showing a QR code while another scans it to send a cashless gift — the scan-to-give flow churches can use for online tithes and offerings" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Church &amp; Ministry</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 14, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">How Your Church Can Receive Tithes and Offerings Online</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Members want to give but rarely carry cash anymore. Here's how your church can receive tithes and offerings online through GCash, Maya, and bank — simply, and with trust.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-small-business-email.html" class="blog-card reveal" data-post="smallbiz">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/small-business-professional-email.jpg" alt="Close-up of hands typing on a laptop at a wooden desk, drafting a business email" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Small Business</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 8, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">Why Your Small Business Needs a Professional Email Address</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Still quoting clients from a personal Gmail account? Here's why a professional email address builds trust with Filipino customers — and how fast it is to set up.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-school-website-design.html" class="blog-card reveal" data-post="school">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/school-campus-plaza.jpg" alt="A wide plaza between two school buildings on a Philippine campus, with students sitting together in the shade" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Education</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 8, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">Why Your School Needs a Real Website, Not Just Facebook</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Enrollment info buried in old Facebook posts leaves parents guessing. Here's why school website design in the Philippines matters, and where to start.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-small-business-website.html" class="blog-card reveal" data-post="smallbiz">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/small-business-found-online.jpg" alt="A small Filipino sari-sari store lit up in the evening with customers gathered outside — a local small business that needs to be found online" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Small Business</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 6, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">A Small Business Website That Gets You Found Online</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Customers search Google and Facebook before they buy. Here's how a simple small business website in the Philippines helps them find, trust, and choose you.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-nonprofit-website-donor-trust.html" class="blog-card reveal" data-post="nonprofit">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/nonprofit-donor-trust.jpg" alt="Filipino children sitting together in a community served by a nonprofit — the kind of story good nonprofit website design uses to earn donor trust" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Nonprofits</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 4, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">Nonprofit Website Design That Earns Donor Trust</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Donors decide whether to trust you before they give — often from your website in seconds. Here's what trustworthy nonprofit website design looks like, and how a credible site turns visitors into supporters.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-school-chatbot.html" class="blog-card reveal" data-post="school">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/school-students-inquiry.jpg" alt="Two Filipino students walking outdoors, one carrying a backpack" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Education</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 3, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">How Schools Can Stop Answering the Same Questions All Day</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">The office phone rings all day with the same questions. Here's how a clear website and a simple chatbot can answer them accurately, around the clock, so staff can focus on families.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-church-email.html" class="blog-card reveal" data-post="church">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/church-professional-email.jpg" alt="A church staff member typing an email at her desk" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Church &amp; Ministry</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 3, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">The Hidden Cost of Running Your Church From a Personal Gmail Account</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">A personal Gmail account might work for now, but it's quietly costing your church trust. Here's why — and how to set up a professional email address instead.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-church-website.html" class="blog-card reveal" data-post="church">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/church-congregation.jpg" alt="Filipino congregation praying together during a worship service" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Church &amp; Ministry</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jul 1, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">How a Website Transforms a Church Organization</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">A well-designed website does more than look good — it becomes your congregation's front door. Here's how churches use their site to reach further.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-nonprofit-digital-tools.html" class="blog-card reveal" data-post="nonprofit">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/nonprofit-volunteers.jpg" alt="Group of young Filipino volunteers smiling together outdoors" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Nonprofits</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jun 30, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">The Real Cost of Nonprofits Sticking with Spreadsheets</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Spreadsheets feel free — until they start costing your nonprofit time, accuracy, and trust. Here's what's really behind the hesitation to go digital.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-school-digital-tools.html" class="blog-card reveal" data-post="school">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/school-classroom.jpg" alt="Filipino students seated at desks inside a classroom" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Education</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jun 27, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">Modernizing Your School Without Overwhelming Your Staff</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">Schools don't fall behind because they don't care — they fall behind because every option feels like more work. Here's how to modernize without the overwhelm.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-startup-single-page.html" class="blog-card reveal">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/startup-entrepreneur.jpg" alt="Asian entrepreneur working focused on a laptop at a cafe table" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Startups</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jun 24, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">Boost Your Startup Business with a Single-Page Website</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">First impressions matter. Discover why a focused single-page site can outperform a complex multi-page website for early-stage startups.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-        <a href="blog-small-business-digital-tools.html" class="blog-card reveal" data-post="smallbiz">
-          <div style="aspect-ratio: 16/9; overflow: hidden;">
-            <img src="assets/photos/audience/small-business-vendor.jpg" alt="Filipina food vendor smiling while serving a customer" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;" loading="lazy" decoding="async">
-          </div>
-          <div style="padding: 28px 32px 32px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-              <span class="badge">Small Business</span><span class="role-pick-badge">For you</span>
-              <span style="font-family: var(--font-body); font-size: 12px; color: #6B7280;">Jun 20, 2026</span>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #1E1F1E; line-height: 1.3; margin-bottom: 12px;">What's Really Holding Small Businesses Back From Going Digital</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 20px;">It's not that owners don't see the value — they're too busy running the business to shop for, learn, and trust new tools. Here's what actually helps.</p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-      </div>
-      <div style="margin-top: 40px; text-align: center;">
-        <a href="blog-archive.html" style="font-family: var(--font-body); font-size: 15px; font-weight: 600; color: #1C75BC; text-decoration: none;">View all posts &rarr;</a>
+  <!-- CLOSING CTA -->
+  <section class="scene cta-scene scene-tall ct-on-dark">
+    <img class="bg" src="assets/photos/campaign/01-phone-app-interaction-landscape.jpg" alt="" style="object-position: 72% center;" loading="lazy" decoding="async">
+    <div class="shade shade-side" style="background: linear-gradient(90deg, #061A38 0%, rgba(6,26,56,0.92) 38%, rgba(6,26,56,0.4) 75%, rgba(6,26,56,0.2) 100%);"></div>
+    <div class="shade" style="background: linear-gradient(180deg, rgba(6,26,56,0) 60%, #041226 100%);"></div>
+    <div class="inner ct-container">
+      <div style="max-width: 560px;">
+        <h2 class="ct-title" style="font-size: clamp(36px, 5vw, 52px); line-height: 1.08;">Tell us what’s getting in the way.</h2>
+        <p class="ct-sub" style="color: rgba(255,255,255,0.82);">A free 30-minute call. No pressure, no jargon — just a conversation.</p>
+        <div style="margin-top: 32px;"><a href="project-brief.html" class="ct-btn ct-btn--lg ct-btn--primary">Book a free call →</a></div>
+        <p style="margin-top: 20px; font-size: 14px; color: rgba(255,255,255,0.78);">or email <a href="mailto:customers@cortanatechsolutions.com" style="color: #fff; font-weight: 600;">customers@cortanatechsolutions.com</a></p>
       </div>
     </div>
   </section>
-
-  <!-- NEWSLETTER CTA -->
-  <section style="background: #2B3990; padding: 80px 0;">
-    <div class="container" style="max-width: 640px; text-align: center;">
-      <h2 style="font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 38px); font-weight: 900; color: #fff; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 12px;">Get New Posts in Your Inbox</h2>
-      <p style="font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 32px;">Practical insights on digital tools for mission-driven organizations, delivered when we publish.</p>
-      <form onsubmit="submitNewsletter(event)" style="display: flex; border-radius: 10px; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.1); backdrop-filter: blur(16px);">
-        <input id="newsletter-email" type="email" placeholder="your@email.com" style="flex: 1; padding: 14px 18px; border: none; background: transparent; color: #fff; font-size: 15px; outline: none; min-width: 0;">
-        <button type="submit" style="padding: 14px 26px; background: #fff; color: #2B3990; border: none; font-family: var(--font-body); font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.2s;" onmouseover="this.style.background='#EBF4FB'" onmouseout="this.style.background='#fff'">Subscribe →</button>
-      </form>
-      <p id="newsletter-msg" style="font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,0.85); margin-top: 14px; min-height: 20px;"></p>
-    </div>
-  </section>
+  </main>
 
   <!-- FOOTER -->
-  <footer style="background: #fff; border-top: 1px solid #E8E6E6; padding: 40px 0 28px;">
-    <div class="container footer-inner" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-      <a href="index.html"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
-      <div style="display: flex; gap: 28px; flex-wrap: wrap;">
-        <a href="services.html" class="footer-link">Services</a>
-        <a href="work.html" class="footer-link">Our Work</a>
-        <a href="blog.html" class="footer-link-active">Blog</a>
-        <a href="about.html" class="footer-link">About</a>
-        <a href="contact.html" class="footer-link">Contact</a>
-      </div>
-      <span style="font-family: var(--font-body); font-size: 13px; color: #6B7280;">© 2026 Cortanatech Solutions, Inc.</span>
+  <footer class="site-footer">
+    <div class="ct-container">
+      <a href="index.html"><img src="assets/logos/logo-white.png" alt="Cortanatech Solutions" style="height: 34px; width: auto;"></a>
+      <nav aria-label="Footer">
+        <a href="services.html">Services</a>
+        <a href="work.html">Our Work</a>
+        <a href="blog.html" aria-current="page">Blog</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <span>© 2026 Cortanatech Solutions, Inc. · Serving the Philippines</span>
     </div>
   </footer>
 
   <script>
     function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
     function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
-    function submitNewsletter(e) {
-      e.preventDefault();
-      document.getElementById('newsletter-msg').textContent = "You're subscribed! We'll send updates when we publish.";
-      document.getElementById('newsletter-email').value = '';
-    }
   </script>
-  <script src="meeting-data.js?v=meeting3"></script>
-  <script src="role.js?v=meeting3"></script>
-  <script src="enhance.js?v=meeting3"></script>
+  <script>
+    (function () {
+      var bar = document.querySelector('.filters'); bar.hidden = false;
+      var btns = bar.querySelectorAll('button'), posts = document.querySelectorAll('.post');
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var f = b.dataset.f;
+          btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+          posts.forEach(function (p) { p.hidden = !!f && p.dataset.aud !== f; });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

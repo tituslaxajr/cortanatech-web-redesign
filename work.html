@@ -18,446 +18,197 @@
   <meta name="twitter:title" content="Our Work — CortanaTech Solutions">
   <meta name="twitter:description" content="See how CortanaTech Solutions partners with mission-driven organizations through real projects — Baptist Bible Seminary, Kapatid Ministry's Kalinga app, Taylor University's Megopic conference site, and our own StewardTrack platform.">
   <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/logos/logo-on-blue.png">
-  <script>try{var r=localStorage.getItem('ct-role');if(r)document.documentElement.setAttribute('data-role',r)}catch(e){}</script>
-  <link rel="stylesheet" href="shared.css?v=nav6">
+  <link rel="preload" as="image" href="assets/photos/campaign/03-dashboard-planning-landscape.jpg">
+  <link rel="stylesheet" href="shared.css?v=ds3">
+  <link rel="stylesheet" href="ds/components.css?v=ds2">
+  <link rel="stylesheet" href="site.css?v=1">
   <style>
-    body { font-family: var(--font-body); }
-    .details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
-    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-
-    /* Case study cards */
-    .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
-    /* Role-first ordering: the case study closest to the visitor's world leads */
-    html[data-role="church"] [data-case="bbsi"],
-    html[data-role="school"] [data-case="bbsi"],
-    html[data-role="nonprofit"] [data-case="kalinga"],
-    html[data-role="smallbiz"] [data-case="megopic"] { order: -2; border-color: var(--color-blue-100); }
-    html[data-role="church"] [data-case="stewardtrack"] { order: -1; }
-    html[data-role="church"] [data-case="bbsi"] .role-pick-badge,
-    html[data-role="school"] [data-case="bbsi"] .role-pick-badge,
-    html[data-role="nonprofit"] [data-case="kalinga"] .role-pick-badge,
-    html[data-role="smallbiz"] [data-case="megopic"] .role-pick-badge { display: inline-block; }
-    .case-card { display: block; width: 100%; text-align: left; background: #fff; border: 1.5px solid #E8E6E6; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer; border-radius: 20px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.05); transition: box-shadow 0.2s, transform 0.2s; }
-    .case-card:hover { box-shadow: 0 10px 30px rgba(28,117,188,0.14); transform: translateY(-3px); }
-    .case-card:focus-visible { outline: 3px solid #1C75BC; outline-offset: 2px; }
-    .case-badge { position: absolute; top: 14px; left: 14px; font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: #fff; text-transform: uppercase; background: rgba(20,24,40,0.55); backdrop-filter: blur(6px); padding: 5px 12px; border-radius: 100px; }
-    .case-card-label { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #1C75BC; text-transform: uppercase; margin-bottom: 10px; }
-    .case-card-title { font-family: var(--font-display); font-size: 21px; font-weight: 900; color: #2B3990; letter-spacing: -0.015em; line-height: 1.25; margin-bottom: 10px; }
-    .case-card-excerpt { font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.65; margin-bottom: 18px; }
-
-    /* Modal */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(17,21,38,0.62); z-index: 300; align-items: center; justify-content: center; padding: 24px; }
-    .modal-overlay.open { display: flex; }
-    .modal-panel { background: #fff; border-radius: 24px; max-width: 920px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 48px; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.28); }
-    .modal-close { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; border-radius: 50%; border: none; background: #F1EDED; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; z-index: 2; }
-    .modal-close:hover { background: #E8E6E6; }
-    body.modal-open { overflow: hidden; }
-
+    .case { scroll-margin-top: 76px; }
+    .case .ct-split { align-items: start; }
+    .case-tag { font-family: var(--font-display); font-weight: 800; font-size: 13px; letter-spacing: .06em; color: var(--color-electric); }
+    .case h2 { margin-top: 8px; }
+    .case .body-copy { margin-top: 18px; }
+    .case-facts { margin-top: 28px; border-top: 1px solid var(--color-line); }
+    .case-facts div { display: grid; grid-template-columns: 132px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--color-line); }
+    .case-facts dt { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-label); padding-top: 3px; }
+    .case-facts dd { font-size: 15px; line-height: 1.65; color: var(--color-text-secondary); }
+    .case-link { margin-top: 24px; display: inline-flex; }
+    .case figure { position: sticky; top: 108px; }
+    .case-note { margin-top: 14px; font-size: 13px; color: var(--color-text-label); }
     @media (max-width: 900px) {
-      .case-grid { grid-template-columns: 1fr !important; }
-    }
-    @media (max-width: 640px) {
-      .modal-panel { padding: 32px 22px; border-radius: 16px; max-height: 92vh; }
-      .modal-close { top: 14px; right: 14px; }
+      .case figure { position: static; order: -1; }
+      .case-facts div { grid-template-columns: 1fr; gap: 4px; }
     }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav style="position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #E8E6E6; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; height: 80px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
-    <a href="index.html" style="flex-shrink: 0;"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
-    <div class="desktop-nav" style="display: flex; align-items: center; gap: 36px;">
-      <a href="services.html" class="nav-link">Services</a>
-      <a href="work.html" class="nav-link-active">Our Work</a>
-      <a href="blog.html" class="nav-link">Blog</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="project-brief.html" class="nav-link">Project Brief</a>
-      <a href="contact.html" class="nav-btn">Get Started</a>
+  <header class="home-nav">
+    <div class="ct-container bar">
+      <a href="index.html" aria-label="Cortanatech Solutions home"><img src="assets/logos/logo-white.png" alt="Cortanatech Solutions" style="height: 40px; width: auto;"></a>
+      <nav class="links" aria-label="Main">
+        <a href="services.html">Services</a>
+        <a href="work.html" aria-current="page">Our Work</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+      </nav>
+      <a href="project-brief.html" class="ct-btn ct-btn--primary">Book a free call</a>
+      <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
     </div>
-    <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-  </nav>
-  <div id="mobile-nav" class="mobile-nav">
-    <a href="services.html" onclick="closeMenu()">Services</a>
-    <a href="work.html" onclick="closeMenu()">Our Work</a>
-    <a href="blog.html" onclick="closeMenu()">Blog</a>
-    <a href="about.html" onclick="closeMenu()">About</a>
-    <a href="project-brief.html" onclick="closeMenu()">Project Brief</a>
-    <a href="contact.html" onclick="closeMenu()">Get Started</a>
-  </div>
+    <div id="mobile-nav" class="mobile-nav">
+      <a href="services.html" onclick="closeMenu()">Services</a>
+      <a href="work.html" onclick="closeMenu()" aria-current="page">Our Work</a>
+      <a href="blog.html" onclick="closeMenu()">Blog</a>
+      <a href="about.html" onclick="closeMenu()">About</a>
+      <a href="project-brief.html" onclick="closeMenu()">Book a free call</a>
+    </div>
+  </header>
 
+  <main>
   <!-- PAGE HERO -->
-  <section class="page-hero">
-    <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs><pattern id="work-dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.5" fill="rgba(255,255,255,0.07)"></circle></pattern></defs>
-      <rect width="100%" height="100%" fill="url(#work-dots)"></rect>
-    </svg>
-    <svg style="position: absolute; right: -60px; top: -80px; width: 380px; height: 380px; pointer-events: none;" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="190" cy="190" r="170" stroke="rgba(255,255,255,0.055)" stroke-width="1.5"></circle>
-      <circle cx="190" cy="190" r="115" stroke="rgba(255,255,255,0.04)" stroke-width="1"></circle>
-    </svg>
-    <div class="container" style="position: relative; z-index: 2; text-align: center;">
-      <div class="eyebrow-light" style="margin-bottom: 16px;">Portfolio</div>
-      <h1 style="font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 18px;">Projects That Make an Impact</h1>
-      <p style="font-family: var(--font-body); font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.68; max-width: 520px; margin: 0 auto;">Every project we take on is a partnership — and a ripple that keeps reaching long after launch. Here's a look at what we've built together.</p>
-    </div>
-  </section>
-
-  <!-- CASE STUDIES GRID -->
-  <section style="background: #fff; padding: 96px 0;">
-    <div class="container">
-      <div class="section-head-center">
-        <div class="eyebrow" style="margin-bottom: 12px;">Case Studies</div>
-        <h2 class="section-title" style="font-size: clamp(28px, 3.5vw, 40px);">Real Projects, Real Partnerships</h2>
-        <p class="section-sub" style="max-width: 480px;">Tap any project below to see the full story — the challenge, what we built, and the outcome.</p>
-      </div>
-      <div class="case-grid reveal-stagger">
-        <button type="button" class="case-card reveal" data-case="bbsi" onclick="openCaseModal('bbsi')" aria-haspopup="dialog">
-          <div style="aspect-ratio: 16/11; overflow: hidden; position: relative;">
-            <img src="assets/photos/bbsi-homepage.jpg" alt="Screenshot of the Baptist Bible Seminary and Institute homepage" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-            <span class="case-badge">Live</span>
-          </div>
-          <div style="padding: 28px 30px 30px;">
-            <div class="case-card-label">Featured Case Study <span class="role-pick-badge">Like yours</span></div>
-            <h3 class="case-card-title">Baptist Bible Seminary &amp; Institute, Inc.</h3>
-            <p class="case-card-excerpt">A fully responsive website and branded professional email for a Philippine theological institution.</p>
-            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;">
-              <span class="badge">Website Design</span>
-              <span class="badge">Professional Email</span>
-            </div>
-            <span class="read-more">View Case Study →</span>
-          </div>
-        </button>
-
-        <button type="button" class="case-card reveal" data-case="kalinga" onclick="openCaseModal('kalinga')" aria-haspopup="dialog">
-          <div style="aspect-ratio: 16/11; overflow: hidden; position: relative;">
-            <img src="assets/photos/kalinga-homepage.jpg" alt="Kalinga admin login screen for Kapatid Ministry's child sponsorship platform" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
-            <span class="case-badge">Internal Tool</span>
-          </div>
-          <div style="padding: 28px 30px 30px;">
-            <div class="case-card-label">Case Study <span class="role-pick-badge">Like yours</span></div>
-            <h3 class="case-card-title">Kalinga — Kapatid Ministry</h3>
-            <p class="case-card-excerpt">A custom child sponsorship management platform built for Kapatid Ministry's team.</p>
-            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;">
-              <span class="badge">Custom Web App</span>
-              <span class="badge">Nonprofit Software</span>
-            </div>
-            <span class="read-more">View Case Study →</span>
-          </div>
-        </button>
-
-        <button type="button" class="case-card reveal" data-case="megopic" onclick="openCaseModal('megopic')" aria-haspopup="dialog">
-          <div style="aspect-ratio: 16/11; overflow: hidden; position: relative;">
-            <img src="assets/photos/megopic-homepage.jpg" alt="Screenshot of the Megopic medical conference website homepage" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-            <span class="case-badge">Live</span>
-          </div>
-          <div style="padding: 28px 30px 30px;">
-            <div class="case-card-label">Case Study <span class="role-pick-badge">Like yours</span></div>
-            <h3 class="case-card-title">Megopic — Taylor University</h3>
-            <p class="case-card-excerpt">A complete event website for Taylor University's medical conference — registration to CME credits.</p>
-            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;">
-              <span class="badge">Event Website</span>
-              <span class="badge">Registration &amp; Ticketing</span>
-            </div>
-            <span class="read-more">View Case Study →</span>
-          </div>
-        </button>
-
-        <button type="button" class="case-card reveal" data-case="stewardtrack" onclick="openCaseModal('stewardtrack')" aria-haspopup="dialog">
-          <div style="aspect-ratio: 16/11; overflow: hidden; position: relative;">
-            <img src="assets/photos/stewardtrack-homepage.jpg" alt="Screenshot of the StewardTrack marketing homepage" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-            <span class="case-badge">Our Product</span>
-          </div>
-          <div style="padding: 28px 30px 30px;">
-            <div class="case-card-label">Built In-House</div>
-            <h3 class="case-card-title">StewardTrack</h3>
-            <p class="case-card-excerpt">Our own SaaS platform helping Philippine churches manage membership, giving, and finances.</p>
-            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;">
-              <span class="badge">SaaS Platform</span>
-              <span class="badge">Church Management</span>
-            </div>
-            <span class="read-more">View Case Study →</span>
-          </div>
-        </button>
+  <section class="scene page-scene ct-on-dark">
+    <img class="bg kenburns" src="assets/photos/campaign/03-dashboard-planning-landscape.jpg" alt="" style="object-position: 70% center;" fetchpriority="high">
+    <div class="shade shade-side" style="background: linear-gradient(90deg, #061A38 0%, rgba(6,26,56,0.94) 34%, rgba(6,26,56,0.6) 62%, rgba(6,26,56,0.2) 100%);"></div>
+    <div class="shade" style="background: linear-gradient(180deg, rgba(6,26,56,0) 55%, #061A38 100%);"></div>
+    <div class="inner ct-container">
+      <div style="max-width: 640px;">
+        <p class="ct-eyebrow eyebrow-dark">Our work</p>
+        <h1 class="page-h1">Real projects for <span class="hl">real organizations</span>.</h1>
+        <p class="page-lede">Schools, ministries and event organizers we’ve partnered with — what they needed, what we built, and how it turned out.</p>
       </div>
     </div>
   </section>
 
-  <!-- MODAL: BBSI -->
-  <div class="modal-overlay" id="modal-bbsi" onclick="if (event.target === this) closeCaseModal('bbsi')">
-    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-bbsi-title">
-      <button type="button" class="modal-close" onclick="closeCaseModal('bbsi')" aria-label="Close case study">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-      <div class="eyebrow" style="margin-bottom: 32px;">Featured Case Study</div>
-      <div class="split-grid" style="gap: 56px; margin-bottom: 56px;">
-        <div class="img-card" style="aspect-ratio: 4/3;">
-          <img src="assets/photos/bbsi-homepage.jpg" alt="Screenshot of the Baptist Bible Seminary and Institute homepage" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-          <div class="img-overlay"></div>
-          <div class="img-caption">
-            <div style="font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.85); text-transform: uppercase; margin-bottom: 6px;">Live</div>
-            <div style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff;">bbsi.edu.ph</div>
-          </div>
-        </div>
-        <div>
-          <h2 id="modal-bbsi-title" class="section-title" style="font-size: clamp(24px, 3vw, 34px); margin-bottom: 16px;">Baptist Bible Seminary &amp; Institute, Inc.</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 24px;">A theological institution in the Philippines committed to training the next generation of ministry leaders through sound biblical scholarship. When they came to us, they needed a professional digital presence that matched the caliber of their academic program.</p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;">
-            <span class="badge">Website Design</span>
-            <span class="badge">Website Development</span>
-            <span class="badge">Professional Email</span>
-          </div>
-          <a href="https://bbsi.edu.ph" target="_blank" rel="noopener noreferrer" class="btn-primary">Visit Live Site →</a>
-        </div>
+  <section id="bbsi" class="case ct-section ct-section--white">
+    <div class="ct-container ct-split">
+      <div>
+        <p class="case-tag">SCHOOL · WEBSITE &amp; EMAIL</p>
+        <h2 class="ct-title">Baptist Bible Seminary &amp; Institute</h2>
+        <p class="body-copy">A theological institution in the Philippines training the next generation of ministry leaders. They needed a digital presence that matched the caliber of their academic program.</p>
+        <dl class="case-facts">
+          <div><dt>The challenge</dt><dd>Represent the seminary online, explain its programs clearly and help prospective students get in touch — without a large IT budget or in-house tech team.</dd></div>
+          <div><dt>What we built</dt><dd>A fully responsive website that reflects the institution’s academic credibility, plus branded email for every faculty and staff member under bbsi.edu.ph.</dd></div>
+          <div><dt>The outcome</dt><dd>BBSI now has a digital home that matches its mission — and its IT administrator called the experience “commendable.”</dd></div>
+        </dl>
+        <a class="ct-link ct-link--underline case-link" href="https://bbsi.edu.ph" target="_blank" rel="noopener noreferrer">Visit bbsi.edu.ph ↗</a>
       </div>
-
-      <div class="details-grid" style="border-top: 1px solid #E8E6E6; padding-top: 48px;">
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">The Challenge</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">BBSI needed a website that could represent their seminary online, communicate their programs clearly, and help prospective students connect with them — all without a large IT budget or in-house tech team.</p>
-        </div>
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">What We Built</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">A fully responsive website designed to reflect the institution's academic credibility. We also configured branded email for faculty and staff — giving every team member a professional presence under the bbsi.edu.ph domain.</p>
-        </div>
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">The Outcome</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">BBSI now has a digital home that matches their mission. Their IT administrator described the experience as commendable — and noted they look forward to future partnership opportunities with Cortanatech.</p>
-        </div>
-      </div>
-
-      <div style="border-top: 1px solid #E8E6E6; padding-top: 48px; margin-top: 48px;">
-        <div class="eyebrow" style="margin-bottom: 24px;">Our Approach</div>
-        <div class="process-grid">
-          <div style="background: #F1EDED; border-radius: 20px; padding: 32px 26px;">
-            <div style="font-family: var(--font-display); font-size: 40px; font-weight: 900; color: #D1D0CE; line-height: 1; margin-bottom: 16px;">01</div>
-            <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #2B3990; margin-bottom: 10px;">Discovery</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">We sat down with BBSI's team to understand their academic programs, admissions process, and exactly what prospective students needed to see.</p>
-          </div>
-          <div style="background: #F1EDED; border-radius: 20px; padding: 32px 26px;">
-            <div style="font-family: var(--font-display); font-size: 40px; font-weight: 900; color: #D1D0CE; line-height: 1; margin-bottom: 16px;">02</div>
-            <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #2B3990; margin-bottom: 10px;">Design &amp; Build</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">We designed and built a fully responsive site that reflects BBSI's academic credibility, and configured branded email for every faculty and staff member.</p>
-          </div>
-          <div style="background: #F1EDED; border-radius: 20px; padding: 32px 26px;">
-            <div style="font-family: var(--font-display); font-size: 40px; font-weight: 900; color: #D1D0CE; line-height: 1; margin-bottom: 16px;">03</div>
-            <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #2B3990; margin-bottom: 10px;">Launch &amp; Handoff</h3>
-            <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.7;">We launched together, walked BBSI's IT administrator through managing the site day-to-day, and stayed on call for support after go-live.</p>
-          </div>
-        </div>
-      </div>
-
-      <div style="background: #F1EDED; border-radius: 20px; padding: 40px 36px; margin-top: 48px; text-align: center;">
-        <div style="font-family: var(--font-display); font-size: 48px; font-weight: 900; color: #D1D0CE; line-height: 0.4; margin-bottom: 16px;">"</div>
-        <blockquote style="font-family: var(--font-display); font-size: clamp(18px, 2vw, 22px); font-weight: 700; color: #2B3990; line-height: 1.5; letter-spacing: -0.01em; margin-bottom: 24px;">The professionalism of their services is commendable. We look forward to more partnership opportunities in the future.</blockquote>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 14px;">
-          <div style="width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: #D1D0CE;">
-            <img src="assets/photos/woman-laptop-smiling.jpg" alt="Evangel Balmes" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
-          </div>
-          <div style="text-align: left;">
-            <div style="font-family: var(--font-body); font-size: 14px; font-weight: 700; color: #1E1F1E;">Evangel Balmes</div>
-            <div style="font-family: var(--font-body); font-size: 13px; color: #454C59;">IT Administrator, Baptist Bible Seminary &amp; Institute, Inc.</div>
-          </div>
-        </div>
-      </div>
+      <figure>
+        <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/bbsi-homepage.jpg" alt="Homepage of the Baptist Bible Seminary and Institute website" loading="lazy" decoding="async"></div></div>
+        
+      </figure>
     </div>
-  </div>
+  </section>
 
-  <!-- MODAL: KALINGA -->
-  <div class="modal-overlay" id="modal-kalinga" onclick="if (event.target === this) closeCaseModal('kalinga')">
-    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-kalinga-title">
-      <button type="button" class="modal-close" onclick="closeCaseModal('kalinga')" aria-label="Close case study">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-      <div class="eyebrow" style="margin-bottom: 32px;">Case Study</div>
-      <div class="split-grid" style="gap: 56px; margin-bottom: 56px;">
-        <div>
-          <h2 id="modal-kalinga-title" class="section-title" style="font-size: clamp(24px, 3vw, 34px); margin-bottom: 16px;">Kalinga — Kapatid Ministry</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 24px;">Kapatid Ministry runs a child sponsorship program that connects generous sponsors with children in need across the Philippines. As the program grew, tracking children, sponsors, and the relationships between them on spreadsheets became harder to manage and easier to get wrong.</p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
-            <span class="badge">Custom Web App</span>
-            <span class="badge">Nonprofit Software</span>
-            <span class="badge">Database Design</span>
-          </div>
-          <p style="font-family: var(--font-body); font-size: 13px; color: #6B7280; font-style: italic;">An internal tool built for Kapatid Ministry's team — not publicly accessible.</p>
-        </div>
-        <div class="img-card" style="aspect-ratio: 4/3;">
-          <img src="assets/photos/kalinga-homepage.jpg" alt="Kalinga admin login screen for Kapatid Ministry's child sponsorship platform" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
-          <div class="img-overlay"></div>
-          <div class="img-caption">
-            <div style="font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.85); text-transform: uppercase; margin-bottom: 6px;">Internal Tool</div>
-            <div style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff;">Built for Kapatid Ministry</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="details-grid" style="border-top: 1px solid #E8E6E6; padding-top: 48px;">
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">The Challenge</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">Kapatid Ministry needed a reliable way to manage a growing number of sponsored children and sponsors — keeping records accurate, sponsorships properly matched, and information easy for staff to find without digging through spreadsheets.</p>
-        </div>
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">What We Built</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">Kalinga, a custom web application for managing child and sponsor profiles, tracking sponsorship relationships, and keeping records organized and searchable — built around how Kapatid Ministry's team actually works.</p>
-        </div>
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">The Outcome</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">Ministry staff can now onboard children and sponsors, check sponsorship status, and pull up a record in seconds — giving the team more time for the relationships behind each sponsorship, not the paperwork.</p>
-        </div>
-      </div>
+  <!-- TESTIMONIAL -->
+  <section class="scene ct-on-dark" style="min-height: 440px; display: flex; align-items: center;">
+    <img class="bg" src="assets/photos/campaign/02-connected-workflow-landscape.jpg" alt="" style="object-position: 70% center;" loading="lazy" decoding="async">
+    <div class="shade shade-side" style="background: linear-gradient(90deg, #061A38 0%, rgba(6,26,56,0.9) 45%, rgba(6,26,56,0.35) 100%);"></div>
+    <div class="inner ct-container" style="width: 100%; padding-top: 80px; padding-bottom: 80px;">
+      <figure style="max-width: 640px;">
+        <div aria-hidden="true" style="font-family: var(--font-display); font-weight: 900; font-size: 96px; line-height: 0.6; color: var(--color-cyan);">“</div>
+        <blockquote style="margin-top: 16px; font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 3vw, 30px); line-height: 1.35; letter-spacing: -0.01em; color: #fff;">The professionalism of their services is commendable. We look forward to more partnership opportunities in the future.</blockquote>
+        <figcaption style="margin-top: 24px; font-size: 15px; color: rgba(255,255,255,0.78);"><strong style="color: #fff;">Evangel Balmes</strong> · IT Administrator, Baptist Bible Seminary &amp; Institute</figcaption>
+      </figure>
     </div>
-  </div>
+  </section>
 
-  <!-- MODAL: MEGOPIC -->
-  <div class="modal-overlay" id="modal-megopic" onclick="if (event.target === this) closeCaseModal('megopic')">
-    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-megopic-title">
-      <button type="button" class="modal-close" onclick="closeCaseModal('megopic')" aria-label="Close case study">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-      <div class="eyebrow" style="margin-bottom: 32px;">Case Study</div>
-      <div class="split-grid" style="gap: 56px; margin-bottom: 56px;">
-        <div class="img-card" style="aspect-ratio: 4/3;">
-          <img src="assets/photos/megopic-homepage.jpg" alt="Screenshot of the Megopic medical conference website homepage" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-          <div class="img-overlay"></div>
-          <div class="img-caption">
-            <div style="font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.85); text-transform: uppercase; margin-bottom: 6px;">Live</div>
-            <div style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff;">Taylor University</div>
-          </div>
-        </div>
-        <div>
-          <h2 id="modal-megopic-title" class="section-title" style="font-size: clamp(24px, 3vw, 34px); margin-bottom: 16px;">Megopic — Taylor University</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 24px;">Megopic is Taylor University's medical conference, bringing together healthcare professionals for sessions, workshops, and continuing education. The event needed a website that could handle registration, showcase the full program, and support conference-specific needs — all ready before a fixed event date.</p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;">
-            <span class="badge">Event Website</span>
-            <span class="badge">Registration &amp; Ticketing</span>
-            <span class="badge">Web Development</span>
-          </div>
-          <a href="https://taylors-conference.dhma-impactlab.com/" target="_blank" rel="noopener noreferrer" class="btn-primary">Visit Live Site →</a>
-        </div>
-      </div>
-
-      <div class="details-grid" style="border-top: 1px solid #E8E6E6; padding-top: 48px;">
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">The Challenge</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">Taylor University needed a professional website that could open registration and ticketing, present speakers and the agenda clearly, and support conference-specific requirements like abstract submissions and CME credit information — ready well ahead of the event.</p>
-        </div>
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">What We Built</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">A complete event website with online registration and ticketing, a speaker and agenda showcase, an abstract submission workflow, and CME credit details — giving organizers a single hub for everything attendees needed before and during the conference.</p>
-        </div>
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">The Outcome</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">Attendees could register, browse the schedule, and submit abstracts without manual back-and-forth, and the conference ran on a site built to handle real event-day traffic.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: STEWARDTRACK -->
-  <div class="modal-overlay" id="modal-stewardtrack" onclick="if (event.target === this) closeCaseModal('stewardtrack')">
-    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-stewardtrack-title">
-      <button type="button" class="modal-close" onclick="closeCaseModal('stewardtrack')" aria-label="Close case study">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#454C59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-      <div class="eyebrow" style="margin-bottom: 32px;">Built In-House</div>
-      <div class="split-grid" style="gap: 56px; margin-bottom: 56px;">
-        <div>
-          <h2 id="modal-stewardtrack-title" class="section-title" style="font-size: clamp(24px, 3vw, 34px); margin-bottom: 16px;">StewardTrack</h2>
-          <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.75; margin-bottom: 24px;">Local churches across the Philippines often run on a patchwork of spreadsheets, paper records, and disconnected tools to manage membership, giving, and finances. Rather than build another one-off website, we built the platform we wished every church could have.</p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;">
-            <span class="badge">SaaS Platform</span>
-            <span class="badge">Church Management</span>
-            <span class="badge">Full-Stack Development</span>
-          </div>
-          <a href="contact.html" class="btn-primary">Interested in StewardTrack? →</a>
-        </div>
-        <div class="img-card" style="aspect-ratio: 4/3;">
-          <img src="assets/photos/stewardtrack-homepage.jpg" alt="Screenshot of the StewardTrack marketing homepage" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-          <div class="img-overlay"></div>
-          <div class="img-caption">
-            <div style="font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: rgba(255,255,255,0.85); text-transform: uppercase; margin-bottom: 6px;">Our Product</div>
-            <div style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff;">Built by Cortanatech</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="details-grid" style="border-top: 1px solid #E8E6E6; padding-top: 48px;">
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">The Challenge</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">Churches need a way to manage member and family records, track giving and tithes, keep finances organized, and plan services and events — without stitching together spreadsheets and paper forms.</p>
-        </div>
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">What We Built</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">StewardTrack, our own SaaS platform purpose-built for local churches — covering membership records, online giving and donation tracking, fund accounting and financial reporting, and event and service scheduling in one system.</p>
-        </div>
-        <div>
-          <div class="eyebrow" style="margin-bottom: 16px;">The Outcome</div>
-          <p style="font-family: var(--font-body); font-size: 14px; color: #454C59; line-height: 1.75;">StewardTrack is proof that we understand ministry operations as well as we understand software — giving churches a single system built for how they actually run, not a generic tool bent into shape.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MORE WORK COMING -->
-  <section style="background: #F1EDED; padding: 80px 0;">
-    <div class="container" style="text-align: center;">
-      <div style="border: 1.5px dashed #D1D0CE; border-radius: 20px; padding: 64px 40px;">
-        <div style="font-family: var(--font-display); font-size: 32px; font-weight: 900; color: #2B3990; margin-bottom: 12px;">More Projects in Progress</div>
-        <p style="font-family: var(--font-body); font-size: 15px; color: #454C59; line-height: 1.72; max-width: 480px; margin: 0 auto 32px;">We're currently working on new projects that will be added here soon. Want to be featured next?</p>
-        <a href="contact.html" class="btn-primary">Start Your Project →</a>
+  <section id="megopic" class="case ct-section ct-section--cloud">
+    <div class="ct-container ct-split">
+      <figure>
+        <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/megopic-homepage.jpg" alt="Homepage of the Medical Goes Public conference website" loading="lazy" decoding="async"></div></div>
+        
+      </figure>
+      <div>
+        <p class="case-tag">NONPROFIT · EVENT WEBSITE</p>
+        <h2 class="ct-title">Medical Goes Public Conference</h2>
+        <p class="body-copy">Taylor University’s medical conference brings healthcare professionals together for sessions, workshops and continuing education — and it needed a website ready before a fixed event date.</p>
+        <dl class="case-facts">
+          <div><dt>The challenge</dt><dd>Open registration and ticketing, present speakers and the agenda clearly, and support abstract submissions and CME credit information — well ahead of the event.</dd></div>
+          <div><dt>What we built</dt><dd>A complete event website with online registration and ticketing, a speaker and agenda showcase, an abstract submission workflow and CME credit details — one hub for attendees.</dd></div>
+          <div><dt>The outcome</dt><dd>Attendees registered, browsed the schedule and submitted abstracts without manual back-and-forth, on a site built to handle event-day traffic.</dd></div>
+        </dl>
+        <a class="ct-link ct-link--underline case-link" href="https://taylors-conference.dhma-impactlab.com/" target="_blank" rel="noopener noreferrer">Visit the conference site ↗</a>
       </div>
     </div>
   </section>
+
+  <section id="kalinga" class="case ct-section ct-section--white">
+    <div class="ct-container ct-split">
+      <div>
+        <p class="case-tag">NONPROFIT · CUSTOM WEB APP</p>
+        <h2 class="ct-title">Kalinga — Kapatid Ministry</h2>
+        <p class="body-copy">Kapatid Ministry connects sponsors with children in need across the Philippines. As the program grew, tracking it all on spreadsheets got harder to manage and easier to get wrong.</p>
+        <dl class="case-facts">
+          <div><dt>The challenge</dt><dd>Keep a growing list of children and sponsors accurate, sponsorships correctly matched, and records easy for staff to find.</dd></div>
+          <div><dt>What we built</dt><dd>Kalinga, a custom web app for child and sponsor profiles, sponsorship tracking and searchable records — built around how the ministry’s team actually works.</dd></div>
+          <div><dt>The outcome</dt><dd>Staff onboard children and sponsors, check sponsorship status and pull up any record in seconds — more time for relationships, less for paperwork.</dd></div>
+        </dl>
+        
+      </div>
+      <figure>
+        <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/kalinga-homepage.jpg" alt="Kalinga admin login screen for Kapatid Ministry’s child sponsorship platform" loading="lazy" decoding="async"></div></div>
+        <p class="case-note">An internal tool for Kapatid Ministry’s team — not publicly accessible.</p>
+      </figure>
+    </div>
+  </section>
+
+  <section id="stewardtrack" class="case ct-section ct-section--cloud">
+    <div class="ct-container ct-split">
+      <figure>
+        <div class="browser"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="shot"><img src="assets/photos/stewardtrack-homepage.jpg" alt="Homepage of StewardTrack, a church management platform" loading="lazy" decoding="async"></div></div>
+        
+      </figure>
+      <div>
+        <p class="case-tag">CHURCH · OUR OWN PLATFORM</p>
+        <h2 class="ct-title">StewardTrack</h2>
+        <p class="body-copy">Local churches often run on spreadsheets, paper records and disconnected tools. Rather than build another one-off website, we built the platform we wished every church had.</p>
+        <dl class="case-facts">
+          <div><dt>The challenge</dt><dd>Manage member and family records, track giving, keep finances organized and plan services and events — without stitching tools together.</dd></div>
+          <div><dt>What we built</dt><dd>StewardTrack, our own church management platform: membership records, online giving and donation tracking, fund accounting and reporting, and event scheduling in one system.</dd></div>
+          <div><dt>The outcome</dt><dd>Proof that we understand ministry operations as well as software — one system built for how churches actually run.</dd></div>
+        </dl>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING CTA -->
+  <section class="scene cta-scene scene-tall ct-on-dark">
+    <img class="bg" src="assets/photos/campaign/01-phone-app-interaction-landscape.jpg" alt="" style="object-position: 72% center;" loading="lazy" decoding="async">
+    <div class="shade shade-side" style="background: linear-gradient(90deg, #061A38 0%, rgba(6,26,56,0.92) 38%, rgba(6,26,56,0.4) 75%, rgba(6,26,56,0.2) 100%);"></div>
+    <div class="shade" style="background: linear-gradient(180deg, rgba(6,26,56,0) 60%, #041226 100%);"></div>
+    <div class="inner ct-container">
+      <div style="max-width: 560px;">
+        <h2 class="ct-title" style="font-size: clamp(36px, 5vw, 52px); line-height: 1.08;">Tell us what’s getting in the way.</h2>
+        <p class="ct-sub" style="color: rgba(255,255,255,0.82);">A free 30-minute call. No pressure, no jargon — just a conversation.</p>
+        <div style="margin-top: 32px;"><a href="project-brief.html" class="ct-btn ct-btn--lg ct-btn--primary">Book a free call →</a></div>
+        <p style="margin-top: 20px; font-size: 14px; color: rgba(255,255,255,0.78);">or email <a href="mailto:customers@cortanatechsolutions.com" style="color: #fff; font-weight: 600;">customers@cortanatechsolutions.com</a></p>
+      </div>
+    </div>
+  </section>
+  </main>
 
   <!-- FOOTER -->
-  <footer style="background: #fff; border-top: 1px solid #E8E6E6; padding: 40px 0 28px;">
-    <div class="container footer-inner" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-      <a href="index.html"><img src="assets/logos/logo-color.png" alt="CortanaTech Solutions" style="height: 58px;"></a>
-      <div style="display: flex; gap: 28px; flex-wrap: wrap;">
-        <a href="services.html" class="footer-link">Services</a>
-        <a href="work.html" class="footer-link-active">Our Work</a>
-        <a href="blog.html" class="footer-link">Blog</a>
-        <a href="about.html" class="footer-link">About</a>
-        <a href="contact.html" class="footer-link">Contact</a>
-      </div>
-      <span style="font-family: var(--font-body); font-size: 13px; color: #6B7280;">© 2026 Cortanatech Solutions, Inc.</span>
+  <footer class="site-footer">
+    <div class="ct-container">
+      <a href="index.html"><img src="assets/logos/logo-white.png" alt="Cortanatech Solutions" style="height: 34px; width: auto;"></a>
+      <nav aria-label="Footer">
+        <a href="services.html">Services</a>
+        <a href="work.html" aria-current="page">Our Work</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <span>© 2026 Cortanatech Solutions, Inc. · Serving the Philippines</span>
     </div>
   </footer>
 
   <script>
     function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
     function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
-
-    var lastFocusedEl = null;
-    function openCaseModal(id) {
-      var overlay = document.getElementById('modal-' + id);
-      if (!overlay) return;
-      lastFocusedEl = document.activeElement;
-      overlay.classList.add('open');
-      document.body.classList.add('modal-open');
-      document.addEventListener('keydown', handleModalKeydown);
-      var closeBtn = overlay.querySelector('.modal-close');
-      if (closeBtn) closeBtn.focus();
-    }
-    function closeCaseModal(id) {
-      var overlay = document.getElementById('modal-' + id);
-      if (!overlay) return;
-      overlay.classList.remove('open');
-      document.body.classList.remove('modal-open');
-      document.removeEventListener('keydown', handleModalKeydown);
-      if (lastFocusedEl) lastFocusedEl.focus();
-    }
-    function handleModalKeydown(e) {
-      if (e.key === 'Escape') {
-        var open = document.querySelector('.modal-overlay.open');
-        if (open) closeCaseModal(open.id.replace('modal-', ''));
-      }
-    }
   </script>
-  <script src="meeting-data.js?v=meeting3"></script>
-  <script src="role.js?v=meeting3"></script>
-  <script src="enhance.js?v=meeting3"></script>
 </body>
 </html>

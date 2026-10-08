@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found — Cortanatech Solutions</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="stylesheet" href="/shared.css?v=ds3">
+  <link rel="stylesheet" href="/ds/components.css?v=ds2">
+  <link rel="stylesheet" href="/site.css?v=4">
+</head>
+<body style="background: var(--color-midnight-deep);">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- NAV -->
+  <header class="home-nav">
+    <div class="ct-container bar">
+      <a href="/index.html" aria-label="Cortanatech Solutions home"><img src="/assets/logos/logo-white-trim.png" alt="Cortanatech Solutions" class="nav-logo"></a>
+      <nav class="links" aria-label="Main">
+        <a href="/services.html">Services</a>
+        <a href="/work.html">Our Work</a>
+        <a href="/blog.html">Blog</a>
+        <a href="/about.html">About</a>
+      </nav>
+      <a href="/project-brief.html" class="ct-btn ct-btn--primary">Book a free call</a>
+      <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+    <div id="mobile-nav" class="mobile-nav">
+      <a href="/services.html" onclick="closeMenu()">Services</a>
+      <a href="/work.html" onclick="closeMenu()">Our Work</a>
+      <a href="/blog.html" onclick="closeMenu()">Blog</a>
+      <a href="/about.html" onclick="closeMenu()">About</a>
+      <a href="/project-brief.html" onclick="closeMenu()">Book a free call</a>
+    </div>
+  </header>
+
+  <main id="main">
+  <section class="scene ct-on-dark" style="min-height: 72vh; display: flex; align-items: center;">
+    <img class="bg" src="/assets/photos/campaign/05-night-dashboard-review-landscape.webp" alt="" style="object-position: 72% center;">
+    <div class="shade shade-side" style="background: linear-gradient(90deg, #061A38 0%, rgba(6,26,56,0.94) 38%, rgba(6,26,56,0.55) 75%, rgba(6,26,56,0.3) 100%);"></div>
+    <div class="inner ct-container" style="width: 100%; padding-top: 96px; padding-bottom: 96px;">
+      <div style="max-width: 600px;">
+        <p class="ct-eyebrow eyebrow-dark">Error 404</p>
+        <h1 class="page-h1">We couldn’t find <span class="hl">that page</span>.</h1>
+        <p class="page-lede">The link may be old or mistyped. Here’s where most people are headed:</p>
+        <div class="stack-sm" style="margin-top: 32px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+          <a href="/project-brief.html" class="ct-btn ct-btn--lg ct-btn--primary">Book a free call →</a>
+          <a href="/index.html" class="ct-btn ct-btn--lg ct-btn--glass">Go to the homepage</a>
+        </div>
+        <p style="margin-top: 28px; font-size: 15px; color: rgba(255,255,255,0.78);">Or browse <a href="/services.html" style="color: #fff; text-decoration: underline;">Services</a>, <a href="/work.html" style="color: #fff; text-decoration: underline;">Our Work</a> or the <a href="/blog.html" style="color: #fff; text-decoration: underline;">Blog</a>.</p>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="ct-container">
+      <a href="/index.html"><img src="/assets/logos/logo-white-trim.png" alt="Cortanatech Solutions" class="foot-logo"></a>
+      <nav aria-label="Footer">
+        <a href="/services.html">Services</a>
+        <a href="/work.html">Our Work</a>
+        <a href="/blog.html">Blog</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <span>© 2026 Cortanatech Solutions, Inc. · Serving the Philippines</span>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
+    function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
+  </script>
+</body>
+</html>

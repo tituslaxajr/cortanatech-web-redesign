@@ -38,7 +38,7 @@
   <link rel="preload" as="image" href="assets/photos/campaign/04-app-hero-landscape.webp">
   <link rel="stylesheet" href="shared.css?v=ds3">
   <link rel="stylesheet" href="ds/components.css?v=ds2">
-  <link rel="stylesheet" href="site.css?v=4">
+  <link rel="stylesheet" href="site.css?v=5">
   <style>
     /* Homepage-only: hero stats + audience switcher. Shared chrome lives in site.css. */
     .scene .bg.swap { transition: opacity .45s var(--ease-ripple); }
@@ -281,7 +281,7 @@
       var check = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#086CFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
       var info = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B9DCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
       var A = {
-        church: { img: 'assets/photos/audience/church-livestream.webp', alt: 'A camera livestreaming a church service', pos: 'center 40%', title: 'Reach your community beyond Sunday', cta: 'Get a free church assessment →', href: 'https://church.cortanatechsolutions.com/',
+        church: { img: 'assets/photos/audience/church-livestream.webp', alt: 'A camera livestreaming a church service', pos: 'center 40%', title: 'Reach your community beyond Sunday', cta: 'Get a free church assessment ↗', href: 'https://church.cortanatechsolutions.com/',
           pains: ['Member records scattered across platforms', 'Events and forms that need the same data typed twice', 'Announcements spread across too many channels'],
           fixes: ['A welcoming church website', 'Membership & records management', 'Online event registration'] },
         school: { img: 'assets/photos/campaign/12-school-enrollment-laptop-square.webp', alt: 'A school registrar walking a parent and student through online enrollment on a laptop', pos: 'center 35%', title: 'Modernize without overwhelming staff', cta: 'Book a free call for your school →', href: 'project-brief.html',
@@ -303,6 +303,7 @@
         document.getElementById('aud-pains').innerHTML = d.pains.map(function (p) { return '<li>' + info + '<span>' + esc(p) + '</span></li>'; }).join('');
         document.getElementById('aud-fixes').innerHTML = d.fixes.map(function (f) { return '<li style="align-items:center">' + check + '<span>' + esc(f) + '</span></li>'; }).join('');
         var cta = document.getElementById('aud-cta'); cta.textContent = d.cta; cta.href = d.href;
+        if (/^https?:/.test(d.href)) { cta.target = '_blank'; cta.rel = 'noopener'; } else { cta.removeAttribute('target'); cta.removeAttribute('rel'); }
         bg.style.opacity = '0';
         setTimeout(function () { bg.src = d.img; bg.alt = d.alt; bg.style.objectPosition = d.pos; bg.style.opacity = '1'; }, 200);
         try { localStorage.setItem('ct-role', k); } catch (e) {}
@@ -318,5 +319,7 @@
       } else { warm(); }
     })();
   </script>
+  <script src="site-config.js?v=1"></script>
+  <script src="site.js?v=1"></script>
 </body>
 </html>

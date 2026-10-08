@@ -23,7 +23,7 @@
   <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/og/project-brief.jpg">
   <link rel="stylesheet" href="shared.css?v=ds3">
   <link rel="stylesheet" href="ds/components.css?v=ds2">
-  <link rel="stylesheet" href="site.css?v=4">
+  <link rel="stylesheet" href="site.css?v=5">
   <style>
     body { font-family: var(--font-body); }
 
@@ -394,6 +394,9 @@
         <p style="text-align:center;font-size:13.5px;color:var(--color-text-muted);margin-top:22px;line-height:1.6;">
           Would rather just talk? <a href="contact.html" style="color:var(--color-primary);font-weight:600;text-decoration:underline;text-underline-offset:2px;">Send us a message</a> and we'll take it from there.
         </p>
+        <p data-show="booking" hidden style="text-align:center;font-size:13.5px;color:var(--color-text-muted);margin-top:8px;line-height:1.6;">
+          Already know what you need? <a data-link="booking" style="color:var(--color-primary);font-weight:600;text-decoration:underline;text-underline-offset:2px;">Pick a call time directly</a>.
+        </p>
 
       </div>
     </div>
@@ -419,6 +422,8 @@
     function toggleMenu() { document.getElementById('mobile-nav').classList.toggle('open'); }
     function closeMenu() { document.getElementById('mobile-nav').classList.remove('open'); }
   </script>
-  <script src="brief.js?v=2"></script>
+  <script src="brief.js?v=3"></script>
+  <script src="site-config.js?v=1"></script>
+  <script src="site.js?v=1"></script>
 </body>
 </html>

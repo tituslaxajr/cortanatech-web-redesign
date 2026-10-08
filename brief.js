@@ -1153,6 +1153,7 @@
       '<p class="brief-step-sub" style="margin:0 auto 4px;max-width:460px;">Your brief is with us. We’ll read it properly and come back within one business day with a recommendation — including anything we think you <em>don’t</em> need to spend money on.</p>' +
       '<p style="font-size:14px;color:var(--color-text-muted);line-height:1.65;max-width:460px;margin:18px auto 0;">Have a logo or photos to send? Email them to <strong>' + esc(CONTACT_EMAIL) + '</strong> and mention ' + esc(d.org || 'your organization') + '.</p>' +
       '<div class="brief-done-actions">' +
+      '<a data-link="booking" hidden class="btn-primary">Pick a time for your call →</a>' +
       '<button type="button" class="btn-primary" id="brief-dl">Download a copy</button>' +
       '<a href="work.html" class="brief-btn-back" style="text-decoration:underline;text-underline-offset:2px;">See work we’ve done →</a>' +
       '</div></div>';
@@ -1170,6 +1171,8 @@
         setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
       });
     }
+    if (window.CT) window.CT.applyLinks(host);
+    document.dispatchEvent(new CustomEvent('ct:lead', { detail: { form: 'project_brief' } }));
     var doneEl = document.getElementById('brief-done');
     if (doneEl) doneEl.focus();
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });

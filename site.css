@@ -6,6 +6,11 @@ body { font-family: var(--font-body); background: #fff; color: var(--color-text-
 .ct-sub, .ct-eyebrow, .ct-card__body, .ct-card__title { margin-bottom: 0; }
 p.ct-sub { margin-top: 16px; }
 
+/* Skip link — hidden until focused by keyboard */
+.skip-link { position: absolute; left: 16px; top: -64px; z-index: 300; background: #fff; color: var(--color-midnight); padding: 10px 18px; border-radius: 10px; font-weight: 700; box-shadow: var(--shadow-xl); transition: top .15s; }
+.skip-link:focus { top: 12px; }
+main:focus { outline: none; }
+
 /* NAV — dark glass */
 .home-nav { position: sticky; top: 0; z-index: 100; background: rgba(6,26,56,0.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.10); }
 .home-nav .bar { height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }

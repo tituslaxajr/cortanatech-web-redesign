@@ -23,11 +23,11 @@
   <meta name="twitter:image" content="https://cortanatechsolutions.com/assets/og/contact.jpg">
   <link rel="stylesheet" href="shared.css?v=ds3">
   <link rel="stylesheet" href="ds/components.css?v=ds2">
-  <link rel="stylesheet" href="site.css?v=4">
+  <link rel="stylesheet" href="site.css?v=5">
   <style>
     .contact { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
     .facts { margin-top: 32px; display: flex; flex-direction: column; gap: 22px; }
-    .facts > div { display: flex; gap: 16px; align-items: center; }
+    .facts > div:not([hidden]) { display: flex; gap: 16px; align-items: center; }
     .facts .ct-label { margin-bottom: 2px; }
     .facts a, .facts span { font-weight: 600; color: var(--color-text-primary); }
     .callout { display: flex; gap: 16px; align-items: center; margin-top: 40px; padding: 22px 24px; border-radius: 20px; background: var(--gradient-hero); color: #fff; transition: transform .2s, box-shadow .2s; }
@@ -86,6 +86,8 @@
         <div class="facts">
           <div><div class="ct-icon-box ct-icon-box--sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div><div><span class="ct-label">Email</span><a href="mailto:customers@cortanatechsolutions.com">customers@cortanatechsolutions.com</a></div></div>
           <div><div class="ct-icon-box ct-icon-box--sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div><div><span class="ct-label">Response time</span><span>Within one business day</span></div></div>
+          <div data-show="messenger" hidden><div class="ct-icon-box ct-icon-box--sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></div><div><span class="ct-label">Messenger</span><a data-link="messenger">Chat with us on Messenger</a></div></div>
+          <div data-show="viber" hidden><div class="ct-icon-box ct-icon-box--sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div><div><span class="ct-label">Viber</span><a data-link="viber">Message us on Viber</a></div></div>
         </div>
         <a href="project-brief.html" class="callout">
           <div><b>Rather book a call?</b><small>A few quick taps about your needs, and we’ll reply within one business day to set up a free 30-minute call.</small></div>
@@ -151,6 +153,7 @@
         headers: { 'Accept': 'application/json' }
       }).then(function (response) {
         if (response.ok) {
+          document.dispatchEvent(new CustomEvent('ct:lead', { detail: { form: 'contact' } }));
           msg.textContent = "Message sent! We'll follow up within one business day.";
           msg.style.color = '#1C75BC';
           form.reset();
@@ -164,5 +167,7 @@
       });
     }
   </script>
+  <script src="site-config.js?v=1"></script>
+  <script src="site.js?v=1"></script>
 </body>
 </html>
